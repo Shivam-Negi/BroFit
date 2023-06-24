@@ -1,5 +1,6 @@
-import mongoose from "mongoose";
+const mongoose = require('mongoose');
+const {serverConfig} = require('./index');
 
 export const connect = async () => {
-    await mongoose.connect('mongodb+srv://shibunegi:shibu@gymcluster.vu4jivp.mongodb.net/');
+    await mongoose.connect();
 }
