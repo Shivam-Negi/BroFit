@@ -1,6 +1,6 @@
 const express = require('express');
 const router = require('./routes/index.js');
-const { PORT } = require('./config/server_config.js');
+const { serverConfig,database } = require('./config');
 
 const app = express();
 
@@ -9,8 +9,8 @@ app.use(express.urlencoded({extended: true}));
 
 //app.use('/api', router);
 
-app.listen(PORT, async () => {
-    console.log(`Server listening on port : ${3000}`);
-    connect();
+app.listen(serverConfig.PORT, async () => {
+    console.log(`Server listening on port : ${serverConfig.PORT}`);
+    database.connect();
     console.log('mongoose connected');
 })
