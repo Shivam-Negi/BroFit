@@ -1,8 +1,10 @@
 const mongoose = require('mongoose');
-const {serverConfig} = require('./index');
+const { URL } = require('./server_config');
 
 const connect = async () => {
-    await mongoose.connect(serverConfig.URL);
+    await mongoose.connect(URL);
 }
 
-module.exports = connect;
+module.exports = {
+    connect
+};
