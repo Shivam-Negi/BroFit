@@ -10,11 +10,13 @@ const userSchema = new mongoose.Schema({
         trim : true,
         unique : true,
         required : true, 
+        match: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
     },
     phoneNo : {
         type : Number,
         minlength : 10,
-        maxlength : 10
+        maxlength : 10,
+        unique : true,
     },
     gymId : {
         type: mongoose.Schema.Types.ObjectId,

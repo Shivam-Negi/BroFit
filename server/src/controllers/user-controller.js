@@ -1,47 +1,70 @@
+const { StatusCodes } = require('http-status-codes');
 const { UserService } = require('../services');
+const { successResponse, errorResponse } = require('../utils/common');
 
 
 async function createUser(req, res) {
     try {
         const user = await UserService.createUser(req.body);
-        return res.status(201).json({
-            success: true,
-            message: "successfully created a user",
-            data: user,
-            err: {}
-        })
+        successResponse.data = user;
+        return res.status(StatusCodes.CREATED).json(successResponse);
         
     } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: "error while creating a user",
-            data: {},
-            err: error
-        })
+        errorResponse.error = error;
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse);
     }
 }
 
 async function getUsers(req, res) {
     try {
         const users = await UserService.getUsers();
-        return res.status(200).json({
-            success: true,
-            message: "successfully fetched all users",
-            data: users,
-            err: {}
-        })
+        successResponse.data = users;
+        return res.status(StatusCodes.OK).json(successResponse);
         
     } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: "error while fetching users",
-            data: {},
-            err: error
-        })
+        errorResponse.error = error;
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse)
+    }
+}
+async function getUser(req, res) {
+    try {
+        const user = await UserService.getUser(req.params.id);
+        successResponse.data = user;
+        return res.status(StatusCodes.OK).json(successResponse);
+    } catch (error) {
+        errorResponse.error = error;
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse);
+        
     }
 }
 
+async function updateUser(req, res) {
+    try {
+        const user = await UserService.updateUser(req.params.id, req.body);
+        successResponse.data = user;
+        return res.status(StatusCodes.OK).json(successResponse);
+    } catch (error) {
+        errorResponse.error = error;
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse);
+        
+    }
+}
+
+async function deleteUser(req, res) {
+    try {
+        const user = await UserService.deleteUser(req.params.id);
+        successResponse.data = user;
+        return res.status(StatusCodes.OK).json(successResponse);
+    } catch (error) {
+        errorResponse.error = error;
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse);
+        
+    }
+}
 module.exports = {
    createUser,
-   getUsers
+   getUsers,
+   getUser,
+   updateUser,
+   deleteUser,
 }
