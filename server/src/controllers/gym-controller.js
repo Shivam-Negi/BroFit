@@ -21,6 +21,27 @@ async function createGym(req, res) {
     }
 }
 
+async function getGyms(req, res) {
+    try {
+        const gyms = await GymService.getGyms();
+        return res.status(200).json({
+            success: true,
+            message: "successfully fetched all gyms",
+            data: gyms,
+            err: {}
+        })
+        
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: "error while fetching gyms",
+            data: {},
+            err: error
+        })
+    }
+}
+
 module.exports = {
     createGym,
+    getGyms
 }
