@@ -8,7 +8,7 @@ async function createGym(data) {
         return gym;
         
     } catch (error) {
-        console.log(error);
+        // console.log(error);
         throw error;
         
     }

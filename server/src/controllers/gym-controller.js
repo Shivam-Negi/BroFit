@@ -1,4 +1,4 @@
-const {GymService} = require('../services');
+const { GymService } = require('../services');
 
 
 async function createGym(req, res) {
@@ -7,7 +7,7 @@ async function createGym(req, res) {
         return res.status(201).json({
             success: true,
             message: "successfully created a gym",
-            data: response,
+            data: gym,
             err: {}
         })
         

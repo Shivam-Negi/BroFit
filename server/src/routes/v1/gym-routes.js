@@ -1,7 +1,7 @@
 const express = require('express');
-const { GymService } = require('../../services');
+const { GymController } = require('../../controllers');
 const router = express.Router();
 
-router.post('/', GymService.createGym);
+router.post('/', GymController.createGym);
 
 module.exports = router;
