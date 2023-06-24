@@ -7,7 +7,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-//app.use('/api', router);
+app.use('/api', router);
 
 app.listen(serverConfig.PORT, async () => {
     console.log(`Server listening on port : ${serverConfig.PORT}`);
