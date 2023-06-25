@@ -2,12 +2,15 @@ const express = require('express');
 const router = express.Router();
 const gymRouter = require('./gym-routes');
 const userRouter = require('./user-routes');
+const gymOwnerRouter = require('./gymOwner-routes');
+const userProfileRouter = require('./gymOwner-routes');
 const planRouter = require('./plan-routes');
 
 
 router.use('/gym', gymRouter);
+router.use('/gymOwner', gymOwnerRouter);
 router.use('/user', userRouter);
-router.use('/plan', planRouter);
+router.use('/userprofile', userProfileRouter);router.use('/plan', planRouter);
 
 
 module.exports = router;
