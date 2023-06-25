@@ -1,4 +1,3 @@
-const user = require('../models/gym');
 const {UserRepository} = require('../repositories');
 const userRepository = new UserRepository();
 const AppError = require('../utils/errors/app-error');

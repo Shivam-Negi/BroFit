@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-    name : {
+    username : {
         type : String,
         required : true
     },
@@ -12,15 +12,13 @@ const userSchema = new mongoose.Schema({
         required : true, 
         match: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
     },
-    phoneNo : {
-        type : Number,
-        minlength : 10,
-        maxlength : 10,
-        unique : true,
+    password : {
+        type : String,
+        requird : true,
     },
     gymId : {
-        type: mongoose.Schema.Types.ObjectId,
-        ref : 'Gym'
+        type: String,
+        required : true
     },
 })
 
