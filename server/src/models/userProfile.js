@@ -2,13 +2,13 @@ const mongoose = require('mongoose');
 
 const userProfileSchema = new mongoose.Schema({
   attendence: [
-    { [date]: { type: Date, required: true, expires: '30d' } },
-    //   date: {
-    //     type: Date,
-    //     required: true,
-    //     expires: '30d',
-    //   },
-    // },
+    {
+      date: {
+        type: Date,
+        required: true,
+        expires: '30d',
+      },
+    },
   ],
   createdBy: {
     type: String,
@@ -16,8 +16,15 @@ const userProfileSchema = new mongoose.Schema({
   },
   profilePhoto: {
     type: String,
-    // required : true,
+  },
+  weight: {
+    type: Number,
+  },
+  height: {
+    type: Number,
   },
 });
 
-module.exports = mongoose.model('UserProfile', userProfileSchema);
+const UserProfile = mongoose.model('UserProfile', userProfileSchema);
+
+module.exports = userProfileSchema;
