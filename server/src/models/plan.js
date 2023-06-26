@@ -12,7 +12,11 @@ const planSchema = new mongoose.Schema({
     gym_id : {
         type : Number,
         ref : 'Gym'
-    },   
+    },
+    validity : {
+        type : Number,
+        required : true
+    },
 })
 
 module.exports = mongoose.model('Plan', planSchema);

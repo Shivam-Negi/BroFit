@@ -5,7 +5,6 @@ const { successResponse, errorResponse } = require('../utils/common');
 
 async function createPlan(req, res) {
     try {
-        console.log("in controller : ", req.body);
         const plan = await PlanService.createPlan(req.body);
         successResponse.data = plan;
         return res.status(StatusCodes.CREATED).json(successResponse);
