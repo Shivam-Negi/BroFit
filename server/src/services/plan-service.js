@@ -1,19 +1,22 @@
 const { StatusCodes } = require('http-status-codes');
 const plan = require('../models/gym');
-const { PlanRepository } = require('../repositories');
-const planRepository = new PlanRepository();
+const { PlanRepository, GymRepository } = require('../repositories');
 const AppError = require('../utils/errors/app-error')
 
+const planRepository = new PlanRepository();
+const gymRepository = new GymRepository();
 
 async function createPlan(data) {
     try {
         const plan = await planRepository.create(data);
+        const gym = await gymRepository.findGym(data.gym_id);
+        gym.plans.push(plan);
+        await gym.save();
         return plan;
         
     } catch (error) {
         // console.log(error);
-        throw new AppError('', StatusCodes.INTERNAL_SERVER_ERROR);
-        
+        throw new AppError('', StatusCodes.INTERNAL_SERVER_ERROR);       
     }
 }
 

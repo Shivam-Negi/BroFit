@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-
 const gymOwnerSchema = new mongoose.Schema({
 
     gymId : {

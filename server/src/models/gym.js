@@ -13,6 +13,12 @@ const gymSchema = new mongoose.Schema({
         type : String,
         required : true,
     },
+    plans : [
+        {
+            type : mongoose.Schema.Types.ObjectId,
+            ref : 'Plan'
+        }
+    ]
 })
 
 module.exports = mongoose.model('Gym', gymSchema);

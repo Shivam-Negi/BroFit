@@ -7,7 +7,6 @@ async function createGym(req, res) {
     try {
         const gym = await GymService.createGym(req.body);
         successResponse.data = gym;
-        console.log(successResponse.success);
         return res.status(StatusCodes.CREATED).json(successResponse);
         
     } catch (error) {
@@ -20,7 +19,6 @@ async function getGyms(req, res) {
     try {
         const gyms = await GymService.getGyms();
         successResponse.data = gyms;
-        console.log(successResponse.success);
         return res.status(StatusCodes.OK).json(successResponse);
         
     } catch (error) {
