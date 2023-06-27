@@ -1,4 +1,4 @@
-const express = require('express');
+/* const express = require('express');
 const router = express.Router();
 const cors = require('cors');
 const { authController } = require('../../controllers/index.js');
@@ -16,3 +16,4 @@ router.post('/login', authController.login_post);
 router.get('/logout', authController.logout_get);
 
 module.exports = router;
+ */

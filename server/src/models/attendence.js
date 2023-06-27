@@ -1,8 +1,14 @@
 const mongoose = require('mongoose');
 
 const attendenceSchema = new mongoose.Schema({
-  gymID: { type: String, required: true },
-  userID: { type: String, required: true },
+  gymID: { 
+    type: String, 
+    required: true 
+  },
+  userID: { 
+    type: String, 
+    required: true 
+  },
   attendence: [
     {
       checkIN: {
