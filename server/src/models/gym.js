@@ -1,24 +1,34 @@
 const mongoose = require('mongoose');
 
 const gymSchema = new mongoose.Schema({
+  gymName: {
+    type: String,
+    required: true,
+  },
+  gymId: {
+    type: String,
+    required: true,
+  },
   name: {
     type: String,
     required: true,
   },
-  gym_id: {
+  email: {
+    type: String,
+    trim: true,
+    unique: true,
+    match: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+    required: true,
+  },
+  mobile: {
     type: Number,
     required: true,
   },
-  owner: {
+  password: {
     type: String,
+    minlength: 6,
     required: true,
   },
-  plans: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Plan',
-    },
-  ],
 });
 
 module.exports = mongoose.model('Gym', gymSchema);

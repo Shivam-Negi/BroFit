@@ -1,19 +1,15 @@
 const mongoose = require('mongoose');
 
 const userProfileSchema = new mongoose.Schema({
-  attendence: [
-    {
-      date: {
-        type: Date,
-        required: true,
-        expires: '30d',
-      },
-    },
-  ],
-  createdBy: {
+  gymID: {
     type: String,
     required: true,
   },
+  email: {
+    type: String,
+    required: true,
+  },
+
   profilePhoto: {
     type: String,
   },
