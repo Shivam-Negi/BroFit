@@ -9,7 +9,7 @@ const gymSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  name: {
+  owner: {
     type: String,
     required: true,
   },
@@ -22,13 +22,14 @@ const gymSchema = new mongoose.Schema({
   },
   mobile: {
     type: Number,
-    required: true,
+    // required: true,
   },
-  password: {
-    type: String,
-    minlength: 6,
-    required: true,
-  },
+  plans : [
+    {
+      type : mongoose.Schema.Types.ObjectId,
+      ref : 'Plan'
+    }
+  ]
 });
 
 module.exports = mongoose.model('Gym', gymSchema);
