@@ -1,10 +1,10 @@
-const CrudRepository = require('./crud-repository');
-const GymOwner = require('../models/gymOwner');
+// const CrudRepository = require('./crud-repository');
+// const GymOwner = require('../models/gymOwner');
 
-class GymOwnerRepository extends CrudRepository {
-    constructor() {
-        super(GymOwner);
-    }
-}
+// class GymOwnerRepository extends CrudRepository {
+//     constructor() {
+//         super(GymOwner);
+//     }
+// }
 
-module.exports = GymOwnerRepository;
+// module.exports = GymOwnerRepository;
