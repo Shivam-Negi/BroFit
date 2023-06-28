@@ -1,8 +1,7 @@
 const { StatusCodes } = require('http-status-codes');
-const {GymRepository} = require('../repositories');
+const { GymRepository } = require('../repositories');
 const gymRepository = new GymRepository();
-const AppError = require('../utils/errors/app-error')
-
+const AppError = require('../utils/errors/app-error');
 
 async function createGym(data) {
     try {
@@ -28,11 +27,11 @@ async function getGyms() {
 
 async function getGym(id) {
     try {
-        const gym = await gymRepository.get(id);
+        const gym = await gymRepository.getGymInfo(id);
         return gym;
         
     } catch (error) {
-        // console.log(error);
+        console.log(error);
         throw new AppError('', StatusCodes.INTERNAL_SERVER_ERROR);   
     }
 }

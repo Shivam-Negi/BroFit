@@ -29,6 +29,12 @@ const gymSchema = new mongoose.Schema({
       type : mongoose.Schema.Types.ObjectId,
       ref : 'Plan'
     }
+  ],
+  members : [
+    {
+      type : mongoose.Schema.Types.ObjectId,
+      ref : 'User'
+    }
   ]
 });
 

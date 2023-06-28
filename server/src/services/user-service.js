@@ -1,13 +1,19 @@
-const {UserRepository} = require('../repositories');
+const { UserRepository, GymRepository } = require('../repositories');
 const AppError = require('../utils/errors/app-error');
 const {StatusCodes} = require('http-status-codes')
 const { Auth } = require('../utils/common');
 
 const userRepository = new UserRepository();
+const gymRepository = new GymRepository();
 
 async function createUser(data) {
     try {
         const user = await userRepository.create(data);
+        console.log('user : ', user);
+        const gym = await gymRepository.findGym(data.gymId);
+        console.log('gym : ', gym);
+        gym.members.push(user);
+        await gym.save();
         return user;      
     } catch (error) {
         // console.log(error);

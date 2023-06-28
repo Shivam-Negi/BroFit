@@ -9,7 +9,7 @@ const gymRepository = new GymRepository();
 async function createPlan(data) {
     try {
         const plan = await planRepository.create(data);
-        const gym = await gymRepository.findGym(data.gym_id);
+        const gym = await gymRepository.findGym(data.gymId);
         gym.plans.push(plan);
         await gym.save();
         return plan;

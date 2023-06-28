@@ -5,7 +5,7 @@ const { UserService } = require("../services");
 const AppError = require("../utils/errors/app-error");
 
 function validateAuthRequest(req, res, next) {
-  console.log(req.body);
+  // console.log(req.body);
   if (!req.body.email) {
     errorResponse.message = "Something went wrong while authenticating user";
     errorResponse.error = new AppError(
