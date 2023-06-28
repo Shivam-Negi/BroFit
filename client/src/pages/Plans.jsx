@@ -1,15 +1,20 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { StyleSheetManager } from 'styled-components';
+import api from '../api/api';
 
 const Plans = () => {
   const [plans, setPlans] = useState([]);
 
   const getPlans = async () => {
-    const data = await fetch('http://localhost:7000/api/v1/gym/1');
-    const data1 = await data.json();
-    setPlans(data1.data.plans); // corrected variable name
-    console.log(data1.data.plans);
+    try {
+      const response = await api.get('/gym/1');
+      const data1 = response.data;
+      setPlans(data1.data.plans);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {
@@ -17,20 +22,24 @@ const Plans = () => {
   }, []);
 
   return (
-    <div className="flex flex-col justify-center items-center">
-      <Card>
-        <h1 className="text-3xl font-bold">Plans</h1>
-        {plans.map((plan) => (
-          <Card key={plan.id}>
-            <Link to={`/plan/${plan.id}`}>
-              <h1>{plan.name}</h1>
-              <p>{plan.price}</p>
-              <p>{plan.validity}</p>
-            </Link>
-          </Card>
-        ))}
-      </Card>
-    </div>
+    <StyleSheetManager>
+      <div className=" container flex flex-col justify-center items-center">
+        <Card>
+          <h1 className="text-3xl font-bold">Plans</h1>
+          {plans.map((plan) => (
+            <div key={plan.price}>
+              <Card>
+                <Link to={`/plan/${plan.id}`}>
+                  <h1>{plan.name}</h1>
+                  <p>{plan.price}</p>
+                  <p>{plan.validity}</p>
+                </Link>
+              </Card>
+            </div>
+          ))}
+        </Card>
+      </div>
+    </StyleSheetManager>
   );
 };
 

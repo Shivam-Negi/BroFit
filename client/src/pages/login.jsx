@@ -17,20 +17,20 @@ export default function Login() {
           password: data.password,
         }),
       });
-
       if (!response.ok) {
         throw new Error('Failed to login');
       }
-
       const responseData = await response.json();
       console.log(responseData);
+      const token = responseData.data;
+      localStorage.setItem('token', token);
     } catch (error) {
       console.error(error);
     }
   };
 
   return (
-    <div>
+    <div className="container">
       <form onSubmit={loginUser}>
         <input
           type="email"
