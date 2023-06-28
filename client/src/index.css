@@ -57,7 +57,7 @@ a {
 button {
   border-radius: 20px;
   border: 1px solid #e89211;
-  background-color: #e89211;
+  background-color: #e89211 !important;
   color: #ffffff;
   font-size: 12px;
   font-weight: bold;
