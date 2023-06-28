@@ -5,14 +5,14 @@ const userProfileSchema = new mongoose.Schema({
     type : mongoose.Schema.Types.ObjectId,
     ref : 'User',
   },
-  gymID: {
-    type: String,
-    required: true,
-  },
-  email: {
-    type: String,
-    required: true,
-  },
+  // gymID: {
+  //   type: String,
+  //   required: true,
+  // },
+  // email: {
+  //   type: String,
+  //   required: true,
+  // },
   
   profilePhoto: {
     type: String,

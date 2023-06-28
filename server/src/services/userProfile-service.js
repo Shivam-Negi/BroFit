@@ -6,6 +6,7 @@ const AppError = require('../utils/errors/app-error');
 
 async function createUserProfile(data) {
     try {
+        
         const userProfile = await userProfileRepository.create(data);
         return userProfile;
         

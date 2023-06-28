@@ -5,6 +5,7 @@ const { UserService } = require("../services");
 const AppError = require("../utils/errors/app-error");
 
 function validateAuthRequest(req, res, next) {
+  console.log(req.body);
   if (!req.body.email) {
     errorResponse.message = "Something went wrong while authenticating user";
     errorResponse.error = new AppError(
@@ -29,6 +30,7 @@ async function checkAuth(req, res, next) {
     const response = await UserService.isAuthenticated(
       req.headers["x-access-token"]
     );
+    console.log('response of check auth',response);
     if (response) {
       req.user = response; // setting the user id in the req object
       next();

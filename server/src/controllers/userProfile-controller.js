@@ -5,7 +5,12 @@ const { successResponse, errorResponse } = require('../utils/common');
 
 async function createUserProfile(req, res) {
     try {
-        const userProfile = await UserProfileService.createUserProfile(req.body);
+        console.log('req body content: ', req.body);
+        const userProfile = await UserProfileService.createUserProfile({
+            userId : req.user,
+            height : req.body.height,
+            weight : req.body.weight,
+        });
         successResponse.data = userProfile;
         return res.status(StatusCodes.CREATED).json(successResponse);
         
