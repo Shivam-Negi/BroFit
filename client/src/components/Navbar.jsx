@@ -1,7 +1,25 @@
 import { Link } from 'react-router-dom';
 import '../css/Navbar.css';
+import React, { useState, useEffect } from 'react';
+import Avatar from './Avatar';
 
 const Navbar = () => {
+  const [token, setToken] = useState(null);
+
+  useEffect(() => {
+    // Check if a token is present in local storage
+    const storedToken = localStorage.getItem('token');
+    if (storedToken) {
+      setToken(storedToken);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    // Clear the token from local storage and state
+    localStorage.removeItem('token');
+    setToken(null);
+  };
+
   let Links = [
     { name: 'Plans', link: '/plans' },
     { name: 'Attendace', link: '/attendance' },
@@ -31,10 +49,17 @@ const Navbar = () => {
           <div className="basis-1/4 ">
             <div className="md:flex flex-row justify-end md:ml-8 text-xl ">
               <div className="nav-login md:flex flex-row rounded-full md:items-center">
-                <img className=" md:m-1" src="src/assets/buddy.png" alt="" />
-                <Link className="md:mx-3" to={'/login'}>
-                  Login
-                </Link>
+                <Avatar />
+
+                {token ? (
+                  <button className="md:mx-3" onClick={handleLogout}>
+                    Logout
+                  </button>
+                ) : (
+                  <Link className="md:mx-3" to={'/login'}>
+                    Login
+                  </Link>
+                )}
               </div>
             </div>
           </div>

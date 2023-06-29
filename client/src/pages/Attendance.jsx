@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import TodayAttendance from '../components/todayAttendance';
 
 const Attendance = () => {
   const [attendance, setAttendance] = useState([]);
@@ -13,6 +14,7 @@ const Attendance = () => {
   return (
     <div className="flex flex-col justify-center items-center">
       <h1 className="text-3xl font-bold">Attendance</h1>
+      <TodayAttendance />
       <div>
         {attendance.map((attendance) => (
           <div
