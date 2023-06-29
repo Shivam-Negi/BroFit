@@ -4,6 +4,7 @@ import Users from './Users';
 import Attendance from './Attendance';
 import Plans from './Plans';
 import Login from './Login';
+import UserProfile from './UserProfile';
 
 const pages = () => {
   return (
@@ -13,6 +14,7 @@ const pages = () => {
       <Route path="/plans" element={<Plans />} />
       <Route path="/users" element={<Users />} />
       <Route path="/attendance" element={<Attendance />} />
+      <Route path="/users/:id" element={<UserProfile />} />
     </Routes>
   );
 };

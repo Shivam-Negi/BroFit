@@ -23,7 +23,7 @@ const CheckInUsers = () => {
           <div
             className="flex flex-row justify-start text-2xl items-center"
             key={user._id}>
-            <h1>{user.name}</h1>
+            <h1>⭕{user.name}</h1>
           </div>
           <hr />
         </div>

@@ -10,6 +10,6 @@ const getToken = () => {
 };
 
 // Set the default headers for each request
-api.defaults.headers.common['Authorization'] = `Bearer ${getToken()}`;
+api.defaults.headers.common['Authorization'] = getToken();
 
 export default api;

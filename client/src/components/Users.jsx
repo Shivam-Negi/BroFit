@@ -16,7 +16,7 @@ const Users = () => {
   }, []);
   return (
     <div className="plain-card w-full">
-      <h2 className=" font-bold text-2xl ">Users</h2>
+      <h2 className=" font-bold text-2xl ">All Users</h2>
       <hr />
       <div className="flex flex-col  ">
         {users.map((user) => (
