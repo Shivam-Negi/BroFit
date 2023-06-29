@@ -6,14 +6,12 @@ const AppError = require('../utils/errors/app-error');
 
 async function createUserProfile(data) {
     try {
-        
         const userProfile = await userProfileRepository.create(data);
         return userProfile;
         
     } catch (error) {
-        // console.log(error);
-        throw new AppError('', StatusCodes.INTERNAL_SERVER_ERROR);
-        
+        console.log(error);
+        throw new AppError('', StatusCodes.INTERNAL_SERVER_ERROR);       
     }
 }
 
