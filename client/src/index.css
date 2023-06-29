@@ -9,11 +9,20 @@ body {
   color: #ffffff;
   font-family: 'Poppins', sans-serif;
 }
+
+* {
+  box-sizing: border-box;
+}
+
 .container {
   max-width: 1500px;
   margin: auto;
 }
 
-* {
-  box-sizing: border-box;
+.plain-card {
+  background-color: #ffffff;
+  color: #000000;
+  border-radius: 1rem;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
 }

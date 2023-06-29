@@ -1,10 +1,5 @@
 import { Link } from 'react-router-dom';
-import CapsuleButton from './CapsuleButton';
 import '../css/Navbar.css';
-
-const handleClick = () => {
-  console.log('Button clicked');
-};
 
 const Navbar = () => {
   let Links = [
@@ -34,14 +29,13 @@ const Navbar = () => {
           </div>
 
           <div className="basis-1/4 ">
-            <div className="md:flex flex-row justify-end md:ml-8 text-xl">
-              <Link to={'/login'}>
-                <CapsuleButton
-                  text="Login"
-                  onClick={handleClick}
-                  color="#ffffff"
-                />
-              </Link>
+            <div className="md:flex flex-row justify-end md:ml-8 text-xl ">
+              <div className="nav-login md:flex flex-row rounded-full md:items-center">
+                <img className=" md:m-1" src="src/assets/buddy.png" alt="" />
+                <Link className="md:mx-3" to={'/login'}>
+                  Login
+                </Link>
+              </div>
             </div>
           </div>
         </div>
