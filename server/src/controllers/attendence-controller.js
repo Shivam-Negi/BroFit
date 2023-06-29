@@ -15,14 +15,13 @@ async function createAttendence(req, res) {
             {
                 userId : req.user,
                 checkIn : req.body.checkIn,
-                day : req.body.day,
                 checkOut : req.body.checkOut,
             }
         );
         // console.log(attendence._id);
         console.log(req.user);
         const userprofile = await UserProfileService.getUserProfileByUserId(req.user);
-        console.log(userprofile);
+        // console.log(userprofile);
         userprofile.attendence.push(attendence._id);
         await userprofile.save();
         successResponse.data = attendence;
