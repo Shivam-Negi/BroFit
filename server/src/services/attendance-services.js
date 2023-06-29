@@ -1,7 +1,8 @@
 const { StatusCodes } = require("http-status-codes");
-const { AttendanceRepository, UserRepository } = require("../repositories");
+const { AttendanceRepository, UserRepository, UserProfileRepository } = require("../repositories");
 const attendanceRepository = new AttendanceRepository();
 const userRepository = new UserRepository();
+const userProfileRepository = new UserProfileRepository();
 const AppError = require("../utils/errors/app-error");
 
 async function createAttendance(data) {
@@ -13,6 +14,11 @@ async function createAttendance(data) {
       checkIn: data.checkIn,
       checkOut: data.checkOut,
     });
+    // console.log(attendance);
+    const userProfile = await userProfileRepository.getUserProfileByUserId(data.userId);
+    // console.log(userProfile);
+    userProfile.attendance.push(attendance._id);
+    await userProfile.save();
     // console.log(attendance);
     return attendance;
   } catch (error) {

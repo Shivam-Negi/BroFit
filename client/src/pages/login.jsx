@@ -3,6 +3,7 @@ import { useState } from 'react';
 import '../css/CapsuleButton.css';
 
 export default function Login() {
+  // Login Logic
   const [isSignUpActive, setIsSignUpActive] = useState(false);
 
   const handleSignUpClick = () => {
@@ -39,6 +40,47 @@ export default function Login() {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  // signup logic
+
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+  });
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    fetch('http://localhost:7000/api/v1/user/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // Handle the response from the server
+        console.log(data); // Log the response data
+        // Reset the form fields
+        setFormData({
+          firstName: '',
+          lastName: '',
+          email: '',
+          password: '',
+        });
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
   };
 
   return (

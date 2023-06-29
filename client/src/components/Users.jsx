@@ -15,20 +15,22 @@ const Users = () => {
     getPlans();
   }, []);
   return (
-    <div className="plain-card">
-      <h2 className=" font-bold text-2xl ">Checked-In Users</h2>
+    <div className="plain-card w-full">
+      <h2 className=" font-bold text-2xl ">All Users</h2>
       <hr />
       <div className="flex flex-col  ">
         {users.map((user) => (
-          <div
-            className="flex flex-row justify-start items-center"
-            key={user._id}>
-            <h1>
-              <Link className="  text-2xl " to={`/users/${user._id}`}>
-                {user.name}
-              </Link>
-              <hr />
-            </h1>
+          <div>
+            <div
+              className="flex flex-row justify-start items-center"
+              key={user._id}>
+              <h1>
+                <Link className="  text-2xl " to={`/users/${user._id}`}>
+                  {user.name}
+                </Link>
+              </h1>
+            </div>
+            <hr />
           </div>
         ))}
       </div>
