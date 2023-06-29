@@ -4,16 +4,7 @@ const userProfileSchema = new mongoose.Schema({
   userId : {
     type : mongoose.Schema.Types.ObjectId,
     ref : 'User',
-  },
-  // gymID: {
-  //   type: String,
-  //   required: true,
-  // },
-  // email: {
-  //   type: String,
-  //   required: true,
-  // },
-  
+  }, 
   profilePhoto: {
     type: String,
   },
@@ -23,8 +14,16 @@ const userProfileSchema = new mongoose.Schema({
   height: {
     type: Number,
   },
+  plan : {
+    type : mongoose.Schema.Types.ObjectId,
+    ref : 'Plan'
+  },
+  attendence: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref : 'Attendence' 
+    }
+  ]
 });
 
-const UserProfile = mongoose.model('UserProfile', userProfileSchema);
-
-module.exports = UserProfile;
+module.exports = mongoose.model('UserProfile', userProfileSchema);

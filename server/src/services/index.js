@@ -3,4 +3,5 @@ module.exports = {
   UserService: require('./user-service'),
   PlanService: require('./plan-service'),
   UserProfileService: require('./userProfile-service'),
+  AttendenceService : require('./attendence-services'),
 };

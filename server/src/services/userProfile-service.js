@@ -6,14 +6,12 @@ const AppError = require('../utils/errors/app-error');
 
 async function createUserProfile(data) {
     try {
-        
         const userProfile = await userProfileRepository.create(data);
         return userProfile;
         
     } catch (error) {
-        // console.log(error);
-        throw new AppError('', StatusCodes.INTERNAL_SERVER_ERROR);
-        
+        console.log(error);
+        throw new AppError('', StatusCodes.INTERNAL_SERVER_ERROR);       
     }
 }
 
@@ -29,7 +27,8 @@ async function getUserProfiles() {
 
 async function getUserProfile(id) {
     try {
-        const userProfile = await userProfileRepository.get(id);
+        const userProfile = await userProfileRepository.getUserProfileInfo(id);
+        // console.log(userProfile);
         return userProfile;
     } catch (error) {
         // console.log(error);
@@ -56,6 +55,15 @@ async function deleteUserProfile(id) {
         throw new AppError('', StatusCodes.INTERNAL_SERVER_ERROR);   
     }
 }
+async function getUserProfileByUserId(id) {
+    try {
+        const userProfile = await userProfileRepository.getUserProfileByUserId(id);
+        return userProfile;
+    } catch (error) {
+        // console.log(error);
+        throw new AppError('', StatusCodes.INTERNAL_SERVER_ERROR);   
+    }
+}
 
 module.exports = {
     createUserProfile,
@@ -63,4 +71,5 @@ module.exports = {
     getUserProfile,
     updateUserProfile,
     deleteUserProfile,
+    getUserProfileByUserId,
 }
