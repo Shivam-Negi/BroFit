@@ -13,7 +13,8 @@ const attendenceSchema = new mongoose.Schema({
     type : String,
   },
   day : {
-    type : String,
+    type : Date,
+    default : () => new Date()
   },
   checkOut : {
     type : String,

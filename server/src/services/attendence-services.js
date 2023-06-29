@@ -13,7 +13,6 @@ async function createAttendence(data) {
             {
                 gymId : user.gymId,
                 checkIn : data.checkIn,
-                day : data.checkIn,
                 checkOut : data.checkOut,
             }
         );
