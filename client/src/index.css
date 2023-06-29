@@ -5,7 +5,24 @@
 @tailwind utilities;
 
 body {
-  background-color: #e5e5f7;
-  color: #000000;
+  background-color: #000000;
+  color: #ffffff;
   font-family: 'Poppins', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.container {
+  max-width: 1500px;
+  margin: auto;
+}
+
+.plain-card {
+  background-color: #ffffff;
+  color: #000000;
+  border-radius: 1rem;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
 }
