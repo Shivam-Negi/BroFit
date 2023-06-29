@@ -1,5 +1,5 @@
 const { StatusCodes } = require("http-status-codes");
-const { AttendanceService, UserProfileService } = require("../services");
+const { AttendanceService } = require("../services");
 const { successResponse, errorResponse } = require("../utils/common");
 
 async function createAttendance(req, res) {
@@ -10,12 +10,6 @@ async function createAttendance(req, res) {
       checkIn: req.body.checkIn,
       checkOut: req.body.checkOut,
     });
-    const userprofile = await UserProfileService.getUserProfileByUserId(
-      req.user
-    );
-    console.log(userprofile);
-    userprofile.attendance.push(attendance._id);
-    await userprofile.save();
     successResponse.data = attendance;
     return res.status(StatusCodes.CREATED).json(successResponse);
   } catch (error) {
