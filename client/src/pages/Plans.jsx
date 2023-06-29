@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useFetcher } from 'react-router-dom';
 import { StyleSheetManager } from 'styled-components';
 import api from '../api/api';
 
@@ -9,7 +9,7 @@ const Plans = () => {
 
   const getPlans = async () => {
     try {
-      const response = await api.get('/gym/1');
+      const response = await fetch('http://localhost:7000/api/v1/gym/1');
       const data1 = response.data;
       setPlans(data1.data.plans);
     } catch (error) {
@@ -21,9 +21,18 @@ const Plans = () => {
     getPlans();
   }, []);
 
+  const Delete = async (planId) => {
+    try {
+      await api.delete(`http://localhost:7000/api/v1/plan/${planId}`);
+      getPlans();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <StyleSheetManager>
-      <div className=" container flex flex-col justify-center items-center">
+      <div className="container flex flex-col justify-center items-center">
         <Card>
           <h1 className="text-3xl font-bold">Plans</h1>
           {plans.map((plan) => (
@@ -34,6 +43,10 @@ const Plans = () => {
                   <p>{plan.price}</p>
                   <p>{plan.validity}</p>
                 </Link>
+                <ButtonContainer>
+                  <Button onClick={() => Delete(plan.id)}> Delete</Button>
+                  <Button as={Link} to={`/plan/${plan.id}/edit`}> Update</Button>
+                </ButtonContainer>
               </Card>
             </div>
           ))}
@@ -65,6 +78,30 @@ const Card = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+  h1 {
+    color: black;
+  }
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+  background color:green;
+`;
+
+const Button = styled.button`
+  background: white;
+  color: blue;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+
+  &:hover {
+    background: yellow;
   }
 `;
 
