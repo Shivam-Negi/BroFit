@@ -9,7 +9,7 @@ const attendenceRouter = require('./attendence-routes');
 
 router.use('/gym', gymRouter);
 router.use('/user', userRouter);
-router.use('/userprofile', userProfileRouter);
+router.use('/userProfile', userProfileRouter);
 router.use('/plan', planRouter);
 router.use('/attendence',attendenceRouter);
 // router.use('/', authRouter);
