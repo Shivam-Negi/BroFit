@@ -1,32 +1,25 @@
 const mongoose = require('mongoose');
 
 const attendenceSchema = new mongoose.Schema({
-  gymID: { 
-    type: String, 
-    required: true 
+  gymId: { 
+    type: String,  
   },
-  userID: { 
-    type: String, 
-    required: true 
+  // userId: { 
+  //   type: mongoose.Schema.Types.ObjectId, 
+  //   ref : 'User', 
+  // },
+  // 
+  checkIn : {
+    type : String,
   },
-  attendence: [
-    {
-      checkIN: {
-        type: Date,
-        required: true,
-      },
-      date: {
-        type: Date,
-        required: true,
-        expires: '365d',
-      },
-      checkOut: {
-        type: Date,
-      },
-    },
-  ],
+  day : {
+    type : String,
+  },
+  checkOut : {
+    type : String,
+  }
 });
 
-const attendence = mongoose.model('attendence', attendenceSchema);
+const attendence = mongoose.model('Attendence', attendenceSchema);
 
 module.exports = attendence;

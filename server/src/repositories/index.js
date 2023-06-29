@@ -3,4 +3,5 @@ module.exports = {
   UserRepository: require('./user-repository'),
   PlanRepository: require('./plan-repository'),
   UserProfileRepository: require('./userProfile-repository'),
+  AttendenceRepository: require('./attendence-repository'),
 };

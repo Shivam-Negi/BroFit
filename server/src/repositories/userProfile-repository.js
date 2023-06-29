@@ -6,6 +6,21 @@ class UserProfileRepository extends CrudRepository{
     constructor() {
         super(UserProfile);
     }
+
+    async getUserProfileInfo(id) {
+
+        const userProfile = await UserProfile.findOne({ _id: id }).populate('attendence');
+        return userProfile;
+        
+    }
+    async getUserProfileByUserId(data){
+        const userProfile = await UserProfile.findOne(
+            {
+               userId : data 
+            }
+        );
+        return userProfile;
+    }
 }
 
 module.exports = UserProfileRepository;

@@ -23,8 +23,15 @@ const userProfileSchema = new mongoose.Schema({
   height: {
     type: Number,
   },
+  attendence:[
+    {
+    
+    type: mongoose.Schema.Types.ObjectId,
+    ref : 'Attendence' 
+  }
+]
 });
 
-const UserProfile = mongoose.model('UserProfile', userProfileSchema);
+module.exports = mongoose.model('UserProfile', userProfileSchema);
 
-module.exports = UserProfile;
+// module.exports = UserProfile;
