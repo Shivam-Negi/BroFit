@@ -10,7 +10,7 @@ async function createUserProfile(data) {
         return userProfile;
         
     } catch (error) {
-        console.log(error);
+        // console.log(error);
         throw new AppError('', StatusCodes.INTERNAL_SERVER_ERROR);       
     }
 }

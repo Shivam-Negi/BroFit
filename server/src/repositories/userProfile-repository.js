@@ -7,22 +7,24 @@ class UserProfileRepository extends CrudRepository {
   }
 
   async getUserProfileInfo(id) {
-    const userProfile = await UserProfile.findOne({ _id: id })
+    const userProfile = await UserProfile.findOne({ userId : id })
       .populate("attendance")
       .populate({
         path: "plan",
         select: "plan validity -_id",
-      })
-      .populate({
-        path: "userId",
-        select: "name email -_id",
       });
+      // console.log(userProfile);
+      // .populate({
+      //   path: "userId",
+      //   select: "name email -_id",
+      // });
     return userProfile;
   }
   async getUserProfileByUserId(data) {
     const userProfile = await UserProfile.findOne({
       userId: data,
     });
+    // console.log(userProfile);
     return userProfile;
   }
 }

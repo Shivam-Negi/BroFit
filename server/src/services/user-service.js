@@ -1,6 +1,7 @@
 const { UserRepository, GymRepository } = require('../repositories');
 const AppError = require('../utils/errors/app-error');
 const { StatusCodes } = require('http-status-codes');
+// const jwt = require('jsonwebtoken');
 const { Auth } = require('../utils/common');
 
 const { serverConfig, Mailer } = require('../config')
@@ -93,14 +94,12 @@ async function isAuthenticated(token) {
     }
     return user._id;
   } catch (error) {
-    if (error instanceof AppError) throw error;
-    if (error.name == 'JsonWebTokenError') {
+    if (error.name === 'JsonWebTokenError') {
       throw new AppError('Invalid JWT token', StatusCodes.BAD_REQUEST);
     }
-    if (error.name == 'TokenExpiredError') {
+    if (error.name === 'TokenExpiredError') {
       throw new AppError('JWT token expired', StatusCodes.BAD_REQUEST);
     }
-    console.log(error);
     throw new AppError(
       'Something went wrong',
       StatusCodes.INTERNAL_SERVER_ERROR
