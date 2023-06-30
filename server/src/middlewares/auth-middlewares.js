@@ -36,7 +36,8 @@ async function checkAuth(req, res, next) {
       next();
     }
   } catch (error) {
-    return res.status(error.statusCode).json(error);
+    errorResponse.error = error;
+    return res.status(error.statusCode).json(errorResponse);
   }
 }
 
