@@ -15,6 +15,7 @@ async function createAttendance(data) {
       checkOut: data.checkOut,
     });
     // console.log(attendance);
+    // console.log(data.userId);
     const userProfile = await userProfileRepository.getUserProfileByUserId(data.userId);
     // console.log(userProfile);
     userProfile.attendance.push(attendance._id);
@@ -54,7 +55,7 @@ async function getAttendance(id) {
     const attendance = await attendanceRepository.getAttendanceByGymId(id);
     return attendance;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     throw new AppError("", StatusCodes.INTERNAL_SERVER_ERROR);
   }
 }
