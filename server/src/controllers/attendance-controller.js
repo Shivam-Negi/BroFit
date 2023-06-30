@@ -19,32 +19,6 @@ async function createAttendance(req, res) {
   }
 }
 
-// async function dailyAttendance(req, res) {
-//     try {
-//         const attendanceInfoData = {
-//             id : req.user,
-//             attendanceInfo : {
-//                 checkIn : req.body.checkIn,
-//                 date : req.body.date,
-//                 checkOut : req.body.checkOut
-//             }
-//         }
-//         // console.log(attendanceInfoData);
-//         const attendance = await AttendanceService.dailyAttendance(attendanceInfoData);
-//         const userProfile = await UserProfileService.getUserProfileByUserId(req.user);
-//         // console.log(attendance.attendance);
-//         let data = attendance.attendance;
-//         userProfile.attendance.push(data[data.length-1]._id);
-//         await userProfile.save();
-//         successResponse.data = attendance.attendance;
-//         return res.status(StatusCodes.OK).json(successResponse);
-//     } catch (error) {
-//         // console.log(error);
-//         errorResponse.error = error;
-//         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse);
-//     }
-// }
-
 async function getAllAttendance(req, res) {
   try {
     const attendance = await AttendanceService.getAllAttendance();
