@@ -1,3 +1,4 @@
+import React from 'react';
 import Users from '../components/Users';
 import CheckInUsers from '../components/CheckInUsers';
 import Lottie from 'lottie-react';

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Loading from '../components/Loading';
 import DayExtractor from '../components/DayExtractor';
@@ -13,7 +13,7 @@ const UserProfile = () => {
   const getUser = async () => {
     try {
       const response = await fetch(
-        'http://localhost:7000/api/v1/userProfile/649d42bae4725758f20ad339',
+        `http://localhost:7000/api/v1/userProfile/${id}`,
         {
           headers: {
             'x-access-token': token,

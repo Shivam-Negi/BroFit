@@ -30,6 +30,9 @@ const Plans = () => {
     }
   };
 
+  // const Update = async (planId) => {
+  //   try {
+
   return (
     <div className="container ">
       <div className="plain-card">
