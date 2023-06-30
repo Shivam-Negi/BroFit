@@ -27,17 +27,17 @@ const Attendance = () => {
   }, []);
 
   return (
-    <div className="flex flex-col justify-center items-center">
+    <div className="container md:px-10 px-7">
       <h1 className="text-3xl font-bold">Attendance</h1>
-      <TodayAttendance />
-      <div>
+      {/* <TodayAttendance /> */}
+      <div className=" md:flex flex-row gap-2">
         {attendance.map((attendance) => (
-          <div
-            className="flex flex-row justify-center items-center"
-            key={attendance._id}>
-            <h1>{attendance.checkIn}</h1>
-            <h1>{attendance.checkOut}</h1>
-            <h1>{attendance.day}</h1>
+          <div key={attendance._id}>
+            <div className="plain-card">
+              <h1>{attendance.checkIn}</h1>
+              <h1>{attendance.checkOut}</h1>
+              <h1>{attendance.day}</h1>
+            </div>
           </div>
         ))}
       </div>
