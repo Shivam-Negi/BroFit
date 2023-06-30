@@ -1,30 +1,30 @@
-const express = require("express");
-const { AttendanceController } = require("../../controllers");
+const express = require('express');
+const { AttendanceController } = require('../../controllers');
 const router = express.Router();
-const { AuthMiddlewares } = require("../../middlewares");
+const { AuthMiddlewares } = require('../../middlewares');
 
 router.get(
-  "/",
+  '/',
   AuthMiddlewares.checkAuth,
   AttendanceController.getAllAttendance
 );
 router.post(
-  "/",
+  '/',
   AuthMiddlewares.checkAuth,
   AttendanceController.createAttendance
 );
 router.get(
-  "/:id",
+  '/:id',
   AuthMiddlewares.checkAuth,
   AttendanceController.getAttendance
 );
 router.patch(
-  "/:id",
+  '/:id',
   AuthMiddlewares.checkAuth,
   AttendanceController.updateAttendance
 );
 router.delete(
-  "/:id",
+  '/:id',
   AuthMiddlewares.checkAuth,
   AttendanceController.deleteAttendance
 );

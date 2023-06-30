@@ -1,9 +1,12 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import '../css/CapsuleButton.css';
 
 export default function Login() {
-  // Login Logic
+  // Animation and page switch Logic
+  const navigate = useNavigate();
+
   const [isSignUpActive, setIsSignUpActive] = useState(false);
 
   const handleSignUpClick = () => {
@@ -14,6 +17,7 @@ export default function Login() {
     setIsSignUpActive(false);
   };
 
+  // SignIn logic
   const [data, setData] = useState({ email: '', password: '' });
 
   const loginUser = async (e) => {
@@ -37,50 +41,46 @@ export default function Login() {
       console.log(responseData);
       const token = responseData.data;
       localStorage.setItem('token', token);
+      navigate('/');
     } catch (error) {
       console.error(error);
     }
   };
 
-  // signup logic
-
+  // SignUp Logic
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
+    name: '',
     email: '',
     password: '',
+    GymId: '',
   });
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setFormData({ ...formData, [name]: value });
-  };
+  const handleSignup = async (e) => {
+    e.preventDefault();
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    fetch('http://localhost:7000/api/v1/user/signup', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // Handle the response from the server
-        console.log(data); // Log the response data
-        // Reset the form fields
-        setFormData({
-          firstName: '',
-          lastName: '',
-          email: '',
-          password: '',
-        });
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
+    try {
+      const resSignup = await fetch(
+        'http://localhost:7000/api/v1/user/signup',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name: formData.name,
+            email: formData.email,
+            password: formData.password,
+            gymId: formData.gymId,
+          }),
+        }
+      );
+      if (!resSignup.ok) {
+        throw new Error('Failed to login');
+      }
+      navigate('/login');
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -98,7 +98,7 @@ export default function Login() {
                 ? 'sign-up-main-container'
                 : 'sign-in-main-container'
             }`}>
-            <form onSubmit={loginUser}>
+            <form onSubmit={isSignUpActive ? handleSignup : loginUser}>
               <h1>{isSignUpActive ? 'Create Account' : 'Sign in'}</h1>
               <div className="public-main-container">
                 <a href="#" className="public">
@@ -117,21 +117,49 @@ export default function Login() {
                   : 'or use your own credentials'}
               </span>
               {isSignUpActive && (
-                <input type="text" name="name" placeholder="Name" />
+                <>
+                  <input
+                    type="name"
+                    name="name"
+                    placeholder="Name"
+                    value={formData.name}
+                    onChange={(e) =>
+                      setFormData({ ...formData, name: e.target.value })
+                    }
+                  />
+                  <input
+                    type="text"
+                    name="gymId"
+                    placeholder="GymID"
+                    value={formData.gymId}
+                    onChange={(e) =>
+                      setFormData({ ...formData, gymId: e.target.value })
+                    }
+                  />
+                </>
               )}
               <input
                 type="email"
                 name="email"
+                value={isSignUpActive ? formData.email : data.email}
                 placeholder="Email"
-                value={data.email}
-                onChange={(e) => setData({ ...data, email: e.target.value })}
+                onChange={(e) =>
+                  isSignUpActive
+                    ? setFormData({ ...formData, email: e.target.value })
+                    : setData({ ...data, email: e.target.value })
+                }
               />
+
               <input
                 type="password"
                 name="password"
                 placeholder="Password"
-                value={data.password}
-                onChange={(e) => setData({ ...data, password: e.target.value })}
+                value={isSignUpActive ? formData.password : data.password}
+                onChange={(e) =>
+                  isSignUpActive
+                    ? setFormData({ ...formData, password: e.target.value })
+                    : setData({ ...data, password: e.target.value })
+                }
               />
               {isSignUpActive ? (
                 <button type="submit">Sign Up</button>
