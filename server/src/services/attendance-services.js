@@ -4,15 +4,15 @@ const attendanceRepository = new AttendanceRepository();
 const userRepository = new UserRepository();
 const userProfileRepository = new UserProfileRepository();
 const AppError = require("../utils/errors/app-error");
+const { checkInTime } = require("../utils/helpers/datetime-helpers");
 
 async function createAttendance(data) {
   try {
+    // console.log(data);
     const user = await userRepository.get(data.userId);
     // console.log(data);
     const attendance = await attendanceRepository.create({
       gymId: user.gymId,
-      checkIn: data.checkIn,
-      checkOut: data.checkOut,
     });
     // console.log(attendance);
     // console.log(data.userId);
@@ -60,9 +60,16 @@ async function getAttendance(id) {
   }
 }
 
-async function updateAttendance(id, data) {
+async function updateAttendance(id) {
   try {
-    const attendance = await attendanceRepository.update(id, data);
+    const userProfile = await userProfileRepository.getUserProfileByUserId(id);
+    let attendanceArray = userProfile.attendance;
+    const attendanceId = attendanceArray[attendanceArray.length-1];
+    const data = {
+      checkOut : checkInTime(),
+      status : 'OUT'
+    }
+    const attendance = await attendanceRepository.update(attendanceId, data);
     return attendance;
   } catch (error) {
     // console.log(error);

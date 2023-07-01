@@ -7,8 +7,6 @@ async function createAttendance(req, res) {
     // console.log(req.user);
     const attendance = await AttendanceService.createAttendance({
       userId: req.user,
-      checkIn: req.body.checkIn,
-      checkOut: req.body.checkOut,
     });
     successResponse.data = attendance;
     return res.status(StatusCodes.CREATED).json(successResponse);
@@ -44,7 +42,6 @@ async function updateAttendance(req, res) {
   try {
     const attendance = await AttendanceService.updateAttendance(
       req.params.id,
-      req.body
     );
     successResponse.data = attendance;
     return res.status(StatusCodes.OK).json(successResponse);
