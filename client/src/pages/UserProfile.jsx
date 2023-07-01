@@ -27,6 +27,7 @@ const UserProfile = () => {
       );
       const responseData = await response.json();
       setUser(responseData.data);
+      console.log(responseData);
     } catch (error) {
       console.error(error);
     }
@@ -69,8 +70,8 @@ const UserProfile = () => {
           <h1>{user.userId.name}</h1>
           <h1>{user.userId.email}</h1>
           <hr />
-          <h1 className="text-left">height: {user.weight}</h1>
-          <h1 className="text-left">weight: {user.weight}</h1>
+          <h1 className="text-left">Height: {user.weight}</h1>
+          <h1 className="text-left">Weight: {user.weight}</h1>
           <h1 className="text-left">Plan: {user.plan.plan}</h1>
         </div>
         <div className="plain-card">
@@ -85,7 +86,7 @@ const UserProfile = () => {
             </div>
           ))}
         </div>
-        <div className="plain-card">
+        <div className="basis-1/2 plain-card w-full">
           <div ref={calendarRef}></div>
         </div>
       </div>
