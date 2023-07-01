@@ -35,11 +35,11 @@ async function getUserProfiles(req, res) {
 async function getUserProfile(req, res) {
     try {
         const userProfile = await UserProfileService.getUserProfile(req.params.id);
-        // console.log(userProfile);
+        //  console.log(userProfile);
         successResponse.data = userProfile;
         return res.status(StatusCodes.OK).json(successResponse);
     } catch (error) {
-        // console.log(error);
+         console.log(error);
         errorResponse.error = error;
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse);
         

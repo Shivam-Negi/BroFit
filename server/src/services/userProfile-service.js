@@ -28,7 +28,7 @@ async function getUserProfiles() {
 async function getUserProfile(id) {
     try {
         const userProfile = await userProfileRepository.getUserProfileInfo(id);
-        // console.log(userProfile);
+        //  console.log(userProfile);
         return userProfile;
     } catch (error) {
         // console.log(error);
