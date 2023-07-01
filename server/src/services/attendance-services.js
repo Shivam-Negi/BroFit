@@ -86,6 +86,25 @@ async function deleteAttendance(id) {
     throw new AppError("", StatusCodes.INTERNAL_SERVER_ERROR);
   }
 }
+async function getAttendanceByUserId(id) {
+   try {
+    const userProfile = await userProfileRepository.getUserProfileByUserId(id);
+    // console.log(userProfile.attendance.length);
+    if(userProfile.attendance.length === 0){
+      // console.log('inside if ');
+      return false;
+    }
+    // console.log('outside if');
+    let attendanceArray = userProfile.attendance;
+    const attendanceId = attendanceArray[attendanceArray.length-1];
+    const attendance = await attendanceRepository.get(attendanceId);
+    return attendance.day.split('-')[0];
+   } catch (error) {
+    console.log(error);
+    throw new AppError("", StatusCodes.INTERNAL_SERVER_ERROR);
+    
+   }
+}
 
 module.exports = {
   getAllAttendance,
@@ -93,5 +112,6 @@ module.exports = {
   createAttendance,
   updateAttendance,
   deleteAttendance,
+  getAttendanceByUserId,
   // dailyAttendance,
 };

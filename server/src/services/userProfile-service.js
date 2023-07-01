@@ -65,6 +65,7 @@ async function getUserProfileByUserId(id) {
     }
 }
 
+
 module.exports = {
     createUserProfile,
     getUserProfiles,
