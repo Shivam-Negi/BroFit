@@ -11,15 +11,18 @@ router.post('/signup', AuthMiddlewares.validateAuthRequest,
 
 router.post('/signin',
                 AuthMiddlewares.validateAuthRequest,
-                UserController.signinWithRole('user'));
+                AuthMiddlewares.verifyRole('user'),
+                UserController.signin);
 
 router.post('/signin/owner',
                 AuthMiddlewares.validateAuthRequest,
-                UserController.signinWithRole('owner'));
+                AuthMiddlewares.verifyRole('owner'),
+                UserController.signin);
 
 router.post('/signin/admin',
                 AuthMiddlewares.validateAuthRequest,
-                UserController.signinWithRole('admin'));
+                AuthMiddlewares.verifyRole('admin'),
+                UserController.signin);
 
 
 module.exports = router;    
