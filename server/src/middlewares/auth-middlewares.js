@@ -50,8 +50,22 @@ async function isAdmin(req, res, next) {
   next();
 }
 
+function checkRole(role) {
+   return async function(req, res, next) {
+    const userId = req.user;
+    const response = await UserService.getUserByUserId(userId);
+    if(!role.includes(response.role)){
+      return res
+       .status(StatusCodes.UNAUTHORIZED)
+       .json({ message: "User not authorized to access this route" });
+    }
+    next();
+   }
+}
+
 module.exports = {
   validateAuthRequest,
   checkAuth,
   isAdmin,
+  checkRole,
 };

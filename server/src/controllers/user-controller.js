@@ -39,6 +39,7 @@ async function createUser(req, res) {    // signup
             password : req.body.password,
             name : req.body.name,
             gymId : req.body.gymId,
+            role : req.body.role, // just to test if it works // here we will only provide gymOwner role
         });
         successResponse.data = user;
         return res
@@ -55,26 +56,46 @@ async function createUser(req, res) {    // signup
     }
 }
 
-async function signin(req, res) {
-    try {
+// async function signin(req,role, res) {
+//     try {
+//         console.log(res.body);
+//         const user = await UserService.signin({
+//             email: req.body.email,
+//             password: req.body.password,
+//             role : role, 
+//         });
+//         // console.log(user);
+//         successResponse.data = user;
+//         return res
+//                 .status(StatusCodes.CREATED)
+//                 .json(successResponse);
+//     } catch (error) {
+//         console.log(error)
+//         errorResponse.error = error;
+//         return res
+//                 .status(error.statusCode)
+//                 .json(errorResponse);
+//     }
+// }
+function signinWithRole(role) {
+    return async function (req, res) {
+      try {
         console.log(res.body);
         const user = await UserService.signin({
-            email: req.body.email,
-            password: req.body.password
+          email: req.body.email,
+          password: req.body.password,
+          role: role,
         });
         // console.log(user);
         successResponse.data = user;
-        return res
-                .status(StatusCodes.CREATED)
-                .json(successResponse);
-    } catch (error) {
-        console.log(error)
+        return res.status(StatusCodes.CREATED).json(successResponse);
+      } catch (error) {
+        // console.log(error);
         errorResponse.error = error;
-        return res
-                .status(error.statusCode)
-                .json(errorResponse);
-    }
-}
+        return res.status(error.statusCode).json(errorResponse);
+      }
+    };
+  }
 
 async function addRoleToUser(req, res) {
     try {
@@ -98,6 +119,7 @@ async function addRoleToUser(req, res) {
 module.exports = {
     getUser,
     createUser,
-    signin,
-    addRoleToUser
+    // signin,
+    addRoleToUser,
+    signinWithRole,
 }
