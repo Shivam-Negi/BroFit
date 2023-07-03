@@ -22,6 +22,13 @@ class GymRepository extends CrudRepository {
         return gym;
     }
 
+    async getGymGraph(id) {
+        const gym = await Gym.findOne({
+            gymId : id
+        });
+        return gym.liveGraph;
+    }
+
     async updateByGymId(id, data) {
         try {
             const result = await Gym.updateOne({
