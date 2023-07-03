@@ -27,19 +27,21 @@ const Attendance = () => {
   }, []);
 
   return (
-    <div className="container md:px-10 px-7">
-      <h1 className="text-3xl font-bold">Attendance</h1>
-      {/* <TodayAttendance /> */}
-      <div className=" md:flex flex-row gap-2">
-        {attendance.map((attendance) => (
-          <div key={attendance._id}>
-            <div className="plain-card">
-              <h1>{attendance.checkIn}</h1>
-              <h1>{attendance.checkOut}</h1>
-              <h1>{attendance.day}</h1>
+    <div className="md:px-10 px-7 ">
+      <div className="container ">
+        <h1 className="text-3xl font-bold">Attendance</h1>
+        {/* <TodayAttendance /> */}
+        <div className=" md:flex flex-row gap-2">
+          {attendance.map((attendance) => (
+            <div key={attendance._id}>
+              <div className="plain-card">
+                <h1>{attendance.checkIn}</h1>
+                <h1>{attendance.checkOut}</h1>
+                <h1>{attendance.day}</h1>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );

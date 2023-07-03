@@ -77,7 +77,7 @@ export default function Login() {
       if (!resSignup.ok) {
         throw new Error('Failed to login');
       }
-      navigate('/login');
+      navigate('/');
     } catch (error) {
       console.error(error);
     }

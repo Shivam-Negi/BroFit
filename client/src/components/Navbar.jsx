@@ -49,8 +49,8 @@ const Navbar = () => {
           </div>
 
           <div className="basis-1/4 ">
-            <div className="md:flex flex-row justify-end md:ml-8 text-xl ">
-              <div className="nav-login md:flex flex-row rounded-full md:items-center">
+            <div className="md:flex flex-row justify-end md:ml-8 text-2xl ">
+              <div className=" md:flex flex-row rounded-full md:text-black  md:bg-white md:items-center">
                 <Avatar />
                 {token ? (
                   <button className="md:mx-3" onClick={handleLogout}>

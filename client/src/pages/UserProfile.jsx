@@ -60,34 +60,36 @@ const UserProfile = () => {
   }
 
   return (
-    <div className="container md:px-10 px-7">
-      <div className="md:flex flex-row gap-2">
-        <div className="plain-card text-xl font-bold">
-          <img
-            src="https://th.bing.com/th/id/OIP.SnYzh4lsfrOarIgl_axMNgHaFF?pid=ImgDet&rs=1"
-            alt="ProfilePic"
-          />
-          <h1>{user.userId.name}</h1>
-          <h1>{user.userId.email}</h1>
-          <hr />
-          <h1 className="text-left">Height: {user.weight}</h1>
-          <h1 className="text-left">Weight: {user.weight}</h1>
-          <h1 className="text-left">Plan: {user.plan.plan}</h1>
-        </div>
-        <div className="plain-card">
-          {user.attendance.map((attendance) => (
-            <div className="text-left" key={attendance.id}>
-              <h1 className="font-bold text-2xl">Attendance:</h1>
-              <h1>CheckIn: {attendance.checkIn}</h1>
-              <h1>CheckOut: {attendance.checkOut}</h1>
-              <h1>
-                <DayExtractor timestamp={timestamp} />
-              </h1>
-            </div>
-          ))}
-        </div>
-        <div className="basis-1/2 plain-card w-full">
-          <div ref={calendarRef}></div>
+    <div className="md:px-10 px-7">
+      <div className="container ">
+        <div className="md:flex flex-row gap-2">
+          <div className=" basis-1/4 plain-card text-xl font-bold">
+            <img
+              src="https://th.bing.com/th/id/OIP.SnYzh4lsfrOarIgl_axMNgHaFF?pid=ImgDet&rs=1"
+              alt="ProfilePic"
+            />
+            <h1>{user.userId.name}</h1>
+            <h1>{user.userId.email}</h1>
+            <hr />
+            <h1 className="text-left">Height: {user.weight}</h1>
+            <h1 className="text-left">Weight: {user.weight}</h1>
+            <h1 className="text-left">Plan: {user.plan.plan}</h1>
+          </div>
+          <div className=" basis-1/4 plain-card">
+            {user.attendance.map((attendance) => (
+              <div className="text-left" key={attendance.id}>
+                <h1 className="font-bold text-2xl">Attendance:</h1>
+                <h1>CheckIn: {attendance.checkIn}</h1>
+                <h1>CheckOut: {attendance.checkOut}</h1>
+                <h1>
+                  <DayExtractor timestamp={timestamp} />
+                </h1>
+              </div>
+            ))}
+          </div>
+          <div className="basis-1/2 plain-card w-full">
+            <div ref={calendarRef}></div>
+          </div>
         </div>
       </div>
     </div>
