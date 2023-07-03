@@ -13,17 +13,33 @@ ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 const DailyAttendance = () => {
   const [chartData, setChartData] = useState({});
-  const getData = () => {
-const graphdata = async () => {
-  const response = await fetch('/api/graphdata');
-  // const Gdata = await response.json();
-  // console.log(Gdata);
-  // setChartData({
 
-  // };
+  const getData = async () => {
+    try {
+      const response = await fetch('http://localhost:7000/api/v1/gym/graph/2');
+      if (response.ok) {
+        const resData = await response.json();
+        setChartData(resData.data); // Set the fetched data to the chartData state
+        console.log(resData);
+      } else {
+        console.log('Error fetching data');
+      }
+    } catch (error) {
+      console.log('Error fetching data:', error);
+    }
+  };
 
   useEffect(() => {
     getData();
+    // Fetch data every 5 minutes (300,000 milliseconds)
+    const interval = setInterval(() => {
+      getData();
+    }, 300000);
+
+    // Cleanup the interval when the component unmounts
+    return () => {
+      clearInterval(interval);
+    };
   }, []);
 
   const data = {
@@ -56,10 +72,7 @@ const graphdata = async () => {
     datasets: [
       {
         label: 'Hourly User Count',
-        data: [
-          10, 20, 30, 40, 50, 60, 70, 80, 90, 80, 70, 60, 50, 40, 30, 20, 10,
-          20, 30, 40, 50, 60, 70, 80,
-        ],
+        data: chartData,
         backgroundColor: 'rgba(75, 192, 192, 0.6)',
         borderColor: 'rgba(75, 192, 192, 1)',
         borderWidth: 1,
@@ -71,7 +84,7 @@ const graphdata = async () => {
     scales: {
       y: {
         beginAtZero: true,
-        max: 100,
+        max: 10,
       },
     },
   };
