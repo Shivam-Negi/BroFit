@@ -62,10 +62,22 @@ function checkRole(role) {
     next();
    }
 }
+function verifyRole(role){
+  return function(req, res, next ) {
+    if(!role) {
+      return res
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .json({ message : "No role specified for this signin route"});
+    }
+    req.role = role;
+    next();
+  }
+}
 
 module.exports = {
   validateAuthRequest,
   checkAuth,
   isAdmin,
   checkRole,
+  verifyRole,
 };
