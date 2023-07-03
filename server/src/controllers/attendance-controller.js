@@ -4,11 +4,14 @@ const { successResponse, errorResponse } = require("../utils/common");
 
 async function createAttendance(req, res) {
   try {
+    // console.log('inside attendence controller');
+    
     // console.log(req.user);
     const attendance = await AttendanceService.createAttendance({
       userId: req.user,
     });
     successResponse.data = attendance;
+    // console.log(successResponse);
     return res.status(StatusCodes.CREATED).json(successResponse);
   } catch (error) {
     // console.log(error);
@@ -42,6 +45,7 @@ async function updateAttendance(req, res) {
   try {
     const attendance = await AttendanceService.updateAttendance(
       req.params.id,
+      req.user
     );
     successResponse.data = attendance;
     return res.status(StatusCodes.OK).json(successResponse);

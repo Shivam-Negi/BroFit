@@ -1,16 +1,18 @@
 const express = require('express');
 const { AttendanceController } = require('../../controllers');
 const router = express.Router();
-const { AuthMiddlewares } = require('../../middlewares');
+const { AuthMiddlewares, RouteRestrictorMiddleware } = require('../../middlewares');
 
 router.get(
   '/',
   AuthMiddlewares.checkAuth,
+  AuthMiddlewares.checkRole(['owner','admin']),
   AttendanceController.getAllAttendance
 );
 router.post(
   '/',
   AuthMiddlewares.checkAuth,
+  // RouteRestrictorMiddleware.routeRestrictor,
   AttendanceController.createAttendance
 );
 router.get(

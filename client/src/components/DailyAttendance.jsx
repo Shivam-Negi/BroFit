@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Chart as ChartJS,
   BarElement,
@@ -12,6 +12,20 @@ import { Bar, Chart } from 'react-chartjs-2';
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 const DailyAttendance = () => {
+  const [chartData, setChartData] = useState({});
+  const getData = () => {
+const graphdata = async () => {
+  const response = await fetch('/api/graphdata');
+  // const Gdata = await response.json();
+  // console.log(Gdata);
+  // setChartData({
+
+  // };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
   const data = {
     labels: [
       '12AM',

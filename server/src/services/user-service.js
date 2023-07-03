@@ -1,7 +1,6 @@
 const { UserRepository, GymRepository } = require('../repositories');
 const AppError = require('../utils/errors/app-error');
 const { StatusCodes } = require('http-status-codes');
-// const jwt = require('jsonwebtoken');
 const { Auth } = require('../utils/common');
 
 const { serverConfig, Mailer } = require('../config')
@@ -12,9 +11,9 @@ const gymRepository = new GymRepository();
 async function createUser(data) {
   try {
     const user = await userRepository.create(data);
-    //  console.log('user : ', user);
+      // console.log('user : ', user);
     const gym = await gymRepository.findGym(data.gymId);
-    //  console.log('gym : ', gym);
+      // console.log('gym : ', gym);
 
       const response = await Mailer.sendMail({
           from: serverConfig.GMAIL_EMAIL,
@@ -22,7 +21,7 @@ async function createUser(data) {
           subject: 'Registration Complete',
           text:  `congrats ${user.name}, you are now successfully registered in the gym ${gym.gymName}`
       });
-      // console.log(response);
+      //  console.log(response);
   
     gym.members.push(user);
     await gym.save();
@@ -69,6 +68,9 @@ async function signin(data) {
       email: user.email,
       userId: user._id,
     });
+    if(user.role != data.role) {
+      throw new AppError('Please make sure you are logging in from right portal',StatusCodes.UNAUTHORIZED);
+    }
     return jwt;
   } catch (error) {
     if (error instanceof AppError) throw error;
@@ -106,10 +108,25 @@ async function isAuthenticated(token) {
     );
   }
 }
+async function getUserByUserId(id) {
+  try {
+    // console.log(id);
+    const user = await userRepository.getUserByUserId(id);
+    // console.log(user);
+    return user;
+  } catch (error) {
+    // console.log(error);
+    throw new AppError(
+      'Cannot fetch data of the user',
+      StatusCodes.INTERNAL_SERVER_ERROR
+    );
+  }
+}
 
 module.exports = {
   createUser,
   getUser,
   signin,
   isAuthenticated,
+  getUserByUserId,
 };

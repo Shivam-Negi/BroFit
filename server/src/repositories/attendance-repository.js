@@ -12,6 +12,13 @@ class AttendanceRepository extends CrudRepository {
     });
     return attendance;
   }
+  async getStatusInUsers(status) {
+    const currentMembers = Attendance.find({
+      status: status
+    });
+    //console.log(currentMembers);
+    return currentMembers;
+  }
 }
 
 module.exports = AttendanceRepository;

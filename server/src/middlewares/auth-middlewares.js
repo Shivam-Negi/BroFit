@@ -50,8 +50,34 @@ async function isAdmin(req, res, next) {
   next();
 }
 
+function checkRole(role) {
+   return async function(req, res, next) {
+    const userId = req.user;
+    const response = await UserService.getUserByUserId(userId);
+    if(!role.includes(response.role)){
+      return res
+       .status(StatusCodes.UNAUTHORIZED)
+       .json({ message: "User not authorized to access this route" });
+    }
+    next();
+   }
+}
+function verifyRole(role){
+  return function(req, res, next ) {
+    if(!role) {
+      return res
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .json({ message : "No role specified for this signin route"});
+    }
+    req.role = role;
+    next();
+  }
+}
+
 module.exports = {
   validateAuthRequest,
   checkAuth,
   isAdmin,
+  checkRole,
+  verifyRole,
 };
