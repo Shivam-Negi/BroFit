@@ -36,6 +36,17 @@ async function getGym(id) {
     }
 }
 
+async function getGymGraph(id) {
+    try {
+        const gym = await gymRepository.getGymGraph(id);
+        return gym;
+        
+    } catch (error) {
+        // console.log(error);
+        throw new AppError('', StatusCodes.INTERNAL_SERVER_ERROR);   
+    }
+}
+
 async function updateGym(id, data) {
     try {
         const gym = await gymRepository.update(id, data);
@@ -62,6 +73,7 @@ module.exports = {
     createGym,
     getGyms,
     getGym,
+    getGymGraph,
     updateGym,
     deleteGym
 }

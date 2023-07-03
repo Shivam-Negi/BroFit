@@ -38,6 +38,19 @@ async function getGym(req, res) {
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse);   
     }
 }
+
+async function getGymGraph(req, res) {
+    try {
+        const gym = await GymService.getGymGraph(req.params.id);
+        successResponse.data = gym;
+        return res.status(StatusCodes.OK).json(successResponse);
+        
+    } catch (error) {
+        errorResponse.error = error;
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse);   
+    }
+}
+
 async function updateGym(req, res) {
     try {
         const gym = await GymService.updateGym(req.params.id, req.body);
@@ -66,6 +79,7 @@ module.exports = {
     createGym,
     getGyms,
     getGym,
+    getGymGraph,
     updateGym,
     deleteGym,
 }

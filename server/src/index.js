@@ -16,5 +16,5 @@ app.listen(serverConfig.PORT, async () => {
   console.log(`Server listening on port : ${serverConfig.PORT}`);
   database.connect();
   console.log('mongoose connected');
-  CRON();
+  // CRON();
 });
