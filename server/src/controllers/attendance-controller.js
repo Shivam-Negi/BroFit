@@ -45,6 +45,7 @@ async function updateAttendance(req, res) {
   try {
     const attendance = await AttendanceService.updateAttendance(
       req.params.id,
+      req.user
     );
     successResponse.data = attendance;
     return res.status(StatusCodes.OK).json(successResponse);

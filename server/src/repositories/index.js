@@ -1,5 +1,5 @@
 module.exports = {
-  GymRepository: require("./gym-respository"),
+  GymRepository: require("./gym-repository"),
   UserRepository: require("./user-repository"),
   PlanRepository: require("./plan-repository"),
   UserProfileRepository: require("./userProfile-repository"),

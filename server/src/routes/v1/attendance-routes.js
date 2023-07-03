@@ -12,7 +12,7 @@ router.get(
 router.post(
   '/',
   AuthMiddlewares.checkAuth,
-  RouteRestrictorMiddleware.routeRestrictor,
+  // RouteRestrictorMiddleware.routeRestrictor,
   AttendanceController.createAttendance
 );
 router.get(

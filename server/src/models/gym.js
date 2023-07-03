@@ -35,7 +35,14 @@ const gymSchema = new mongoose.Schema({
       type : mongoose.Schema.Types.ObjectId,
       ref : 'User'
     }
-  ]
+  ],
+  currentlyCheckedIn : {
+    type : Number,
+    default : 0
+  },
+  liveGraph : {
+    type : [Number]
+  }
 });
 
 module.exports = mongoose.model('Gym', gymSchema);
