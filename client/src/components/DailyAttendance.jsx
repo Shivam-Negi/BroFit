@@ -12,15 +12,19 @@ import { Bar, Chart } from 'react-chartjs-2';
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 const DailyAttendance = () => {
-  const [chartData, setChartData] = useState({});
+  const [chartData, setChartData] = useState([]);
+  const [maxNumber, setMaxNumber] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
 
   const getData = async () => {
     try {
       const response = await fetch('http://localhost:7000/api/v1/gym/graph/2');
       if (response.ok) {
         const resData = await response.json();
-        setChartData(resData.data); // Set the fetched data to the chartData state
-        console.log(resData);
+        setChartData(resData.data);
+        const newMaxNumber = Math.max(...resData.data) + 1;
+        setMaxNumber(newMaxNumber);
+        setIsLoading(false);
       } else {
         console.log('Error fetching data');
       }
@@ -30,17 +34,24 @@ const DailyAttendance = () => {
   };
 
   useEffect(() => {
-    getData();
-    // Fetch data every 5 minutes (300,000 milliseconds)
+    const fetchData = async () => {
+      await getData();
+    };
+
+    fetchData();
+
     const interval = setInterval(() => {
-      getData();
+      fetchData();
     }, 300000);
 
-    // Cleanup the interval when the component unmounts
     return () => {
       clearInterval(interval);
     };
-  }, []);
+  }, []); // Add an empty dependency array
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
 
   const data = {
     labels: [
@@ -84,7 +95,7 @@ const DailyAttendance = () => {
     scales: {
       y: {
         beginAtZero: true,
-        max: 10,
+        max: maxNumber,
       },
     },
   };
