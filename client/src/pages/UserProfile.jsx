@@ -50,7 +50,7 @@ const UserProfile = () => {
           const [hours, minutes] = attendance.checkIn.split(':');
           const startDate = new Date(year, month - 1, day, hours, minutes);
           const endDate = new Date(startDate.getTime() + 3 * 60 * 60 * 1000);
-  
+
           return {
             title: 'Attendance',
             start: startDate,
@@ -63,38 +63,10 @@ const UserProfile = () => {
           };
         },
       });
-  
+
       calendar.render();
     }
   }, [user]);
-    
-  /* useEffect(() => {
-    if (user) {
-      console.log(user);
-      const calendarEl = calendarRef.current;
-      const calendar = new Calendar(calendarEl, {
-        plugins: [interactionPlugin, dayGridPlugin],
-        initialView: 'dayGridMonth',
-        contentHeight: '400px',
-        contentWidth: '400px%',
-        events: user.attendance.map((attendance) => {
-          const [day, month, year] = attendance.day.split('-');
-          const [hours, minutes] = attendance.checkIn.split(':');
-          const startDate = new Date(year, month - 1, day, hours, minutes);
-          const endDate = new Date(startDate.getTime() + 3 * 60 * 60 * 1000);
-
-        return {
-          title: 'Attendance',
-          start: startDate,
-          end: endDate,
-          rendering: 'background', // Set rendering option to 'background'
-          backgroundColor: 'green', // Set the background color to green
-        };
-      }),
-    });
-      calendar.render();
-    }
-  }, [user]); */
 
   if (user === null) {
     return <Loading />;

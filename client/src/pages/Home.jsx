@@ -12,8 +12,8 @@ const Home = () => {
         <div className="basis-1/2">
           <h1 className="text-8xl font-bold md:mb-10 mb-5">Hello Owner</h1>
           <div className=" md:flex flex-row gap-2 mb-10 ">
-            <Users />
             <CheckInUsers />
+            <Users />
           </div>
           <DailyAttendance />
         </div>

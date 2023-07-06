@@ -34,27 +34,29 @@ const Plans = () => {
   //   try {
 
   return (
-    <div className="container ">
-      <div className="plain-card">
-        <h1 className="text-3xl content-center font-bold">Plans</h1>
-        <div className="md:flex flex-row gap-1 ">
-          {plans.map((plan) => (
-            <div key={plan.plan}>
-              <div className="plain-card text-xl">
-                <h1>{plan.plan}</h1>
-                <p>{plan._id}</p>
-                <p>{plan.price}</p>
-                <p>{plan.validity}</p>
-                <ButtonContainer>
-                  <Button onClick={() => Delete(plan.id)}> Delete</Button>
-                  <Button as={Link} to={`/plan/${plan.id}/edit`}>
-                    {' '}
-                    Update
-                  </Button>
-                </ButtonContainer>
+    <div className="container md:px-10 px-7">
+      <div className="md:flex flex-row justify-center ">
+        <div className="plain-card">
+          <h1 className="text-3xl content-center font-bold mb-5 ">Plans</h1>
+          <div className="md:flex flex-row gap-1 ">
+            {plans.map((plan) => (
+              <div key={plan.plan}>
+                <div className="plain-card text-xl">
+                  <h1>{plan.plan}</h1>
+                  <p>{plan._id}</p>
+                  <p>{plan.price}</p>
+                  <p>{plan.validity}</p>
+                  <ButtonContainer>
+                    <Button onClick={() => Delete(plan.id)}> Delete</Button>
+                    <Button as={Link} to={`/plan/${plan.id}/edit`}>
+                      {' '}
+                      Update
+                    </Button>
+                  </ButtonContainer>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </div>

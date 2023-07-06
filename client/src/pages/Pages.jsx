@@ -9,7 +9,7 @@ import UserProfile from './UserProfile';
 const pages = () => {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route exact path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/plans" element={<Plans />} />
       <Route path="/users" element={<Users />} />
