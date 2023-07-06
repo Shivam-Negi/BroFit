@@ -12,6 +12,13 @@ class UserRepository extends CrudRepository {
         });
         return user;
     }
+    async getUserByUserId(id) {
+
+        const user = await User.findOne({
+            _id : id
+        });
+        return user;
+    }
 }
 
 module.exports = UserRepository;

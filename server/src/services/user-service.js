@@ -68,6 +68,9 @@ async function signin(data) {
       email: user.email,
       userId: user._id,
     });
+    if(user.role != data.role) {
+      throw new AppError('Please make sure you are logging in from right portal',StatusCodes.UNAUTHORIZED);
+    }
     return jwt;
   } catch (error) {
     if (error instanceof AppError) throw error;
@@ -105,10 +108,25 @@ async function isAuthenticated(token) {
     );
   }
 }
+async function getUserByUserId(id) {
+  try {
+    // console.log(id);
+    const user = await userRepository.getUserByUserId(id);
+    // console.log(user);
+    return user;
+  } catch (error) {
+    // console.log(error);
+    throw new AppError(
+      'Cannot fetch data of the user',
+      StatusCodes.INTERNAL_SERVER_ERROR
+    );
+  }
+}
 
 module.exports = {
   createUser,
   getUser,
   signin,
   isAuthenticated,
+  getUserByUserId,
 };

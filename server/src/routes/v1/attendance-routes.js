@@ -6,12 +6,13 @@ const { AuthMiddlewares, RouteRestrictorMiddleware } = require('../../middleware
 router.get(
   '/',
   AuthMiddlewares.checkAuth,
+  AuthMiddlewares.checkRole(['owner','admin']),
   AttendanceController.getAllAttendance
 );
 router.post(
   '/',
   AuthMiddlewares.checkAuth,
-  RouteRestrictorMiddleware.routeRestrictor,
+  // RouteRestrictorMiddleware.routeRestrictor,
   AttendanceController.createAttendance
 );
 router.get(

@@ -68,37 +68,69 @@ const UserProfile = () => {
     }
   }, [user]);
 
+  /* useEffect(() => {
+    if (user) {
+      console.log(user);
+      const calendarEl = calendarRef.current;
+      const calendar = new Calendar(calendarEl, {
+        plugins: [interactionPlugin, dayGridPlugin],
+        initialView: 'dayGridMonth',
+        contentHeight: '400px',
+        contentWidth: '400px%',
+        events: user.attendance.map((attendance) => {
+          const [day, month, year] = attendance.day.split('-');
+          const [hours, minutes] = attendance.checkIn.split(':');
+          const startDate = new Date(year, month - 1, day, hours, minutes);
+          const endDate = new Date(startDate.getTime() + 3 * 60 * 60 * 1000);
+
+        return {
+          title: 'Attendance',
+          start: startDate,
+          end: endDate,
+          rendering: 'background', // Set rendering option to 'background'
+          backgroundColor: 'green', // Set the background color to green
+        };
+      }),
+    });
+      calendar.render();
+    }
+  }, [user]); */
+
   if (user === null) {
     return <Loading />;
   }
 
   return (
-    <div className="container md:px-10 px-7">
-      <div className="md:flex flex-row gap-2">
-        <div className="plain-card text-xl font-bold">
-          <img
-            src="https://th.bing.com/th/id/OIP.SnYzh4lsfrOarIgl_axMNgHaFF?pid=ImgDet&rs=1"
-            alt="ProfilePic"
-          />
-          <h1>{user.userId.name}</h1>
-          <h1>{user.userId.email}</h1>
-          <hr />
-          <h1 className="text-left">Height: {user.weight}</h1>
-          <h1 className="text-left">Weight: {user.weight}</h1>
-          <h1 className="text-left">Plan: {user.plan.plan}</h1>
-        </div>
-        <div className="plain-card">
-          {user.attendance.map((attendance) => (
-            <div className="text-left" key={attendance.id}>
-              <h1 className="font-bold text-2xl">Attendance:</h1>
-              <h1>CheckIn: {attendance.checkIn}</h1>
-              <h1>CheckOut: {attendance.checkOut}</h1>
-              <h1> Date : {attendance.day}</h1>
-            </div>
-          ))}
-        </div>
-        <div className="basis-1/2 plain-card w-full">
-          <div ref={calendarRef}></div>
+    <div className="md:px-10 px-7">
+      <div className="container ">
+        <div className="md:flex flex-row gap-2">
+          <div className=" basis-1/4 plain-card text-xl font-bold">
+            <img
+              src="https://th.bing.com/th/id/OIP.SnYzh4lsfrOarIgl_axMNgHaFF?pid=ImgDet&rs=1"
+              alt="ProfilePic"
+            />
+            <h1>{user.userId.name}</h1>
+            <h1>{user.userId.email}</h1>
+            <hr />
+            <h1 className="text-left">Height: {user.weight}</h1>
+            <h1 className="text-left">Weight: {user.weight}</h1>
+            <h1 className="text-left">Plan: {user.plan.plan}</h1>
+          </div>
+          <div className=" basis-1/4 plain-card">
+            {user.attendance.map((attendance) => (
+              <div className="text-left" key={attendance.id}>
+                <h1 className="font-bold text-2xl">Attendance:</h1>
+                <h1>CheckIn: {attendance.checkIn}</h1>
+                <h1>CheckOut: {attendance.checkOut}</h1>
+                <h1>
+                  <DayExtractor timestamp={timestamp} />
+                </h1>
+              </div>
+            ))}
+          </div>
+          <div className="basis-1/2 plain-card w-full">
+            <div ref={calendarRef}></div>
+          </div>
         </div>
       </div>
     </div>
