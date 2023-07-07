@@ -37,9 +37,11 @@ class CrudRepository {
         }
     }
 
-    async getAll() {
+    async getAll(gymId) {
         try {
-            const result = await this.model.find({});
+            const result = await this.model.find(
+                {gymId : gymId}
+            );
             return result;
         } catch (error) {
             console.log("Something went wrong in crud repo");

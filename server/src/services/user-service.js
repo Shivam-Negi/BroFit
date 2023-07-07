@@ -10,10 +10,10 @@ const gymRepository = new GymRepository();
 
 async function createUser(data) {
   try {
-    const user = await userRepository.create(data);
-      // console.log('user : ', user);
     const gym = await gymRepository.findGym(data.gymId);
       // console.log('gym : ', gym);
+    const user = await userRepository.create(data);
+      // console.log('user : ', user);
 
       const response = await Mailer.sendMail({
           from: serverConfig.GMAIL_EMAIL,
@@ -25,7 +25,12 @@ async function createUser(data) {
   
     gym.members.push(user);
     await gym.save();
-    return user;
+
+    const jwt = Auth.createToken({
+      userId: user._id,
+    });
+    return {jwt, user};
+    // return user;
   } catch (error) {
     // console.log(error);
     throw new AppError(
@@ -88,9 +93,9 @@ async function isAuthenticated(token) {
       throw new AppError('Missing JWT token', StatusCodes.BAD_REQUEST);
     }
     const response = Auth.verifyToken(token);
-      // console.log("response after token verification : ", response);
+       console.log("response after token verification : ", response);
     const user = await userRepository.get(response.userId);
-    //  console.log('user details : ', user);
+      console.log('user details : ', user);
     if (!user) {
       throw new AppError('No user found', StatusCodes.NOT_FOUND);
     }

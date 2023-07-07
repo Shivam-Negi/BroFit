@@ -20,9 +20,9 @@ async function createPlan(data) {
     }
 }
 
-async function getPlans() {
+async function getPlans(gymId) {
     try {
-        const plans = await planRepository.getAll();
+        const plans = await planRepository.getAll(gymId);
         return plans;
     } catch (error) {
         // console.log(error);
