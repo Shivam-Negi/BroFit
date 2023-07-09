@@ -30,6 +30,8 @@ class GymRepository extends CrudRepository {
     }
 
     async updateByGymId(id, data) {
+        /* console.log('id : ', id);
+        console.log('data : ', data); */
         try {
             const result = await Gym.updateOne({
                 gymId : id
@@ -37,6 +39,7 @@ class GymRepository extends CrudRepository {
             {new: true});
             return result;
         } catch(error) {
+            // console.log('error in updation of graph : ', error);
             console.log("Something went wrong in crud repo");
             throw error;
         }

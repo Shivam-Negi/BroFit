@@ -18,7 +18,7 @@ async function createAttendance(data) {
     // console.log('attendance : ', attendance);
     const currentTime = checkInTime();
     const hour = currentTime.split(':')[0];
-    gymRepository.updateByGymId(user.gymId, {
+    await gymRepository.updateByGymId(user.gymId, {
       $inc: {
         [`liveGraph.${hour}`]: 1,
       }

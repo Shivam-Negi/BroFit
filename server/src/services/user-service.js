@@ -15,12 +15,12 @@ async function createUser(data) {
     const user = await userRepository.create(data);
       // console.log('user : ', user);
 
-      const response = await Mailer.sendMail({
+      /* const response = await Mailer.sendMail({
           from: serverConfig.GMAIL_EMAIL,
           to: user.email,
           subject: 'Registration Complete',
           text:  `congrats ${user.name}, you are now successfully registered in the gym ${gym.gymName}`
-      });
+      }); */
       //  console.log(response);
   
     gym.members.push(user);
