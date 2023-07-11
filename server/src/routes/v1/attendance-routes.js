@@ -15,7 +15,7 @@ router.post(
   // RouteRestrictorMiddleware.routeRestrictor,
   AttendanceController.createAttendance
 );
-router.get(
+router.get(                   // get attendance acc to date
   '/:id',
   AuthMiddlewares.checkAuth,
   AttendanceController.getAttendance

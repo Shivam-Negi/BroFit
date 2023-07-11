@@ -93,9 +93,9 @@ async function isAuthenticated(token) {
       throw new AppError('Missing JWT token', StatusCodes.BAD_REQUEST);
     }
     const response = Auth.verifyToken(token);
-       console.log("response after token verification : ", response);
+      //  console.log("response after token verification : ", response);
     const user = await userRepository.get(response.userId);
-      console.log('user details : ', user);
+      // console.log('user details : ', user);
     if (!user) {
       throw new AppError('No user found', StatusCodes.NOT_FOUND);
     }
