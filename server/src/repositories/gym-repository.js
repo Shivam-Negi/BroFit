@@ -18,7 +18,11 @@ class GymRepository extends CrudRepository {
     async getGymInfo(id) {
         const gym = await Gym.findOne({
             gymId : id
-        }).populate('plans').populate('members');
+        }).populate('plans')
+        .populate({
+            path: "members",
+            select: "name"
+        });
         return gym;
     }
 
