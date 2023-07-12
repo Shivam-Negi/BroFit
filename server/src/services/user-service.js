@@ -70,6 +70,7 @@ async function signin(data) {
       name: user.name,
       email: user.email,
       userId: user._id,
+      role: user.role,
     });
     if(user.role != data.role) {
       throw new AppError('Please make sure you are logging in from right portal',StatusCodes.UNAUTHORIZED);
