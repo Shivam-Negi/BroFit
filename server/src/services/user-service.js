@@ -21,10 +21,12 @@ async function createUser(data) {
           subject: 'Registration Complete',
           text:  `congrats ${user.name}, you are now successfully registered in the gym ${gym.gymName}`
       });
-      //  console.log(response);
+      // console.log(response);
   
-    gym.members.push(user);
+    gym.members.push(user._id);
+    console.log(gym.members);
     await gym.save();
+    console.log('testing');
     return user;
   } catch (error) {
     // console.log(error);
@@ -123,10 +125,32 @@ async function getUserByUserId(id) {
   }
 }
 
+async function deleteUser(id) {
+
+  try {
+    const user = await userRepository.destroy(id);
+    const gym = await gymRepository.findGym(user.gymId);
+    let membersArray = gym.members;
+    membersArray.slice(membersArray.findIndex(),1);
+    console.log(membersArray);
+    gym.members = membersArray;
+    console.log(gym.members);
+    await gym.save();
+  } catch (error) {
+    throw new AppError(
+      'Cannot delete user from the database',
+      StatusCodes.INTERNAL_SERVER_ERROR
+    );
+    
+  }
+
+}
+
 module.exports = {
   createUser,
   getUser,
   signin,
   isAuthenticated,
   getUserByUserId,
+  deleteUser,
 };
