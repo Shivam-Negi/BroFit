@@ -41,7 +41,8 @@ const gymSchema = new mongoose.Schema({
     default : 0
   },
   liveGraph : {
-    type : [Number]
+    type : [Number],
+    default: () => Array(24).fill(0)
   }
 });
 

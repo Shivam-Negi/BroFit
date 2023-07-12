@@ -1,12 +1,14 @@
-const { UserRepository, GymRepository } = require('../repositories');
+const { UserRepository, GymRepository, UserProfileRepository, AttendanceRepository } = require('../repositories');
 const AppError = require('../utils/errors/app-error');
 const { StatusCodes } = require('http-status-codes');
 const { Auth } = require('../utils/common');
 
 const { serverConfig, Mailer } = require('../config')
 
+const userProfileRespository = new UserProfileRepository();
 const userRepository = new UserRepository();
 const gymRepository = new GymRepository();
+const attendanceRespository = new AttendanceRepository();
 
 async function createUser(data) {
   try {
@@ -24,7 +26,7 @@ async function createUser(data) {
       //  console.log(response);
   
     gym.members.push(user._id);
-    console.log(gym.members);
+    //console.log(gym.members);
     await gym.save();
     return user;
   } catch (error) {
@@ -128,13 +130,10 @@ async function deleteUser(id) {
 
   try {
     const user = await userRepository.destroy(id);
-    const gym = await gymRepository.findGym(user.gymId);
-    let membersArray = gym.members;
-    membersArray.slice(membersArray.findIndex(),1);
-    console.log(membersArray);
-    gym.members = membersArray;
-    console.log(gym.members);
-    await gym.save();
+    const gym = await gymRepository.deleteMembersFromGym(user.gymId, user._id);
+    const userProfile = await userProfileRespository.deleteUserProfileByUserId(user._id);
+    const attendance = await  attendanceRespository.deleteAllAttendanceOfTheUserId(userProfile.attendance);
+    return user;
   } catch (error) {
     throw new AppError(
       'Cannot delete user from the database',
