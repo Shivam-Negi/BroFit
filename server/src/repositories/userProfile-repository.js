@@ -14,7 +14,7 @@ class UserProfileRepository extends CrudRepository {
       })
       .populate({
         path: "plan",
-        select: "plan validity -_id",
+        select: "name validity -_id",
       });
     return userProfile;
   }

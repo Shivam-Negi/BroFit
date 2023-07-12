@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import '../css/Navbar.css';
 import React, { useState, useEffect } from 'react';
 import Avatar from './Avatar';
+// import Cookies from 'js-cookie';
 
 const Navbar = () => {
   const [token, setToken] = useState(null);
@@ -9,6 +10,7 @@ const Navbar = () => {
   useEffect(() => {
     // Check if a token is present in local storage
     const storedToken = localStorage.getItem('token');
+    // const storedToken = Cookies.get('token');
     if (storedToken) {
       setToken(storedToken);
     }

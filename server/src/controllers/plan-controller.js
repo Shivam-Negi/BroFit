@@ -17,7 +17,7 @@ async function createPlan(req, res) {
 
 async function getPlans(req, res) {
     try {
-        const plans = await PlanService.getPlans();
+        const plans = await PlanService.getPlans(req.params.gymId);
         successResponse.data = plans;
         return res.status(StatusCodes.OK).json(successResponse);
         

@@ -1,4 +1,5 @@
 import React from 'react';
+// import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import '../css/CapsuleButton.css';
@@ -19,6 +20,8 @@ export default function Login() {
 
   // SignIn logic
   const [data, setData] = useState({ email: '', password: '' });
+  const expiresIn = 15;
+  const expires = new Date(new Date().getTime() + expiresIn * 1000);
 
   const loginUser = async (e) => {
     e.preventDefault();
@@ -40,6 +43,7 @@ export default function Login() {
       const responseData = await response.json();
       console.log(responseData);
       const token = responseData.data;
+      // Cookies.set('token', token, { expires });
       localStorage.setItem('token', token);
       navigate('/');
     } catch (error) {

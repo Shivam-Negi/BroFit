@@ -1,5 +1,6 @@
 const CrudRepository = require("./crud-repository");
 const Attendance = require("../models/attendance");
+const { currentDate } = require("../utils/helpers/datetime-helpers");
 
 class AttendanceRepository extends CrudRepository {
   constructor() {
@@ -9,7 +10,8 @@ class AttendanceRepository extends CrudRepository {
   async getAttendanceByGymId(id) {
     const attendance = Attendance.find({
       gymId: id,
-    });
+      day: currentDate(),
+    }).select('checkIn checkOut status -_id');
     return attendance;
   }
   async getStatusInUsers(status) {

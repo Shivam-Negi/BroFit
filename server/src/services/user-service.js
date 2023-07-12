@@ -10,23 +10,22 @@ const gymRepository = new GymRepository();
 
 async function createUser(data) {
   try {
-    const user = await userRepository.create(data);
-      // console.log('user : ', user);
     const gym = await gymRepository.findGym(data.gymId);
       // console.log('gym : ', gym);
+    const user = await userRepository.create(data);
+      // console.log('user : ', user);
 
-      const response = await Mailer.sendMail({
+      /* const response = await Mailer.sendMail({
           from: serverConfig.GMAIL_EMAIL,
           to: user.email,
           subject: 'Registration Complete',
           text:  `congrats ${user.name}, you are now successfully registered in the gym ${gym.gymName}`
-      });
-      // console.log(response);
+      }); */
+      //  console.log(response);
   
     gym.members.push(user._id);
     console.log(gym.members);
     await gym.save();
-    console.log('testing');
     return user;
   } catch (error) {
     // console.log(error);
@@ -90,9 +89,9 @@ async function isAuthenticated(token) {
       throw new AppError('Missing JWT token', StatusCodes.BAD_REQUEST);
     }
     const response = Auth.verifyToken(token);
-      // console.log("response after token verification : ", response);
+      //  console.log("response after token verification : ", response);
     const user = await userRepository.get(response.userId);
-    //  console.log('user details : ', user);
+      // console.log('user details : ', user);
     if (!user) {
       throw new AppError('No user found', StatusCodes.NOT_FOUND);
     }
