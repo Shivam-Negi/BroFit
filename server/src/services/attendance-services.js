@@ -15,7 +15,7 @@ async function createAttendance(data) {
     const attendance = await attendanceRepository.create({
       gymId: user.gymId,
     });
-    // console.log('attendance : ', attendance);
+    //  console.log('attendance : ', attendance);
     const currentTime = checkInTime();
     const hour = currentTime.split(':')[0];
     await gymRepository.updateByGymId(user.gymId, {
@@ -28,7 +28,7 @@ async function createAttendance(data) {
     // console.log(userProfile);
     userProfile.attendance.push(attendance);
     await userProfile.save();
-    // console.log(attendance);
+    //  console.log(attendance);
     return attendance;
   } catch (error) {
     // console.log(error);

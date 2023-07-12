@@ -9,10 +9,22 @@ const userProfileSchema = new mongoose.Schema({
     type: String,
   },
   weight: {
-    type: Number,
+    type: String,
   },
   height: {
+    type: String,
+  },
+  age: {
     type: Number,
+  },
+  gender: {
+    type: String,
+    enum: ['male', 'female', 'other'],
+  },
+  status: {
+    type: String,
+    enum: ['active', 'inactive'],
+    default: 'inactive',
   },
   plan: {
     type: mongoose.Schema.Types.ObjectId,
