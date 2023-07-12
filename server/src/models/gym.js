@@ -20,10 +20,6 @@ const gymSchema = new mongoose.Schema({
     match: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
     required: true,
   },
-  mobile: {
-    type: Number,
-    // required: true,
-  },
   plans : [
     {
       type : mongoose.Schema.Types.ObjectId,
@@ -43,6 +39,12 @@ const gymSchema = new mongoose.Schema({
   liveGraph : {
     type : [Number],
     default: () => Array(24).fill(0)
+  },
+  latitude : {
+    type : String
+  },
+  longitude : {
+    type : String
   }
 });
 
