@@ -27,7 +27,10 @@ async function getUser(req, res) {
 
 async function getUserInfo(req, res) {
     try {
-        const user = await UserService.getUserInfo(req.body);
+        const user = await UserService.getUserInfo({
+            name: req.params.name,
+            gymId:  req.params.gym
+        });
         successResponse.data = user;
         return res
                 .status(StatusCodes.OK)
