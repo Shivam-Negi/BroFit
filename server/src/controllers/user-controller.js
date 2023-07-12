@@ -25,6 +25,25 @@ async function getUser(req, res) {
     }
 }
 
+async function getUserInfo(req, res) {
+    try {
+        const user = await UserService.getUserInfo({
+            name: req.params.name,
+            gymId:  req.params.gym
+        });
+        successResponse.data = user;
+        return res
+                .status(StatusCodes.OK)
+                .json(successResponse);
+    } catch(error) {
+        //console.log(error)
+        errorResponse.error = error;
+        return res
+                .status(error.statusCode)
+                .json(errorResponse);
+    }
+}
+
 
 /**
  * POST : /signup
@@ -97,9 +116,8 @@ async function signin(req, res) {
 
 async function addRoleToUser(req, res) {
     try {
-        const user = await UserService.addRoleToUser({
-            role: req.body.role,
-            id: req.body.id
+        const user = await UserService.addRoleToUser(req.params.id, {
+            role: 'owner',
         });
         successResponse.data = user;
         return res
@@ -136,5 +154,7 @@ module.exports = {
     signin,
     addRoleToUser,
     deleteUser,
+    getUserInfo,
+    addRoleToUser
     // signinWithRole,
 }

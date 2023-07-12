@@ -6,6 +6,8 @@ const router = express.Router();
 
 router.get('/:id', UserController.getUser);
 
+router.get('/:name/:gym', UserController.getUserInfo);
+
 router.post('/signup', AuthMiddlewares.validateAuthRequest,
                        UserController.createUser);
 
@@ -26,5 +28,6 @@ router.post('/signin/admin',
 
 router.delete('/:id',UserController.deleteUser);
 
+router.patch('/:id', UserController.addRoleToUser)
 
 module.exports = router;    
