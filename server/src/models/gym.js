@@ -39,6 +39,12 @@ const gymSchema = new mongoose.Schema({
   liveGraph : {
     type : [Number],
     default: () => Array(24).fill(0)
+  },
+  latitude : {
+    type : String
+  },
+  longitude : {
+    type : String
   }
 });
 
