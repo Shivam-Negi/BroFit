@@ -113,9 +113,8 @@ async function signin(req, res) {
 
 async function addRoleToUser(req, res) {
     try {
-        const user = await UserService.addRoleToUser({
-            role: req.body.role,
-            id: req.body.id
+        const user = await UserService.addRoleToUser(req.params.id, {
+            role: 'owner',
         });
         successResponse.data = user;
         return res
@@ -152,6 +151,7 @@ module.exports = {
     signin,
     addRoleToUser,
     deleteUser,
-    getUserInfo
+    getUserInfo,
+    addRoleToUser
     // signinWithRole,
 }

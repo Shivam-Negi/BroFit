@@ -141,7 +141,6 @@ async function getUserInfo(data) {
 }
 
 async function deleteUser(id) {
-
   try {
     const user = await userRepository.destroy(id);
     const gym = await gymRepository.deleteMembersFromGym(user.gymId, user._id);
@@ -152,10 +151,20 @@ async function deleteUser(id) {
     throw new AppError(
       'Cannot delete user from the database',
       StatusCodes.INTERNAL_SERVER_ERROR
-    );
-    
+    );   
   }
+}
 
+async function addRoleToUser(id, data) {
+  try {
+    const response = await userRepository.update(id, data);
+    return response;
+  } catch (error) {
+    throw new AppError(
+      'Cannot fetch data of the user',
+      StatusCodes.INTERNAL_SERVER_ERROR
+    );
+  }   
 }
 
 module.exports = {
@@ -165,5 +174,6 @@ module.exports = {
   isAuthenticated,
   getUserByUserId,
   deleteUser,
-  getUserInfo
+  getUserInfo,
+  addRoleToUser
 };

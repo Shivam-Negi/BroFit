@@ -22,7 +22,7 @@ class UserRepository extends CrudRepository {
         const user = await User.findOne({
             gymId : data.gymId,
             name : data.name
-        }).select('role name email gymId -_id');
+        }).select('role name email gymId');
         return user;
     }
 }
