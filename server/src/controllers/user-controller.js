@@ -25,6 +25,22 @@ async function getUser(req, res) {
     }
 }
 
+async function getUserInfo(req, res) {
+    try {
+        const user = await UserService.getUserInfo(req.body);
+        successResponse.data = user;
+        return res
+                .status(StatusCodes.OK)
+                .json(successResponse);
+    } catch(error) {
+        //console.log(error)
+        errorResponse.error = error;
+        return res
+                .status(error.statusCode)
+                .json(errorResponse);
+    }
+}
+
 
 /**
  * POST : /signup
@@ -119,5 +135,6 @@ module.exports = {
     createUser,
     signin,
     addRoleToUser,
+    getUserInfo
     // signinWithRole,
 }

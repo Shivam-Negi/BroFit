@@ -128,10 +128,25 @@ async function getUserByUserId(id) {
   }
 }
 
+async function getUserInfo(data) {
+  try {
+    const user = await userRepository.getUserByNameAndGym(data);
+    // console.log(user);
+    return user;
+  } catch (error) {
+    // console.log(error);
+    throw new AppError(
+      'Cannot fetch data of the user',
+      StatusCodes.INTERNAL_SERVER_ERROR
+    );
+  }
+}
+
 module.exports = {
   createUser,
   getUser,
   signin,
   isAuthenticated,
   getUserByUserId,
+  getUserInfo
 };
