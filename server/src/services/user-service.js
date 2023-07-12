@@ -1,12 +1,14 @@
-const { UserRepository, GymRepository } = require('../repositories');
+const { UserRepository, GymRepository, UserProfileRepository, AttendanceRepository } = require('../repositories');
 const AppError = require('../utils/errors/app-error');
 const { StatusCodes } = require('http-status-codes');
 const { Auth } = require('../utils/common');
 
 const { serverConfig, Mailer } = require('../config')
 
+const userProfileRespository = new UserProfileRepository();
 const userRepository = new UserRepository();
 const gymRepository = new GymRepository();
+const attendanceRespository = new AttendanceRepository();
 
 async function createUser(data) {
   try {
@@ -23,14 +25,10 @@ async function createUser(data) {
       }); */
       //  console.log(response);
   
-    gym.members.push(user);
+    gym.members.push(user._id);
+    //console.log(gym.members);
     await gym.save();
-
-    const jwt = Auth.createToken({
-      userId: user._id,
-    });
-    return {jwt, user};
-    // return user;
+    return user;
   } catch (error) {
     // console.log(error);
     throw new AppError(
@@ -142,11 +140,30 @@ async function getUserInfo(data) {
   }
 }
 
+async function deleteUser(id) {
+
+  try {
+    const user = await userRepository.destroy(id);
+    const gym = await gymRepository.deleteMembersFromGym(user.gymId, user._id);
+    const userProfile = await userProfileRespository.deleteUserProfileByUserId(user._id);
+    const attendance = await  attendanceRespository.deleteAllAttendanceOfTheUserId(userProfile.attendance);
+    return user;
+  } catch (error) {
+    throw new AppError(
+      'Cannot delete user from the database',
+      StatusCodes.INTERNAL_SERVER_ERROR
+    );
+    
+  }
+
+}
+
 module.exports = {
   createUser,
   getUser,
   signin,
   isAuthenticated,
   getUserByUserId,
+  deleteUser,
   getUserInfo
 };

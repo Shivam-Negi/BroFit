@@ -49,6 +49,23 @@ class GymRepository extends CrudRepository {
         }
     }
 
+    async deleteMembersFromGym(id,userId) {
+
+        try {
+            const gym = await Gym.updateOne({
+                gymId : id
+            },
+            {
+                $pull : {members : userId }
+            });
+            return gym;
+        } catch (error) {
+            console.log("Something went wrong in crud repo");
+            throw error;
+        }
+
+    }
+
 }
 
 module.exports = GymRepository;

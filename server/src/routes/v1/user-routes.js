@@ -26,5 +26,7 @@ router.post('/signin/admin',
                 AuthMiddlewares.verifyRole('admin'),
                 UserController.signin);
 
+router.delete('/:id',UserController.deleteUser);
+
 
 module.exports = router;    

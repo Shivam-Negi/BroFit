@@ -130,11 +130,28 @@ async function addRoleToUser(req, res) {
     }
 }
 
+async function deleteUser(req, res) {
+    try {
+        const user = await UserService.deleteUser(req.params.id);
+        successResponse.data = user;
+        return res
+                .status(StatusCodes.OK)
+                .json(successResponse);
+    } catch (error) {
+        errorResponse.error = error;
+        return res
+                .status(errorResponse)
+                .json(errorResponse);
+        
+    }
+}
+
 module.exports = {
     getUser,
     createUser,
     signin,
     addRoleToUser,
+    deleteUser,
     getUserInfo
     // signinWithRole,
 }

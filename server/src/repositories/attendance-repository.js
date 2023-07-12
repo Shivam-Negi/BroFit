@@ -21,6 +21,13 @@ class AttendanceRepository extends CrudRepository {
     //console.log(currentMembers);
     return currentMembers;
   }
+
+  async deleteAllAttendanceOfTheUserId(attendanceId) {
+    const attendance = await Attendance.deleteMany({
+      _id : attendanceId
+    });
+    return attendance;
+  }
 }
 
 module.exports = AttendanceRepository;

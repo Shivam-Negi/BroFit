@@ -11,7 +11,7 @@ async function createAttendance(data) {
   try {
     // console.log(data);
     const user = await userRepository.get(data.userId);
-    // console.log(data);
+    // console.log(user);
     const attendance = await attendanceRepository.create({
       gymId: user.gymId,
     });
