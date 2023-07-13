@@ -2,7 +2,7 @@ const express = require('express');
 const router = require('./routes/index.js');
 const { serverConfig, database } = require('./config');
 const cors = require('cors');
-const CRON = require('./utils/common/cron-jobs.js')
+const { graphCron, checkOutCron } = require('./utils/common/cron-jobs.js')
 
 const app = express();
 
@@ -16,5 +16,6 @@ app.listen(serverConfig.PORT, async () => {
   console.log(`Server listening on port : ${serverConfig.PORT}`);
   database.connect();
   console.log('mongoose connected');
-  //  CRON();
+  graphCron();
+  checkOutCron();
 });

@@ -9,26 +9,24 @@ const { checkInTime } = require("../utils/helpers/datetime-helpers");
 
 async function createAttendance(data) {
   try {
-    // console.log(data);
     const user = await userRepository.get(data.userId);
-    // console.log(user);
     const attendance = await attendanceRepository.create({
       gymId: user.gymId,
     });
-    //  console.log('attendance : ', attendance);
+    const gym = await gymRepository.findGym(user.gymId);
+    let liveMem = gym.currentlyCheckedIn;
+    liveMem = liveMem + 1;
     const currentTime = checkInTime();
     const hour = currentTime.split(':')[0];
     await gymRepository.updateByGymId(user.gymId, {
-      $inc: {
-        [`liveGraph.${hour}`]: 1,
+      $set: {
+        currentlyCheckedIn : liveMem,
+        [`liveGraph.${hour}`]: liveMem,
       }
     })
-    // console.log(data.userId);
     const userProfile = await userProfileRepository.getUserProfileByUserId(data.userId);
-    // console.log(userProfile);
     userProfile.attendance.push(attendance);
     await userProfile.save();
-    //  console.log(attendance);
     return attendance;
   } catch (error) {
     // console.log(error);
@@ -69,7 +67,6 @@ async function getAttendance(id) {
 async function updateAttendance(id, userId) {
   try {
     const userProfile = await userProfileRepository.getUserProfileByUserId(id);
-    console.log('user profile : ', userProfile);
     let attendanceArray = userProfile.attendance;
     const attendanceId = attendanceArray[attendanceArray.length-1];
     const data = {
@@ -77,18 +74,21 @@ async function updateAttendance(id, userId) {
       status : 'OUT'
     }
     const attendance = await attendanceRepository.update(attendanceId, data);
-    const gymId = await userRepository.get(userId);
-    // console.log('gym : ', gymId);
+    const user = await userRepository.get(userId);
+    const gym = await gymRepository.findGym(user.gymId);
+    let liveMem = gym.currentlyCheckedIn;
+    liveMem = liveMem - 1;
     const currentTime = checkInTime();
     const hour = currentTime.split(':')[0];
-    gymRepository.updateByGymId(gymId, {
-      $inc: {
-        [`liveGraph.${hour}`]: -1,
+    await gymRepository.updateByGymId(user.gymId, {
+      $set: {
+        currentlyCheckedIn : liveMem,
+        [`liveGraph.${hour}`]: liveMem,
       }
     })
     return attendance;
   } catch (error) {
-    // console.log(error);
+     console.log(error);
     throw new AppError("", StatusCodes.INTERNAL_SERVER_ERROR);
   }
 }
@@ -106,12 +106,9 @@ async function deleteAttendance(id) {
 async function getAttendanceByUserId(id) {
    try {
     const userProfile = await userProfileRepository.getUserProfileByUserId(id);
-    // console.log(userProfile.attendance.length);
     if(userProfile.attendance.length === 0){
-      // console.log('inside if ');
       return false;
     }
-    // console.log('outside if');
     let attendanceArray = userProfile.attendance;
     const attendanceId = attendanceArray[attendanceArray.length-1];
     const attendance = await attendanceRepository.get(attendanceId);
@@ -131,5 +128,4 @@ module.exports = {
   deleteAttendance,
   getAttendanceByUserId,
   getStatusInUsers
-  // dailyAttendance,
 };

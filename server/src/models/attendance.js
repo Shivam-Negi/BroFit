@@ -20,7 +20,7 @@ const attendanceSchema = new mongoose.Schema({
   },
   checkOut: {
     type: String,
-    default: checkOutTime
+    default: ''
   },
 });
 

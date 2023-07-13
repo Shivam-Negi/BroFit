@@ -10,7 +10,9 @@ async function createUserProfile(req, res) {
             userId : req.user,
             height : req.body.height,
             weight : req.body.weight,
-            plan : req.body.plan
+            plan : req.body.plan,
+            age : req.body.age,
+            gender : req.body.gender
         });
         successResponse.data = userProfile;
         return res.status(StatusCodes.CREATED).json(successResponse);
