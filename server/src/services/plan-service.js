@@ -55,8 +55,8 @@ async function updatePlan(id, data) {
 async function deletePlan(id){
     try {
         const plan = await planRepository.destroy(id);
+        const gym = await gymRepository.deletePlansFromeGymByGymId(plan.gymId, plan._id);
         return plan;
-
     } catch (error) {
         // console.log(error);
         throw new AppError('', StatusCodes.INTERNAL_SERVER_ERROR);   
