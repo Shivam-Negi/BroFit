@@ -1,8 +1,9 @@
 const cron = require('node-cron');
 const { checkInTime } = require('../helpers/datetime-helpers');
 const { AttendanceService } = require('../../services');
-const { GymRepository } = require('../../repositories');
+const { GymRepository, AttendanceRepository } = require('../../repositories');
 const gymRepository = new GymRepository();
+const attendanceRepository = new AttendanceRepository();
 
 const status = 'IN';
 
@@ -30,57 +31,39 @@ async function graphCron() {
 }
 
 
-
-async function scheduleCrons() {
-    // every 10 mins it will check
+ /* get statusIn users and check if their checkIn time has been for more than 2.5 hrs.
+ If yes update their checkOut time and change their status to 'OUT' */
+async function checkOutCron() {
+    // every 15 mins it will check
     cron.schedule('*/15 * * * * *', async () => {
       try {
         const members = await AttendanceService.getStatusInUsers(status);
         console.log('members inside cron:', members);
-        
-        const countMembersByGymId = (members) => {
-          const countMap = {};
-        
-          for (const member of members) {
-            const { gymId } = member;
-            
-            if (!countMap[gymId]) {
-              countMap[gymId] = 1;
-            } else {
-              countMap[gymId] += 1;
-            }
-          }
-        
-          const checkInMems = [];
-        
-          for (const gymId in countMap) {
-            checkInMems.push({ [gymId]: countMap[gymId] });
-          }
-        
-          return checkInMems;
-        };
-        
-        const checkInMems = countMembersByGymId(members);
-        console.log('checkInMems:', checkInMems);
-        
-        // Update the gym with the checkInMems
-        for (const checkedIn of checkInMems) {
-            const id = Object.keys(checkedIn)[0]; // Extract the id from the object key
-            const data = checkedIn[id]; // Extract the data from the object value
-            
-            /* const gym = await gymRepository.findGym(+id);
-            console.log('gym : ', gym); */
-            const currentTime = checkInTime();
-            const hour = currentTime.split(':')[0];
-            const response = await gymRepository.updateByGymId(+id, {
-                currentlyCheckedIn : data,
-                $set: {
-                  [`liveGraph.${hour}`]: data,
-                }
-            });
-            console.log('response : ', response);
-        }
 
+        const currentTime = checkInTime();
+        const hour = currentTime.split(':')[0];
+        for(const member of members) {
+          const attendanceId = member._id;
+          let memInHr = member.checkIn.split(':')[0];
+          console.log('memInHr : ', memInHr);
+          const diff = +hour - (+memInHr);
+          console.log('diff :', diff);
+          const data = {
+            checkOut : checkInTime(),
+            status : 'OUT'
+          }
+          if(diff > 2) {
+            await attendanceRepository.update(attendanceId, data);
+            await gymRepository.updateByGymId(member.gymId, {
+              $inc: {
+                currentlyCheckedIn: -1
+              },
+               /* $set: {
+                [`liveGraph.${hour}`]: currentlyCheckedIn,
+              }  */
+            })
+          }
+        }
       } catch (error) {
         console.error('cron error:', error);
       }
@@ -88,4 +71,7 @@ async function scheduleCrons() {
   }
   
 
-module.exports = graphCron;
+module.exports = {
+  graphCron,
+  checkOutCron
+}
