@@ -6,6 +6,31 @@ const gymRepository = new GymRepository();
 
 const status = 'IN';
 
+/* get currentlyCheckedIn mems every 10 mins and update the 
+corresponding hour of the live graph of each gym */
+async function graphCron() {
+  cron.schedule('*/15 * * * * *', async () => {
+    try {
+      const currentTime = checkInTime();
+      const hour = currentTime.split(':')[0];
+      const gyms = await gymRepository.getAll();
+      for (const gym of gyms) {
+        let liveMem = gym.currentlyCheckedIn;
+        // console.log(`liveMem of gymId ${gym.gymId} is ${liveMem}`);
+        await gymRepository.updateByGymId(gym.gymId, {
+          $set: {
+            [`liveGraph.${hour}`]: liveMem,
+          }
+        })
+      }
+    } catch (error) {
+      console.log('graphCron error : ', error);
+    }
+  })
+}
+
+
+
 async function scheduleCrons() {
     // every 10 mins it will check
     cron.schedule('*/15 * * * * *', async () => {
@@ -57,10 +82,10 @@ async function scheduleCrons() {
         }
 
       } catch (error) {
-        console.error('Error:', error);
+        console.error('cron error:', error);
       }
     });
   }
   
 
-module.exports = scheduleCrons;
+module.exports = graphCron;
