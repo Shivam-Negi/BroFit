@@ -16,13 +16,20 @@ async function createAttendance(data) {
       gymId: user.gymId,
     });
     //  console.log('attendance : ', attendance);
+    const gym = await gymRepository.findGym(user.gymId);
+    // console.log('gym : ', gym);
+    let liveMem = gym.currentlyCheckedIn;
+    liveMem = liveMem + 1;
+    // console.log('live : ', liveMem);
     const currentTime = checkInTime();
     const hour = currentTime.split(':')[0];
-    await gymRepository.updateByGymId(user.gymId, {
-      $inc: {
-        [`liveGraph.${hour}`]: 1,
+    const response = await gymRepository.updateByGymId(user.gymId, {
+      $set: {
+        currentlyCheckedIn : liveMem,
+        [`liveGraph.${hour}`]: liveMem,
       }
     })
+    console.log('response : ', response);
     // console.log(data.userId);
     const userProfile = await userProfileRepository.getUserProfileByUserId(data.userId);
     // console.log(userProfile);
@@ -69,7 +76,7 @@ async function getAttendance(id) {
 async function updateAttendance(id, userId) {
   try {
     const userProfile = await userProfileRepository.getUserProfileByUserId(id);
-    console.log('user profile : ', userProfile);
+    // console.log('user profile : ', userProfile);
     let attendanceArray = userProfile.attendance;
     const attendanceId = attendanceArray[attendanceArray.length-1];
     const data = {
@@ -77,18 +84,24 @@ async function updateAttendance(id, userId) {
       status : 'OUT'
     }
     const attendance = await attendanceRepository.update(attendanceId, data);
-    const gymId = await userRepository.get(userId);
-    // console.log('gym : ', gymId);
+    const user = await userRepository.get(userId);
+    //  console.log('user : ', user);
+    const gym = await gymRepository.findGym(user.gymId);
+    // console.log('gym : ', gym);
+    let liveMem = gym.currentlyCheckedIn;
+    liveMem = liveMem - 1;
     const currentTime = checkInTime();
     const hour = currentTime.split(':')[0];
-    gymRepository.updateByGymId(gymId, {
-      $inc: {
-        [`liveGraph.${hour}`]: -1,
+    const response = await gymRepository.updateByGymId(user.gymId, {
+      $set: {
+        currentlyCheckedIn : liveMem,
+        [`liveGraph.${hour}`]: liveMem,
       }
     })
+    // console.log('response :', response);
     return attendance;
   } catch (error) {
-    // console.log(error);
+     console.log(error);
     throw new AppError("", StatusCodes.INTERNAL_SERVER_ERROR);
   }
 }
