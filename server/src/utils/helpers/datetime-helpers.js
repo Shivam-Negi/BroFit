@@ -24,8 +24,16 @@ function checkOutTime() {
     return `${+hours + 3}:${minutes}`;
 }
 
+function HrsToMins(time) {
+  const hour = time.split(':')[0];
+  const min = time.split(':')[1];
+  const currTimeInMin = (+hour * 60) + (+min);
+  return currTimeInMin;
+}
+
 module.exports = {
     currentDate,
     checkInTime,
+    HrsToMins,
     checkOutTime
 }

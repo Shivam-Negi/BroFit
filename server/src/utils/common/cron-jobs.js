@@ -1,5 +1,5 @@
 const cron = require('node-cron');
-const { checkInTime } = require('../helpers/datetime-helpers');
+const { checkInTime, HrsToMins } = require('../helpers/datetime-helpers');
 const { AttendanceService } = require('../../services');
 const { GymRepository, AttendanceRepository } = require('../../repositories');
 const gymRepository = new GymRepository();
@@ -38,30 +38,38 @@ async function checkOutCron() {
     cron.schedule('*/15 * * * * *', async () => {
       try {
         const members = await AttendanceService.getStatusInUsers(status);
-        // console.log('members inside cron:', members);
+        //  console.log('members inside cron:', members);
 
-        const currentTime = checkInTime();
-        const hour = currentTime.split(':')[0];
+        const currentTime = HrsToMins(checkInTime());
+        // console.log('time : ', currentTime);
         for(const member of members) {
           const attendanceId = member._id;
-          let memInHr = member.checkIn.split(':')[0];
-          console.log('memInHr : ', memInHr);
-          const diff = +hour - (+memInHr);
-          console.log('diff :', diff);
           const data = {
             checkOut : checkInTime(),
             status : 'OUT'
           }
-          if(diff > 2) {
+          let memInHr = member.checkIn.split(':')[0];
+          if(memInHr > (+checkInTime().split(':')[0])) {
             await attendanceRepository.update(attendanceId, data);
             await gymRepository.updateByGymId(member.gymId, {
               $inc: {
                 currentlyCheckedIn: -1
-              },
-               /* $set: {
-                [`liveGraph.${hour}`]: currentlyCheckedIn,
-              }  */
-            })
+              }
+            });
+          }
+          else {
+            let memTime = HrsToMins(member.checkIn);
+            // console.log('mem : ', memTime);
+            const diff = currentTime - memTime;
+            // console.log('diff :', diff);
+            if(diff > 180) {
+              await attendanceRepository.update(attendanceId, data);
+              await gymRepository.updateByGymId(member.gymId, {
+                $inc: {
+                  currentlyCheckedIn: -1
+                },
+              })
+            }
           }
         }
       } catch (error) {
