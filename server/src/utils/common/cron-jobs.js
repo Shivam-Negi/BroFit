@@ -38,7 +38,7 @@ async function checkOutCron() {
     cron.schedule('*/15 * * * * *', async () => {
       try {
         const members = await AttendanceService.getStatusInUsers(status);
-        console.log('members inside cron:', members);
+        // console.log('members inside cron:', members);
 
         const currentTime = checkInTime();
         const hour = currentTime.split(':')[0];

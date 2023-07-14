@@ -25,10 +25,13 @@ async function createUser(data) {
       }); */
       //  console.log(response);
   
-    gym.members.push(user._id);
+    gym.members.push(user);
     //console.log(gym.members);
     await gym.save();
-    return user;
+    const jwt = Auth.createToken({
+      userId: user._id,
+    });
+    return {jwt, user};
   } catch (error) {
     // console.log(error);
     throw new AppError(
