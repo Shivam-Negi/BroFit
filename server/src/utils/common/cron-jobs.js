@@ -22,7 +22,16 @@ async function graphCron() {
           $set: {
             [`liveGraph.${hour}`]: liveMem,
           }
-        })
+        });
+        if(+hour == 1) {
+          for(let i = 0; i < 24; ++i) {
+            await gymRepository.updateByGymId(gym.gymId, {
+              $set: {
+                [`liveGraph.${i}`]: 0,
+              }
+            });
+          }
+        }
       }
     } catch (error) {
       console.log('graphCron error : ', error);
