@@ -30,6 +30,7 @@ async function createUser(data) {
     await gym.save();
     const jwt = Auth.createToken({
       userId: user._id,
+      role: user.role
     });
     return {jwt, user};
   } catch (error) {
