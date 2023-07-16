@@ -120,6 +120,21 @@ async function getAttendanceByUserId(id) {
    }
 }
 
+async function getDayWiseAttendenceOfCustomerByGymId(id, data) {
+  try {
+    const attendance = await attendanceRepository.getdailyAttendenceByGymId(id, data);
+    // console.log(typeof(attendance));
+    if (attendance.length === 0) {
+      // console.log('inside if');
+      throw new AppError('attendance not found for the specified day', StatusCodes.NOT_FOUND);
+    }
+    return attendance;
+  } catch (error) {
+    if( error instanceof AppError) throw error;
+    throw new AppError("", StatusCodes.INTERNAL_SERVER_ERROR);
+  }
+}
+
 module.exports = {
   getAllAttendance,
   getAttendance,
@@ -127,5 +142,6 @@ module.exports = {
   updateAttendance,
   deleteAttendance,
   getAttendanceByUserId,
-  getStatusInUsers
+  getStatusInUsers,
+  getDayWiseAttendenceOfCustomerByGymId
 };

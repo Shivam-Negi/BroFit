@@ -30,5 +30,9 @@ router.delete(
   AuthMiddlewares.checkAuth,
   AttendanceController.deleteAttendance
 );
+router.post(
+  '/dayWiseAttendance/:id',
+  AttendanceController.getDayWiseAttendence
+);
 
 module.exports = router;

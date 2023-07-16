@@ -28,6 +28,22 @@ class AttendanceRepository extends CrudRepository {
     });
     return attendance;
   }
+
+  async getdailyAttendenceByGymId(id, data) {
+    try {
+      const attendance = await Attendance.find({
+        gymId : id,
+        day : data
+      });
+      // console.log(attendance);
+      
+      return attendance;
+      
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
 }
 
 module.exports = AttendanceRepository;
