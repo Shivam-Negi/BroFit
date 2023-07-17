@@ -38,7 +38,7 @@ async function getUserProfile(id) {
 
 async function updateUserProfile(id, data) {
     try {
-        const userProfile = await userProfileRepository.update(id, data);
+        const userProfile = await userProfileRepository.updateUserProfile(id, data);
         return userProfile;
     } catch (error) {
         // console.log(error);

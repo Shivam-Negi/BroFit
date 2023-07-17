@@ -31,6 +31,14 @@ class UserProfileRepository extends CrudRepository {
       });
       return userProfile;
   }
+
+  async updateUserProfile(id, data) {
+      const result = await UserProfile.findByIdAndUpdate(id, data, {new: true}).populate({
+        path: "plan",
+        select: "name validity -_id",
+      });
+      return result;
+  }
 }
 
 module.exports = UserProfileRepository;
