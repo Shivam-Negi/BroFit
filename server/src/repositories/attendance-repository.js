@@ -30,11 +30,15 @@ class AttendanceRepository extends CrudRepository {
   }
 
   async getdailyAttendenceByGymId(id, data) {
+    console.log('id : ', id);
+    console.log('data : ',data);
     try {
       const attendance = await Attendance.find({
         gymId : id,
         day : data
-      });
+      }).populate({
+          path: "userId",
+          select: "name"});
       // console.log(attendance);
       
       return attendance;

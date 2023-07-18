@@ -12,6 +12,7 @@ async function createAttendance(data) {
     const user = await userRepository.get(data.userId);
     const attendance = await attendanceRepository.create({
       gymId: user.gymId,
+      userId: data.userId,
     });
     const gym = await gymRepository.findGym(user.gymId);
     let liveMem = gym.currentlyCheckedIn;
