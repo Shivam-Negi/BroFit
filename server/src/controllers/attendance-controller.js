@@ -67,7 +67,7 @@ async function deleteAttendance(req, res) {
 
 async function getDayWiseAttendence(req, res) {
   try {
-    const attendance = await AttendanceService.getDayWiseAttendenceOfCustomerByGymId(req.params.id, req.body.day);
+    const attendance = await AttendanceService.getDayWiseAttendenceOfCustomerByGymId(req.params.id, req.params.day);
     successResponse.data = attendance;
     return res.status(StatusCodes.OK).json(successResponse);
   } catch (error) {

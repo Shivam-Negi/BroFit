@@ -30,8 +30,8 @@ router.delete(
   AuthMiddlewares.checkAuth,
   AttendanceController.deleteAttendance
 );
-router.post(
-  '/dayWiseAttendance/:id',
+router.get(
+  '/:id/:day',
   AttendanceController.getDayWiseAttendence
 );
 
