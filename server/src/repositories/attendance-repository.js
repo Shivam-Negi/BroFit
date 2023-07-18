@@ -11,7 +11,10 @@ class AttendanceRepository extends CrudRepository {
     const attendance = Attendance.find({
       gymId: id,
       day: currentDate(),
-    }).select('checkIn checkOut status -_id');
+    }).populate({
+      path: "userId",
+      select: "name"})
+      // .select('checkIn checkOut status -_id');
     return attendance;
   }
   async getStatusInUsers(status) {
@@ -30,8 +33,8 @@ class AttendanceRepository extends CrudRepository {
   }
 
   async getdailyAttendenceByGymId(id, data) {
-    console.log('id : ', id);
-    console.log('data : ',data);
+    // console.log('id : ', id);
+    // console.log('data : ',data);
     try {
       const attendance = await Attendance.find({
         gymId : id,
