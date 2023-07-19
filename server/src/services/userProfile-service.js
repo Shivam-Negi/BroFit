@@ -54,7 +54,7 @@ async function updateUserProfilePlans(id, data) {
         const userProfilePlan = await userProfileRepository.updateUserProfile(userProfile._id, {
             status : data.status,
             planStartDate : currentDate(),
-            planExpiryDate : dateAfterAddingDays(days),
+            planExpiryDate : dateAfterAddingDays(days+1),
         });
         return userProfilePlan;
     } catch (error) {
