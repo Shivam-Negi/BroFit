@@ -59,9 +59,23 @@ async function updateUserProfile(req, res) {
         
     }
 }
+// this is for owners
 async function updateUserProfilePlans(req, res) {
     try {
         const userProfile = await UserProfileService.updateUserProfilePlans(req.params.id, req.body);
+        // console.log(userProfile);
+        successResponse.data = userProfile;
+        return res.status(StatusCodes.OK).json(successResponse);
+    } catch (error) {
+        errorResponse.error = error;
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse);
+        
+    }
+}
+// this is for users
+async function updateUserPlan(req, res) {
+    try {
+        const userProfile = await UserProfileService.updateUserPlan(req.params.id, req.body);
         // console.log(userProfile);
         successResponse.data = userProfile;
         return res.status(StatusCodes.OK).json(successResponse);
@@ -90,5 +104,6 @@ module.exports = {
     getUserProfile,
     updateUserProfile,
     deleteUserProfile,
-    updateUserProfilePlans
+    updateUserProfilePlans,
+    updateUserPlan,
 }

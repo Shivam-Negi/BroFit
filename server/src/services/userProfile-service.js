@@ -61,6 +61,20 @@ async function updateUserProfilePlans(id, data) {
         throw new AppError('', StatusCodes.INTERNAL_SERVER_ERROR); 
     }
 }
+
+async function updateUserPlan(userId, data) {
+    try {
+        const userProfile = await userProfileRepository.getUserProfileInfo(userId);
+        const userProfilePlan = await userProfileRepository.updateUserProfile(userProfile._id, {
+            plan: data.plan,
+            planStartDate : '',
+            planExpiryDate : '',
+        });
+        return userProfilePlan;
+    } catch (error) {
+        throw new AppError('', StatusCodes.INTERNAL_SERVER_ERROR); 
+    }
+}
 async function deleteUserProfile(id) {
     try {
         const userProfile = await userProfileRepository.destroy(id);
@@ -88,5 +102,6 @@ module.exports = {
     updateUserProfile,
     deleteUserProfile,
     getUserProfileByUserId,
-    updateUserProfilePlans
+    updateUserProfilePlans,
+    updateUserPlan,
 }
