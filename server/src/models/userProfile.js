@@ -30,6 +30,14 @@ const userProfileSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Plan",
   },
+  planStartDate : {
+    type: String,
+    default : " "
+  },
+  planExpiryDate : {
+    type: String,
+    default : " "
+  },
   attendance: [
     {
       type: mongoose.Schema.Types.ObjectId,

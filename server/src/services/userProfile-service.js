@@ -2,6 +2,7 @@ const {UserProfileRepository} = require('../repositories');
 const userProfileRepository = new UserProfileRepository();
 const {StatusCodes} = require('http-status-codes');
 const AppError = require('../utils/errors/app-error');
+const { currentDate, dateAfterAddingDays } = require('../utils/helpers/datetime-helpers');
 
 
 async function createUserProfile(data) {
@@ -46,6 +47,20 @@ async function updateUserProfile(id, data) {
     }
 }
 
+async function updateUserProfilePlans(id, data) {
+    try {
+        const userProfile = await userProfileRepository.getUserProfileInfo(id);
+        const days = userProfile.plan.validity;
+        const userProfilePlan = await userProfileRepository.updateUserProfile(userProfile._id, {
+            status : data.status,
+            planStartDate : currentDate(),
+            planExpiryDate : dateAfterAddingDays(days),
+        });
+        return userProfilePlan;
+    } catch (error) {
+        throw new AppError('', StatusCodes.INTERNAL_SERVER_ERROR); 
+    }
+}
 async function deleteUserProfile(id) {
     try {
         const userProfile = await userProfileRepository.destroy(id);
@@ -73,4 +88,5 @@ module.exports = {
     updateUserProfile,
     deleteUserProfile,
     getUserProfileByUserId,
+    updateUserProfilePlans
 }

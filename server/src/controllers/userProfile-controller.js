@@ -31,7 +31,7 @@ async function getUserProfiles(req, res) {
         
     } catch (error) {
         errorResponse.error = error;
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse)
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse);
     }
 }
 async function getUserProfile(req, res) {
@@ -59,6 +59,18 @@ async function updateUserProfile(req, res) {
         
     }
 }
+async function updateUserProfilePlans(req, res) {
+    try {
+        const userProfile = await UserProfileService.updateUserProfilePlans(req.params.id, req.body);
+        // console.log(userProfile);
+        successResponse.data = userProfile;
+        return res.status(StatusCodes.OK).json(successResponse);
+    } catch (error) {
+        errorResponse.error = error;
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse);
+        
+    }
+}
 
 async function deleteUserProfile(req, res) {
     try {
@@ -78,4 +90,5 @@ module.exports = {
     getUserProfile,
     updateUserProfile,
     deleteUserProfile,
+    updateUserProfilePlans
 }

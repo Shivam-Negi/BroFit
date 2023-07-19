@@ -9,6 +9,20 @@ function currentDate () {
     return `${day}-${month}-${year}`;
 }
 
+function dateAfterAddingDays(days ){
+  const currentDate = new Date();
+  const dateCopy = new Date();
+  dateCopy.setDate(currentDate.getDate() + days);
+  const date = dateCopy.toLocaleDateString("en-IN", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    timeZone : "Asia/Kolkata",
+  });
+  const [day, month, year] = date.split("/");
+  return `${day}-${month}-${year}`;
+}
+
 function checkInTime() {
     const date = new Date().toLocaleTimeString("en-IN", {
       timeZone: "Asia/Kolkata", // Set the timezone to IST
@@ -35,5 +49,6 @@ module.exports = {
     currentDate,
     checkInTime,
     HrsToMins,
-    checkOutTime
+    checkOutTime,
+    dateAfterAddingDays,
 }

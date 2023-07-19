@@ -8,5 +8,6 @@ router.post('/', AuthMiddlewares.checkAuth, UserProfileController.createUserProf
 router.get('/:id', AuthMiddlewares.checkAuth, UserProfileController.getUserProfile);
 router.patch('/:id', AuthMiddlewares.checkAuth, UserProfileController.updateUserProfile);
 router.delete('/:id', AuthMiddlewares.checkAuth, UserProfileController.deleteUserProfile);
+router.patch('/plan/:id',UserProfileController.updateUserProfilePlans);
  
 module.exports = router;
