@@ -4,4 +4,5 @@ module.exports = {
   UserProfileController: require("./userProfile-controller"),
   PlanController: require("./plan-controller"),
   AttendanceController: require("./attendance-controller"),
+  ForgotPwdController: require("./forgotPwd-controller"),
 };

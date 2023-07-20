@@ -118,6 +118,33 @@ async function isAuthenticated(token) {
     );
   }
 }
+
+async function isAuthenticatedReset(id, token) {
+  try {
+    if (!token) {
+      throw new AppError('Missing JWT token', StatusCodes.BAD_REQUEST);
+    }
+    const user = await userRepository.get(id);
+    if(!user) {
+      throw new AppError('No user found', StatusCodes.NOT_FOUND);
+    }
+    const response = Auth.verifyTokenReset(token, user.password);
+    // console.log("response after token verification : ", response);
+    return response.userId;
+  } catch (error) {
+    if (error.name === 'JsonWebTokenError') {
+      throw new AppError('Invalid JWT token', StatusCodes.BAD_REQUEST);
+    }
+    if (error.name === 'TokenExpiredError') {
+      throw new AppError('JWT token expired', StatusCodes.BAD_REQUEST);
+    }
+    throw new AppError(
+      'Something went wrong',
+      StatusCodes.INTERNAL_SERVER_ERROR
+    );
+  }
+}
+
 async function getUserByUserId(id) {
   try {
     // console.log(id);
@@ -182,5 +209,6 @@ module.exports = {
   getUserByUserId,
   deleteUser,
   getUserInfo,
-  addRoleToUser
+  addRoleToUser,
+  isAuthenticatedReset,
 };
