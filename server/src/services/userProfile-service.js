@@ -66,7 +66,7 @@ async function updateUserPlan(userId, data) {
     try {
         const userProfile = await userProfileRepository.getUserProfileInfo(userId);
         const userProfilePlan = await userProfileRepository.updateUserProfile(userProfile._id, {
-            plan: data.plan,
+            plan: data.planId,
             planStartDate : '',
             planExpiryDate : '',
         });

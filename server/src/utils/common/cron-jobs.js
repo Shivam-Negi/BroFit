@@ -1,9 +1,10 @@
 const cron = require('node-cron');
-const { checkInTime, HrsToMins } = require('../helpers/datetime-helpers');
+const { checkInTime, HrsToMins, currentDate } = require('../helpers/datetime-helpers');
 const { AttendanceService } = require('../../services');
-const { GymRepository, AttendanceRepository } = require('../../repositories');
+const { GymRepository, AttendanceRepository, UserProfileRepository } = require('../../repositories');
 const gymRepository = new GymRepository();
 const attendanceRepository = new AttendanceRepository();
+const userProfileRepository = new UserProfileRepository();
 
 const status = 'IN';
 
@@ -48,7 +49,6 @@ async function checkOutCron() {
       try {
         const members = await AttendanceService.getStatusInUsers(status);
         //  console.log('members inside cron:', members);
-
         const currentTime = HrsToMins(checkInTime());
         // console.log('time : ', currentTime);
         for(const member of members) {
@@ -82,13 +82,33 @@ async function checkOutCron() {
           }
         }
       } catch (error) {
-        console.error('cron error:', error);
+        console.error('checkOutCron error:', error);
+    }
+  });
+}
+
+async function planExCron() {
+  cron.schedule('0 0 * * *', async () => {
+    try {
+      const users = await userProfileRepository.getExpireToday(currentDate());
+      //  console.log('users : ', users);
+      const data = {
+        status: 'inactive',       
+        planExpiryDate: '',
+        planStartDate: '',
       }
-    });
-  }
-  
+      for(const user of users) {
+        await userProfileRepository.updateUserProfile(user._id, data)
+      }
+    } catch (error) {
+      console.log('planExCron error : ', error);
+    }
+  })
+}
+
 
 module.exports = {
   graphCron,
-  checkOutCron
+  checkOutCron,
+  planExCron,
 }

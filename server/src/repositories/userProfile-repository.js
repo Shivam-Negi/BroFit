@@ -39,6 +39,16 @@ class UserProfileRepository extends CrudRepository {
       });
       return result;
   }
+  async getExpireToday(day) {
+    const userProfile = await UserProfile.find({ 
+          planExpiryDate : day
+      }).select('planExpiryDate userId plan')
+      .populate({
+        path: "plan",
+        select: "name validity -_id",
+      });
+    return userProfile;
+  }
 }
 
 module.exports = UserProfileRepository;
