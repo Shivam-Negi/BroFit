@@ -49,6 +49,17 @@ class UserProfileRepository extends CrudRepository {
       });
     return userProfile;
   }
+  async getUserByStatus(id, data) {
+    try {
+      const userProfile = await UserProfile.find({
+        gymId : id,
+        status : data,
+      });
+      return userProfile;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 module.exports = UserProfileRepository;

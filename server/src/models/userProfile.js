@@ -5,6 +5,11 @@ const userProfileSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
+  gymId : {
+    type : String,
+    required : true,
+
+  },
   profilePhoto: {
     type: String,
   },

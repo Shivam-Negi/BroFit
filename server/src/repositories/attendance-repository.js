@@ -31,7 +31,6 @@ class AttendanceRepository extends CrudRepository {
     });
     return attendance;
   }
-
   async getdailyAttendenceByGymId(id, data) {
     // console.log('id : ', id);
     // console.log('data : ',data);

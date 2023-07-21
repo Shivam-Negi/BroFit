@@ -98,6 +98,21 @@ async function deleteUserProfile(req, res) {
     }
 }
 
+async function getUserByStatus(req, res) {
+    try {
+        // console.log(req.params);
+        const userProfiles = await UserProfileService.getUserStatusByGymId(req.params.id, req.params.status);
+        // console.log(userProfiles);
+        successResponse.data = userProfiles;
+        // console.log(successResponse);
+        return res.status(StatusCodes.OK).json(successResponse);
+    } catch (error) {
+        // console.log(error);
+        errorResponse.error = error;
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse);
+    }
+}
+
 module.exports = {
     createUserProfile,
     getUserProfiles,
@@ -106,4 +121,5 @@ module.exports = {
     deleteUserProfile,
     updateUserProfilePlans,
     updateUserPlan,
+    getUserByStatus,
 }

@@ -1,12 +1,16 @@
-const {UserProfileRepository} = require('../repositories');
+const {UserProfileRepository, UserRepository} = require('../repositories');
 const userProfileRepository = new UserProfileRepository();
+const userRepository = new UserRepository();
 const {StatusCodes} = require('http-status-codes');
 const AppError = require('../utils/errors/app-error');
 const { currentDate, dateAfterAddingDays } = require('../utils/helpers/datetime-helpers');
+const user = require('../models/user');
 
 
 async function createUserProfile(data) {
     try {
+        const user = await userRepository.get(data.userId);
+        data.gymId = user.gymId;
         const userProfile = await userProfileRepository.create(data);
         return userProfile;
         
@@ -93,6 +97,21 @@ async function getUserProfileByUserId(id) {
         throw new AppError('', StatusCodes.INTERNAL_SERVER_ERROR);   
     }
 }
+async function getUserStatusByGymId(id ,data) {
+    try {
+        // console.log(data);
+        const userProfile = await userProfileRepository.getUserByStatus(id, data);
+        // console.log(userProfile);
+        if(userProfile.length === 0) {
+            // console.log('inside if');
+            throw new AppError('No such members found ', StatusCodes.NOT_FOUND);
+        }
+        return userProfile;
+    } catch (error) {
+        if(error instanceof AppError) throw error;
+        throw new AppError('', StatusCodes.INTERNAL_SERVER_ERROR); 
+    }
+}
 
 
 module.exports = {
@@ -104,4 +123,5 @@ module.exports = {
     getUserProfileByUserId,
     updateUserProfilePlans,
     updateUserPlan,
+    getUserStatusByGymId,
 }

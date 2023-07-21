@@ -10,5 +10,6 @@ router.patch('/:id', AuthMiddlewares.checkAuth, UserProfileController.updateUser
 router.delete('/:id', AuthMiddlewares.checkAuth, UserProfileController.deleteUserProfile);
 router.patch('/plan/:id',UserProfileController.updateUserProfilePlans);
 router.patch('/newPlan/:id',UserProfileController.updateUserPlan);
+router.get('/:id/:status',UserProfileController.getUserByStatus);
  
 module.exports = router;
