@@ -109,7 +109,7 @@ async function getUserByStatus(req, res) {
     } catch (error) {
         // console.log(error);
         errorResponse.error = error;
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse);
+        return res.status(error.statusCode).json(errorResponse);
     }
 }
 

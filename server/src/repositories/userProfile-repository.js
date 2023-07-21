@@ -54,12 +54,18 @@ class UserProfileRepository extends CrudRepository {
       const userProfile = await UserProfile.find({
         gymId : id,
         status : data,
-      }).populate({
+      }).populate([{
         path: "plan",
         select: "name validy -_id",
-      });
+      },
+      {
+        path: "userId",
+        select: "name email"
+      }
+    ]);
       return userProfile;
     } catch (error) {
+      // console.log(error);
       throw error;
     }
   }
