@@ -21,7 +21,7 @@ async function getUser(data) {
             userId: user._id,
           }, user.password);
         
-        const link = `http://localhost:7000/api/v1/forgotPass/reset/${user._id}/${jwt}`;
+        const link = `${serverConfig.RESET}/${user._id}/${jwt}`;
         const response = await Mailer.sendMail({
             from: serverConfig.GMAIL_EMAIL,
             to: user.email,
