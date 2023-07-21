@@ -8,10 +8,10 @@ const userProfileRepository = new UserProfileRepository();
 
 const status = 'IN';
 
-/* get currentlyCheckedIn mems every 10 mins and update the 
+/* get currentlyCheckedIn mems every 5 mins and update the 
 corresponding hour of the live graph of each gym */
 async function graphCron() {
-  cron.schedule('*/15 * * * * *', async () => {
+  cron.schedule('*/5 * * * *', async () => {
     try {
       const currentTime = checkInTime();
       const hour = currentTime.split(':')[0];
@@ -45,7 +45,7 @@ async function graphCron() {
  If yes update their checkOut time and change their status to 'OUT' */
 async function checkOutCron() {
     // every 15 mins it will check
-    cron.schedule('*/15 * * * * *', async () => {
+    cron.schedule('*/15 * * * * ', async () => {
       try {
         const members = await AttendanceService.getStatusInUsers(status);
         //  console.log('members inside cron:', members);
