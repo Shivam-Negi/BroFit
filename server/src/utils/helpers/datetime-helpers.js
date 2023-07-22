@@ -28,14 +28,11 @@ function checkInTime() {
       timeZone: "Asia/Kolkata", // Set the timezone to IST
       hour12: false, // Use 24-hour format
     });
-    const [hours, minutes] = date.split(":"); // Extract hours and minutes
+    let [hours, minutes] = date.split(":"); // Extract hours and minutes
+    if(hours == 24) {
+      hours = '00'
+    }
     return `${hours}:${minutes}`;
-}
-
-function checkOutTime() {
-    const checkInTime = this.checkIn;
-    const [hours, minutes] = checkInTime.split(':');
-    return `${+hours + 3}:${minutes}`;
 }
 
 function HrsToMins(time) {
@@ -49,6 +46,5 @@ module.exports = {
     currentDate,
     checkInTime,
     HrsToMins,
-    checkOutTime,
     dateAfterAddingDays,
 }

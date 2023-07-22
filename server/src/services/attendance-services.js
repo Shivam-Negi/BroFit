@@ -30,7 +30,7 @@ async function createAttendance(data) {
     await userProfile.save();
     return attendance;
   } catch (error) {
-    // console.log(error);
+    //  console.log(error);
     throw new AppError("", StatusCodes.INTERNAL_SERVER_ERROR);
   }
 }
