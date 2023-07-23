@@ -107,6 +107,9 @@ async function deleteAttendance(id) {
 async function getAttendanceByUserId(id) {
    try {
     const userProfile = await userProfileRepository.getUserProfileByUserId(id);
+    // if(!userProfile) {
+    //   throw new AppError('no such data is present', StatusCodes.NOT_FOUND);
+    // }
     if(userProfile.attendance.length === 0){
       return false;
     }
@@ -116,6 +119,7 @@ async function getAttendanceByUserId(id) {
     return attendance.day.split('-')[0];
    } catch (error) {
     console.log(error);
+    if( error instanceof AppError) throw error;
     throw new AppError("", StatusCodes.INTERNAL_SERVER_ERROR);
     
    }

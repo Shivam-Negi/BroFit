@@ -12,7 +12,8 @@ async function createUserProfile(req, res) {
             weight : req.body.weight,
             plan : req.body.plan,
             age : req.body.age,
-            gender : req.body.gender
+            gender : req.body.gender,
+            address : req.body.address
         });
         successResponse.data = userProfile;
         return res.status(StatusCodes.CREATED).json(successResponse);

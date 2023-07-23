@@ -4,4 +4,5 @@ module.exports = {
   PlanRepository: require("./plan-repository"),
   UserProfileRepository: require("./userProfile-repository"),
   AttendanceRepository: require("./attendance-repository"),
+  CounterRepository: require('./counter-repository')
 };

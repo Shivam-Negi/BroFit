@@ -60,7 +60,7 @@ class UserProfileRepository extends CrudRepository {
       },
       {
         path: "userId",
-        select: "name email"
+        select: "name email registerationNumber"
       }
     ]);
       return userProfile;

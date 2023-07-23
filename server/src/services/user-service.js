@@ -1,4 +1,4 @@
-const { UserRepository, GymRepository, UserProfileRepository, AttendanceRepository } = require('../repositories');
+const { UserRepository, GymRepository, UserProfileRepository, AttendanceRepository, CounterRepository } = require('../repositories');
 const AppError = require('../utils/errors/app-error');
 const { StatusCodes } = require('http-status-codes');
 const { Auth } = require('../utils/common');
@@ -9,13 +9,35 @@ const userProfileRespository = new UserProfileRepository();
 const userRepository = new UserRepository();
 const gymRepository = new GymRepository();
 const attendanceRespository = new AttendanceRepository();
+const counterRepository = new CounterRepository();
 
 async function createUser(data) {
   try {
+    
     const gym = await gymRepository.findGym(data.gymId);
-      // console.log('gym : ', gym);
-    const user = await userRepository.create(data);
-      // console.log('user : ', user);
+    // console.log('gym : ', gym);
+    let counter = await counterRepository.counterIncreement(gym.gymId);
+    // console.log(counter);
+    if(!counter) {
+      const newCounter = await counterRepository.create(
+      {
+        gymId: gym.gymId,
+        seq: 1,
+      });
+      counter = newCounter;
+      // console.log(counter);
+    }
+    // console.log(counter);
+    const user = await userRepository.create({
+            email : data.email,
+            password : data.password,
+            name : data.name,
+            gymId : data.gymId,
+            role : data.role,
+            registerationNumber : Number(counter.seq),
+    });
+    // console.log('user : ', user);
+
 
       /* const response = await Mailer.sendMail({
           from: serverConfig.GMAIL_EMAIL,

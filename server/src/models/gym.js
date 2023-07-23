@@ -46,6 +46,9 @@ const gymSchema = new mongoose.Schema({
   longitude : {
     type : String
   }
+},
+{
+  timestamps: true
 });
 
 module.exports = mongoose.model('Gym', gymSchema);

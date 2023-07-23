@@ -8,6 +8,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    registerationNumber: {
+      type : Number,
+      required: true,
+    },
     role: {
       type: String,
       enum: ['user', 'owner', 'admin'],

@@ -31,6 +31,9 @@ const userProfileSchema = new mongoose.Schema({
     enum: ['active', 'inactive'],
     default: 'inactive',
   },
+  address: {
+    type: String,
+  },
   plan: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Plan",
@@ -49,6 +52,9 @@ const userProfileSchema = new mongoose.Schema({
       ref: "Attendance",
     },
   ],
+},
+{
+  timestamps: true
 });
 
 module.exports = mongoose.model("UserProfile", userProfileSchema);
