@@ -66,7 +66,7 @@ class UserProfileRepository extends CrudRepository {
         path: "userId",
         select: "name email registerationNumber"
       }
-    ]);
+    ]).sort({updatedAt : -1});
       return userProfile;
     } catch (error) {
       // console.log(error);
