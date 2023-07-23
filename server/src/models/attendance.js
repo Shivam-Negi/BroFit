@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const {currentDate, checkInTime, checkOutTime} = require('../utils/helpers/datetime-helpers')
+const {currentDate, checkInTime} = require('../utils/helpers/datetime-helpers')
 
 const attendanceSchema = new mongoose.Schema({
   gymId: {

@@ -8,10 +8,10 @@ const userProfileRepository = new UserProfileRepository();
 
 const status = 'IN';
 
-/* get currentlyCheckedIn mems every 10 mins and update the 
+/* get currentlyCheckedIn mems every 5 mins and update the 
 corresponding hour of the live graph of each gym */
 async function graphCron() {
-  cron.schedule('*/15 * * * * *', async () => {
+  cron.schedule('*/5 * * * *', async () => {
     try {
       const currentTime = checkInTime();
       const hour = currentTime.split(':')[0];
@@ -24,15 +24,6 @@ async function graphCron() {
             [`liveGraph.${hour}`]: liveMem,
           }
         });
-        if(+hour == 1) {
-          for(let i = 0; i < 24; ++i) {
-            await gymRepository.updateByGymId(gym.gymId, {
-              $set: {
-                [`liveGraph.${i}`]: 0,
-              }
-            });
-          }
-        }
       }
     } catch (error) {
       console.log('graphCron error : ', error);
@@ -41,11 +32,11 @@ async function graphCron() {
 }
 
 
- /* get statusIn users and check if their checkIn time has been for more than 2.5 hrs.
+ /* get statusIn users and check if their checkIn time has been for more than 3 hrs.
  If yes update their checkOut time and change their status to 'OUT' */
 async function checkOutCron() {
     // every 15 mins it will check
-    cron.schedule('*/15 * * * * *', async () => {
+    cron.schedule('*/15 * * * * ', async () => {
       try {
         const members = await AttendanceService.getStatusInUsers(status);
         //  console.log('members inside cron:', members);
@@ -58,7 +49,8 @@ async function checkOutCron() {
             status : 'OUT'
           }
           let memInHr = member.checkIn.split(':')[0];
-          if(memInHr > (+checkInTime().split(':')[0])) {
+          // if user hasn't checked out till 1 a.m., auto checkout 
+          if(memInHr > (+checkInTime().split(':')[0]) && (+checkInTime().split(':')[0]) > 0) {
             await attendanceRepository.update(attendanceId, data);
             await gymRepository.updateByGymId(member.gymId, {
               $inc: {
@@ -66,6 +58,7 @@ async function checkOutCron() {
               }
             });
           }
+          // for rest of the cases
           else {
             let memTime = HrsToMins(member.checkIn);
             // console.log('mem : ', memTime);
@@ -106,9 +99,30 @@ async function planExCron() {
   })
 }
 
+// every night at 2 a.m. 
+async function graphResetCron() {
+  cron.schedule('0 2 * * *', async () => {
+    try {
+      const gyms = await gymRepository.getAll();
+      for (const gym of gyms) {
+        for(let i = 0; i < 24; ++i) {
+          await gymRepository.updateByGymId(gym.gymId, {
+            $set: {
+              [`liveGraph.${i}`]: 0,
+            }
+          });
+        }
+      }
+    } catch (error) {
+      console.log('graphResetCron error : ', error);
+    }
+  })
+}
+
 
 module.exports = {
   graphCron,
   checkOutCron,
   planExCron,
+  graphResetCron,
 }

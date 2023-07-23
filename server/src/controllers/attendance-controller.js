@@ -14,7 +14,7 @@ async function createAttendance(req, res) {
     // console.log(successResponse);
     return res.status(StatusCodes.CREATED).json(successResponse);
   } catch (error) {
-    // console.log(error);
+    //  console.log(error);
     errorResponse.error = error;
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse);
   }
