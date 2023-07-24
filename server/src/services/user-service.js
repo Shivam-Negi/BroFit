@@ -16,6 +16,14 @@ async function createUser(data) {
     
     const gym = await gymRepository.findGym(data.gymId);
     // console.log('gym : ', gym);
+    const user = await userRepository.create({
+            email : data.email,
+            password : data.password,
+            name : data.name,
+            gymId : data.gymId,
+            role : data.role,
+    });
+    // console.log('user : ', user);
     let counter = await counterRepository.counterIncreement(gym.gymId);
     // console.log(counter);
     if(!counter) {
@@ -28,17 +36,8 @@ async function createUser(data) {
       // console.log(counter);
     }
     // console.log(counter);
-    const user = await userRepository.create({
-            email : data.email,
-            password : data.password,
-            name : data.name,
-            gymId : data.gymId,
-            role : data.role,
-            registerationNumber : Number(counter.seq),
-    });
-    // console.log('user : ', user);
-
-
+    user.registerationNumber = counter.seq;
+    await user.save();
       /* const response = await Mailer.sendMail({
           from: serverConfig.GMAIL_EMAIL,
           to: user.email,
