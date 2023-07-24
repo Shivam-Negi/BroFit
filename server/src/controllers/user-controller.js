@@ -142,7 +142,7 @@ async function deleteUser(req, res) {
     } catch (error) {
         errorResponse.error = error;
         return res
-                .status(errorResponse)
+                .status(error.statusCode)
                 .json(errorResponse);
         
     }
