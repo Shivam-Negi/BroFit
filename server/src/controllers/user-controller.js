@@ -58,7 +58,7 @@ async function createUser(req, res) {    // signup
             password : req.body.password,
             name : req.body.name,
             gymId : req.body.gymId,
-            role : req.body.role, // just to test if it works // here we will only provide gymOwner role
+            // role : req.body.role,  
         });
         successResponse.data = user;
         return res
