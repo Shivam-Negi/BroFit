@@ -3,6 +3,8 @@ const { StatusCodes } = require("http-status-codes");
 const { errorResponse } = require("../utils/common");
 const { UserService } = require("../services");
 const AppError = require("../utils/errors/app-error");
+const { GymRepository } = require("../repositories");
+const gymRepository = new GymRepository();
 
 function validateAuthRequest(req, res, next) {
   // console.log(req.body);
@@ -23,6 +25,19 @@ function validateAuthRequest(req, res, next) {
     return res.status(StatusCodes.BAD_REQUEST).json(errorResponse);
   }
   next();
+}
+
+async function checkOwner(req, res, next) {
+  // console.log(req.body);
+  try {
+    const gymOwnerEmail = await gymRepository.findOwner(req.body.gymId);
+    if(gymOwnerEmail.email == req.body.email) {
+      req.body.role = 'owner';
+    }
+    next();
+  } catch (error) {
+    return res.status(StatusCodes.BAD_REQUEST).json(error);
+  }
 }
 
 async function checkAuth(req, res, next) {
@@ -107,5 +122,6 @@ module.exports = {
   checkRole,
   verifyRole,
   validateEmailRequest,
-  checkAuthReset
+  checkAuthReset,
+  checkOwner,
 };

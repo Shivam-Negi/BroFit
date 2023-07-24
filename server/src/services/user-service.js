@@ -37,9 +37,11 @@ async function createUser(data) {
       role : data.role,
       registerationNumber : counter.seq,
     });
-    gym.members.push(user);
+    if(data.role != 'owner') {
+      gym.members.push(user);
+      await gym.save();
+    }
     //console.log(gym.members);
-    await gym.save();
     const jwt = Auth.createToken({
       userId: user._id,
       role: user.role,

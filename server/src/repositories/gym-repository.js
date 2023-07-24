@@ -14,6 +14,12 @@ class GymRepository extends CrudRepository {
         });
         return gym;
     }
+    async findOwner(id) {
+        const gym = await Gym.findOne({
+            gymId : id
+        }).select('email -_id');
+        return gym;
+    }
 
     async getGymInfo(id) {
         const gym = await Gym.findOne({
