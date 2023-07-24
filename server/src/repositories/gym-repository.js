@@ -27,7 +27,7 @@ class GymRepository extends CrudRepository {
         }).populate('plans')
         .populate({
             path: "members",
-            select: "name"
+            select: "name registerationNumber"
         });
         return gym;
     }
