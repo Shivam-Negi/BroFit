@@ -19,13 +19,6 @@ async function createUser(data) {
       throw new AppError('The gym with the given gymId doesnt exist',StatusCodes.BAD_REQUEST);
     }
     // console.log('gym : ', gym);
-    const user = await userRepository.create({
-            email : data.email,
-            password : data.password,
-            name : data.name,
-            gymId : data.gymId,
-            role : data.role,
-    });
     // console.log('user : ', user);
     let counter = await counterRepository.counterIncreement(gym.gymId);
     // console.log(counter);
@@ -39,16 +32,14 @@ async function createUser(data) {
       // console.log(counter);
     }
     // console.log(counter);
-    user.registerationNumber = counter.seq;
-    await user.save();
-      /* const response = await Mailer.sendMail({
-          from: serverConfig.GMAIL_EMAIL,
-          to: user.email,
-          subject: 'Registration Complete',
-          text:  `congrats ${user.name}, you are now successfully registered in the gym ${gym.gymName}`
-      }); */
-      //  console.log(response);
-  
+    const user = await userRepository.create({
+      email : data.email,
+      password : data.password,
+      name : data.name,
+      gymId : data.gymId,
+      role : data.role,
+      registerationNumber : counter.seq,
+    });
     gym.members.push(user);
     //console.log(gym.members);
     await gym.save();
@@ -89,7 +80,7 @@ async function getUser(id) {
 async function signin(data) {
   try {
     const user = await userRepository.getUserByEmail(data.email);
-    //  console.log('in service, User details: ', user);
+      // console.log('in service, User details: ', user);
     if (!user) {
       throw new AppError(
         'No user found for the given email',
@@ -97,7 +88,7 @@ async function signin(data) {
       );
     }
     const passwordMatch = Auth.checkPassword(data.password, user.password);
-    // console.log("password match : ", passwordMatch);
+    //  console.log("password match : ", passwordMatch);
     if (!passwordMatch) {
       throw new AppError('Invalid password', StatusCodes.BAD_REQUEST);
     }
