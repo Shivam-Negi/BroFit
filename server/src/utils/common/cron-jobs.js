@@ -11,7 +11,7 @@ const status = 'IN';
 /* get currentlyCheckedIn mems every 5 mins and update the 
 corresponding hour of the live graph of each gym */
 async function graphCron() {
-  cron.schedule('*/5 * * * * *', async () => {
+  cron.schedule('*/5 * * * * ', async () => {
     try {
       const currentTime = checkInTime();
       const hour = currentTime.split(':')[0];
@@ -102,18 +102,18 @@ async function planExCron() {
 
 // every night at 2 a.m. 
 async function graphResetCron() {
-  cron.schedule('*/5 * * * * *', async () => {
+  cron.schedule('0 0 * * *', async () => {
     console.log('resetting graph');
     try {
       const gyms = await gymRepository.getAll();
       for (const gym of gyms) {
         for(let i = 0; i < 24; ++i) {
-          const res = await gymRepository.updateByGymId(gym.gymId, {
+           await gymRepository.updateByGymId(gym.gymId, {
             $set: {
               [`liveGraph.${i}`]: 0,
             }
           });
-          console.log(`${gym} reset ${res}`);
+          // console.log(`${gym} reset ${res}`);
         }
       }
     } catch (error) {
