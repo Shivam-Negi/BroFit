@@ -13,7 +13,7 @@ class AttendanceRepository extends CrudRepository {
       day: currentDate(),
     }).populate({
       path: "userId",
-      select: "name"})
+      select: "name registerationNumber"})
       // .select('checkIn checkOut status -_id');
     return attendance;
   }

@@ -6,9 +6,10 @@ const router = express.Router();
 
 router.get('/:id', UserController.getUser);
 
-router.get('/:name/:gym', UserController.getUserInfo);
+router.get('/:reg/:gym', UserController.getUserInfo);
 
 router.post('/signup', AuthMiddlewares.validateAuthRequest,
+                       AuthMiddlewares.checkOwner,
                        UserController.createUser);
 
 router.post('/signin',

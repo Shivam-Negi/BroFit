@@ -41,9 +41,11 @@ async function createUser(data) {
       role : data.role,
       registerationNumber : counter.seq,
     });
-    gym.members.push(user);
+    if(data.role != 'owner') {
+      gym.members.push(user);
+      await gym.save();
+    }
     //console.log(gym.members);
-    await gym.save();
     const jwt = Auth.createToken({
       userId: user._id,
       role: user.role,
@@ -191,7 +193,7 @@ async function getUserByUserId(id) {
 
 async function getUserInfo(data) {
   try {
-    const user = await userRepository.getUserByNameAndGym(data);
+    const user = await userRepository.getUserByRegAndGym(data);
     if(!user) {
       throw new AppError('no user exists for these values', StatusCodes.BAD_REQUEST);
     }

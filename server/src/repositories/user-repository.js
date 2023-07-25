@@ -18,11 +18,11 @@ class UserRepository extends CrudRepository {
         });
         return user;
     }
-    async getUserByNameAndGym(data) {
+    async getUserByRegAndGym(data) {
         const user = await User.findOne({
             gymId : data.gymId,
-            name : data.name
-        }).select('role name email gymId');
+            registerationNumber : data.registerationNumber
+        }).select('role name email gymId registerationNumber');
         return user;
     }
 }
