@@ -14,18 +14,18 @@ router.post('/signup', AuthMiddlewares.validateAuthRequest,
 
 router.post('/signin',
                 AuthMiddlewares.validateAuthRequest,
-                AuthMiddlewares.verifyRole('user'),
+                // AuthMiddlewares.verifyRole('user'),
                 UserController.signin);
 
-router.post('/signin/owner',
-                AuthMiddlewares.validateAuthRequest,
-                AuthMiddlewares.verifyRole('owner'),
-                UserController.signin);
+// router.post('/signin/owner',
+//                 AuthMiddlewares.validateAuthRequest,
+//                 AuthMiddlewares.verifyRole('owner'),
+//                 UserController.signin);
 
-router.post('/signin/admin',
-                AuthMiddlewares.validateAuthRequest,
-                AuthMiddlewares.verifyRole('admin'),
-                UserController.signin);
+// router.post('/signin/admin',
+//                 AuthMiddlewares.validateAuthRequest,
+//                 AuthMiddlewares.verifyRole('admin'),
+//                 UserController.signin);
 
 router.delete('/:id',UserController.deleteUser);
 

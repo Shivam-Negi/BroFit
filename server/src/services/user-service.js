@@ -13,8 +13,12 @@ const counterRepository = new CounterRepository();
 
 async function createUser(data) {
   try {
-    
+    // console.log(data.gymId);
     const gym = await gymRepository.findGym(data.gymId);
+    // console.log(gym);
+    if(!gym) {
+      throw new AppError('The gym with the given gymId doesnt exist',StatusCodes.BAD_REQUEST);
+    }
     // console.log('gym : ', gym);
     // console.log('user : ', user);
     let counter = await counterRepository.counterIncreement(gym.gymId);
@@ -50,6 +54,7 @@ async function createUser(data) {
     return {jwt, user};
   } catch (error) {
     // console.log(error);
+    if(error instanceof AppError) throw error;
     throw new AppError(
       'Cannot create a new User object',
       StatusCodes.INTERNAL_SERVER_ERROR
@@ -60,9 +65,14 @@ async function createUser(data) {
 async function getUser(id) {
   try {
     const user = await userRepository.get(id);
+    if(!user) {
+      throw new AppError('No User exists for the given UserId',StatusCodes.BAD_REQUEST);
+    }
     return user;
+   
   } catch (error) {
     // console.log(error);
+    if( error instanceof AppError) throw error;
     throw new AppError(
       'Cannot fetch data of the user',
       StatusCodes.INTERNAL_SERVER_ERROR
@@ -90,11 +100,12 @@ async function signin(data) {
       email: user.email,
       userId: user._id,
       role: user.role,
-      gymId: user.gymId
+      gymId: user.gymId,
+      registerationNumber: user.registerationNumber
     });
-    if(user.role != data.role) {
-      throw new AppError('Please make sure you are logging in from right portal',StatusCodes.UNAUTHORIZED);
-    }
+    // if(user.role != data.role) {
+    //   throw new AppError('Please make sure you are logging in from right portal',StatusCodes.UNAUTHORIZED);
+    // }
     return jwt;
   } catch (error) {
     if (error instanceof AppError) throw error;
@@ -126,6 +137,7 @@ async function isAuthenticated(token) {
     if (error.name === 'TokenExpiredError') {
       throw new AppError('JWT token expired', StatusCodes.BAD_REQUEST);
     }
+    if(error instanceof AppError) throw error;
     throw new AppError(
       'Something went wrong',
       StatusCodes.INTERNAL_SERVER_ERROR
@@ -152,6 +164,7 @@ async function isAuthenticatedReset(id, token) {
     if (error.name === 'TokenExpiredError') {
       throw new AppError('JWT token expired', StatusCodes.BAD_REQUEST);
     }
+    if(error instanceof AppError) throw error;
     throw new AppError(
       'Something went wrong',
       StatusCodes.INTERNAL_SERVER_ERROR
@@ -164,9 +177,13 @@ async function getUserByUserId(id) {
     // console.log(id);
     const user = await userRepository.getUserByUserId(id);
     // console.log(user);
+    if(!user) {
+      throw new AppError('no user exist for this userId',StatusCodes.BAD_REQUEST);
+    }
     return user;
   } catch (error) {
     // console.log(error);
+    if(error instanceof AppError) throw error;
     throw new AppError(
       'Cannot fetch data of the user',
       StatusCodes.INTERNAL_SERVER_ERROR
@@ -177,10 +194,14 @@ async function getUserByUserId(id) {
 async function getUserInfo(data) {
   try {
     const user = await userRepository.getUserByRegAndGym(data);
+    if(!user) {
+      throw new AppError('no user exists for these values', StatusCodes.BAD_REQUEST);
+    }
     // console.log(user);
     return user;
   } catch (error) {
     // console.log(error);
+    if(error instanceof AppError) throw error;
     throw new AppError(
       'Cannot fetch data of the user',
       StatusCodes.INTERNAL_SERVER_ERROR
@@ -191,11 +212,25 @@ async function getUserInfo(data) {
 async function deleteUser(id) {
   try {
     const user = await userRepository.destroy(id);
+    console.log(user);
+    if(!user) {
+      throw new AppError('no user exist for the given userId',StatusCodes.BAD_REQUEST);
+    }
     const gym = await gymRepository.deleteMembersFromGym(user.gymId, user._id);
+    // console.log(gym.nModified);
+    // if(gym.nModified === 0) {
+    //   throw new AppError('no such user exist in the gym members array',StatusCodes.BAD_GATEWAY);
+    // }
     const userProfile = await userProfileRespository.deleteUserProfileByUserId(user._id);
+    // console.log(userProfile);
+    // if(!userProfile) {
+    //   throw new AppError('no userProfile exist for this user',StatusCodes.BAD_REQUEST);
+    // }
     const attendance = await  attendanceRespository.deleteAllAttendanceOfTheUserId(userProfile.attendance);
+    // console.log(attendance);
     return user;
   } catch (error) {
+    if( error instanceof AppError) throw error;
     throw new AppError(
       'Cannot delete user from the database',
       StatusCodes.INTERNAL_SERVER_ERROR
@@ -206,6 +241,9 @@ async function deleteUser(id) {
 async function addRoleToUser(id, data) {
   try {
     const response = await userRepository.update(id, data);
+    if(!response) {
+      throw new AppError('no user found for this userId', StatusCodes.BAD_REQUEST);
+    }
     return response;
   } catch (error) {
     throw new AppError(
