@@ -176,7 +176,7 @@ async function getUserByUserId(id) {
 
 async function getUserInfo(data) {
   try {
-    const user = await userRepository.getUserByNameAndGym(data);
+    const user = await userRepository.getUserByRegAndGym(data);
     // console.log(user);
     return user;
   } catch (error) {

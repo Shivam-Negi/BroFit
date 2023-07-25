@@ -28,8 +28,8 @@ async function getUser(req, res) {
 async function getUserInfo(req, res) {
     try {
         const user = await UserService.getUserInfo({
-            name: req.params.name,
-            gymId:  req.params.gym
+            registerationNumber : req.params.reg,
+            gymId : req.params.gym
         });
         successResponse.data = user;
         return res
@@ -117,7 +117,7 @@ async function signin(req, res) {
 async function addRoleToUser(req, res) {
     try {
         const user = await UserService.addRoleToUser(req.params.id, {
-            role: 'owner',
+            role: req.body.role,
         });
         successResponse.data = user;
         return res

@@ -49,7 +49,7 @@ async function getGymGraph(id) {
 
 async function updateGym(id, data) {
     try {
-        const gym = await gymRepository.update(id, data);
+        const gym = await gymRepository.updateByGymId(id, data);
         return gym;
         
     } catch (error) {
