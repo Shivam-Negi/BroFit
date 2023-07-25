@@ -67,7 +67,7 @@ async function createUser(req, res) {    // signup
 
     }
     catch(error) {
-        console.log(error)
+        // console.log(error)
         errorResponse.error = error;
         return res
                 .status(error.statusCode)

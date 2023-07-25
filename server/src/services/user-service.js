@@ -13,8 +13,9 @@ const counterRepository = new CounterRepository();
 
 async function createUser(data) {
   try {
-    
+    // console.log(data.gymId);
     const gym = await gymRepository.findGym(data.gymId);
+    // console.log(gym);
     if(!gym) {
       throw new AppError('The gym with the given gymId doesnt exist',StatusCodes.BAD_REQUEST);
     }
@@ -97,11 +98,12 @@ async function signin(data) {
       email: user.email,
       userId: user._id,
       role: user.role,
-      gymId: user.gymId
+      gymId: user.gymId,
+      registerationNumber: user.registerationNumber
     });
-    if(user.role != data.role) {
-      throw new AppError('Please make sure you are logging in from right portal',StatusCodes.UNAUTHORIZED);
-    }
+    // if(user.role != data.role) {
+    //   throw new AppError('Please make sure you are logging in from right portal',StatusCodes.UNAUTHORIZED);
+    // }
     return jwt;
   } catch (error) {
     if (error instanceof AppError) throw error;
@@ -208,18 +210,22 @@ async function getUserInfo(data) {
 async function deleteUser(id) {
   try {
     const user = await userRepository.destroy(id);
+    console.log(user);
     if(!user) {
       throw new AppError('no user exist for the given userId',StatusCodes.BAD_REQUEST);
     }
     const gym = await gymRepository.deleteMembersFromGym(user.gymId, user._id);
-    if(gym.nModified === 0) {
-      throw new AppError('no such user exist in the gym members array',StatusCodes.BAD_GATEWAY);
-    }
+    // console.log(gym.nModified);
+    // if(gym.nModified === 0) {
+    //   throw new AppError('no such user exist in the gym members array',StatusCodes.BAD_GATEWAY);
+    // }
     const userProfile = await userProfileRespository.deleteUserProfileByUserId(user._id);
-    if(!userProfile) {
-      throw new AppError('no userProfile exist for this user');
-    }
+    // console.log(userProfile);
+    // if(!userProfile) {
+    //   throw new AppError('no userProfile exist for this user',StatusCodes.BAD_REQUEST);
+    // }
     const attendance = await  attendanceRespository.deleteAllAttendanceOfTheUserId(userProfile.attendance);
+    // console.log(attendance);
     return user;
   } catch (error) {
     if( error instanceof AppError) throw error;

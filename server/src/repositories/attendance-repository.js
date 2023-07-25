@@ -40,7 +40,7 @@ class AttendanceRepository extends CrudRepository {
         day : data
       }).populate({
           path: "userId",
-          select: "name"});
+          select: "name registerationNumber"});
       // console.log(attendance);
       
       return attendance;
