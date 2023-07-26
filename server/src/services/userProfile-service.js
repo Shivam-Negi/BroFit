@@ -10,12 +10,16 @@ const user = require('../models/user');
 async function createUserProfile(data) {
     try {
         const user = await userRepository.get(data.userId);
+        if(!user) {
+            throw new AppError('no user found for the userId', StatusCodes.BAD_REQUEST);
+        }
         data.gymId = user.gymId;
         const userProfile = await userProfileRepository.create(data);
         return userProfile;
         
     } catch (error) {
         // console.log(error);
+        if(error instanceof AppError) throw error;
         throw new AppError('', StatusCodes.INTERNAL_SERVER_ERROR);       
     }
 }
