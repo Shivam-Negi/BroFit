@@ -21,6 +21,14 @@ async function createUser(data) {
     }
     // console.log('gym : ', gym);
     // console.log('user : ', user);
+    let user = await userRepository.create({
+      email : data.email,
+      password : data.password,
+      name : data.name,
+      gymId : data.gymId,
+      role : data.role,
+      // registerationNumber : counter.seq,
+    });
     let counter = await counterRepository.counterIncreement(gym.gymId);
     // console.log(counter);
     if(!counter) {
@@ -33,14 +41,9 @@ async function createUser(data) {
       // console.log(counter);
     }
     // console.log(counter);
-    const user = await userRepository.create({
-      email : data.email,
-      password : data.password,
-      name : data.name,
-      gymId : data.gymId,
-      role : data.role,
-      registerationNumber : counter.seq,
-    });
+    // user.registerationNumber = counter.seq;
+    // await user.save();
+    user = await userRepository.update(user.id, {registerationNumber : counter.seq});
     if(data.role != 'owner') {
       gym.members.push(user);
       await gym.save();
