@@ -47,9 +47,14 @@ class UserProfileRepository extends CrudRepository {
   }
 
   async updateUserProfile(id, data) {
-      const result = await UserProfile.findByIdAndUpdate(id, data, {new: true}).populate({
+      const result = await UserProfile.findByIdAndUpdate(id, data, {new: true}).select('-attendance')
+      .populate({
         path: "plan",
         select: "name validity -_id",
+      })
+      .populate({
+        path: "userId",
+        select: "name email registerationNumber -_id ",
       });
       return result;
   }
