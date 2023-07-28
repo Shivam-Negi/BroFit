@@ -13,14 +13,15 @@ async function createUserProfile(req, res) {
             plan : req.body.plan,
             age : req.body.age,
             gender : req.body.gender,
-            address : req.body.address
+            address : req.body.address,
+            phoneNumber : req.body.phoneNumber
         });
         successResponse.data = userProfile;
         return res.status(StatusCodes.CREATED).json(successResponse);
         
     } catch (error) {
         errorResponse.error = error;
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse);
+        return res.status(error.statusCode).json(errorResponse);
     }
 }
 

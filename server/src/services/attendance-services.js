@@ -10,11 +10,17 @@ const { checkInTime } = require("../utils/helpers/datetime-helpers");
 async function createAttendance(data) {
   try {
     const user = await userRepository.get(data.userId);
+    if(!user) {
+      throw new AppError('no user exist for this userId', StatusCodes.BAD_REQUEST);
+    }
     const attendance = await attendanceRepository.create({
       gymId: user.gymId,
       userId: data.userId,
     });
     const gym = await gymRepository.findGym(user.gymId);
+    if(!gym) {
+      throw new AppError('no gym exist for this gymId', StatusCodes.BAD_REQUEST);
+    }
     let liveMem = gym.currentlyCheckedIn;
     liveMem = liveMem + 1;
     const currentTime = checkInTime();
@@ -26,12 +32,16 @@ async function createAttendance(data) {
       }
     })
     const userProfile = await userProfileRepository.getUserProfileByUserId(data.userId);
+    if(!userProfile) {
+      throw new AppError('no userProfile exists for this userId', StatusCodes.BAD_REQUEST);
+    }
     userProfile.attendance.push(attendance);
     await userProfile.save();
     return attendance;
   } catch (error) {
     //  console.log(error);
-    throw new AppError("", StatusCodes.INTERNAL_SERVER_ERROR);
+    if(error instanceof AppError) return error;
+    throw new AppError("could not create attendence for the user", StatusCodes.INTERNAL_SERVER_ERROR);
   }
 }
 
@@ -68,6 +78,9 @@ async function getAttendance(id) {
 async function updateAttendance(id, userId) {
   try {
     const userProfile = await userProfileRepository.getUserProfileByUserId(id);
+    if(!userProfile) {
+      throw new AppError('no userProfile found for the given userId',StatusCodes.BAD_REQUEST);
+    }
     let attendanceArray = userProfile.attendance;
     const attendanceId = attendanceArray[attendanceArray.length-1];
     const data = {
@@ -76,7 +89,13 @@ async function updateAttendance(id, userId) {
     }
     const attendance = await attendanceRepository.update(attendanceId, data);
     const user = await userRepository.get(userId);
+    if(!user) {
+      throw new AppError('no user found for this userId', StatusCodes.BAD_REQUEST);
+    }
     const gym = await gymRepository.findGym(user.gymId);
+    if(!gym) {
+      throw new AppError('no gym found for this gymId', StatusCodes.BAD_REQUEST);
+    }
     let liveMem = gym.currentlyCheckedIn;
     liveMem = liveMem - 1;
     const currentTime = checkInTime();

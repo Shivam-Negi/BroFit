@@ -21,6 +21,14 @@ async function createUser(data) {
     }
     // console.log('gym : ', gym);
     // console.log('user : ', user);
+    let user = await userRepository.create({
+      email : data.email,
+      password : data.password,
+      name : data.name,
+      gymId : data.gymId,
+      role : data.role,
+      // registerationNumber : counter.seq,
+    });
     let counter = await counterRepository.counterIncreement(gym.gymId);
     // console.log(counter);
     if(!counter) {
@@ -33,14 +41,9 @@ async function createUser(data) {
       // console.log(counter);
     }
     // console.log(counter);
-    const user = await userRepository.create({
-      email : data.email,
-      password : data.password,
-      name : data.name,
-      gymId : data.gymId,
-      role : data.role,
-      registerationNumber : counter.seq,
-    });
+    // user.registerationNumber = counter.seq;
+    // await user.save();
+    user = await userRepository.update(user.id, {registerationNumber : counter.seq});
     if(data.role != 'owner') {
       gym.members.push(user);
       await gym.save();
@@ -212,22 +215,23 @@ async function getUserInfo(data) {
 async function deleteUser(id) {
   try {
     const user = await userRepository.destroy(id);
-    console.log(user);
+    // console.log(user);
     if(!user) {
       throw new AppError('no user exist for the given userId',StatusCodes.BAD_REQUEST);
     }
     const gym = await gymRepository.deleteMembersFromGym(user.gymId, user._id);
-    // console.log(gym.nModified);
-    // if(gym.nModified === 0) {
-    //   throw new AppError('no such user exist in the gym members array',StatusCodes.BAD_GATEWAY);
-    // }
+    // console.log(gym);
+    if(!gym.acknowledged) {
+      throw new AppError('no such user exist in the gym members array',StatusCodes.BAD_GATEWAY);
+    }
     const userProfile = await userProfileRespository.deleteUserProfileByUserId(user._id);
     // console.log(userProfile);
-    // if(!userProfile) {
-    //   throw new AppError('no userProfile exist for this user',StatusCodes.BAD_REQUEST);
-    // }
-    const attendance = await  attendanceRespository.deleteAllAttendanceOfTheUserId(userProfile.attendance);
-    // console.log(attendance);
+    if(!userProfile && user.role == 'user') {
+      throw new AppError('no userProfile exist for this user',StatusCodes.BAD_REQUEST);
+    }
+    if(user.role === 'user') {
+      const attendance = await  attendanceRespository.deleteAllAttendanceOfTheUserId(userProfile.attendance);
+    }
     return user;
   } catch (error) {
     if( error instanceof AppError) throw error;
@@ -241,8 +245,8 @@ async function deleteUser(id) {
 async function addRoleToUser(id, data) {
   try {
     const response = await userRepository.update(id, data);
-    if(!response) {
-      throw new AppError('no user found for this userId', StatusCodes.BAD_REQUEST);
+    if(!response.acknowledged) {
+      throw new AppError('failed to change the role of the user please check details and try again later', StatusCodes.BAD_REQUEST);
     }
     return response;
   } catch (error) {

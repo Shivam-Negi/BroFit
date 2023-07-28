@@ -34,6 +34,10 @@ const userProfileSchema = new mongoose.Schema({
   address: {
     type: String,
   },
+  phoneNumber: {
+    type: String,
+    maxLength: 10,
+  },
   plan: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Plan",
