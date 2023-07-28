@@ -8,7 +8,7 @@ class UserProfileRepository extends CrudRepository {
 
   async getUserProfileInfo(id) {
     const userProfile = await UserProfile.findOne({ userId : id })
-      .select('-attendance -_id')
+      .select('-attendance')
       .populate({
         path: "userId",
         select: "name email registerationNumber -_id ",
