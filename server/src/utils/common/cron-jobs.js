@@ -92,7 +92,8 @@ async function planExCron() {
         planStartDate: '',
       }
       for(const user of users) {
-        await userProfileRepository.updateUserProfile(user._id, data)
+        await userProfileRepository.updateUserProfile(user._id, data);
+        console.log(`${user} plan updated to inactive at ${checkInTime()}`);
       }
     } catch (error) {
       console.log('planExCron error : ', error);
@@ -113,7 +114,7 @@ async function graphResetCron() {
               [`liveGraph.${i}`]: 0,
             }
           });
-          // console.log(`${gym} reset ${res}`);
+           console.log(`${gym} graph reset at ${checkInTime()}`);
         }
       }
     } catch (error) {

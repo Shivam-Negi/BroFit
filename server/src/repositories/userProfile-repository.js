@@ -11,7 +11,7 @@ class UserProfileRepository extends CrudRepository {
       .select('-attendance -_id')
       .populate({
         path: "userId",
-        select: "email registerationNumber -_id ",
+        select: "name email registerationNumber -_id ",
       })
       /* .populate({
         path: "attendance",
@@ -71,7 +71,7 @@ class UserProfileRepository extends CrudRepository {
       }).select('userId -_id')
       .populate({
         path: "userId",
-        select: "email registerationNumber _id",
+        select: "name registerationNumber _id",
       }).sort({updatedAt : -1});
       return userProfile;
     } catch (error) {
