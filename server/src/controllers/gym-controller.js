@@ -51,6 +51,18 @@ async function getGymGraph(req, res) {
     }
 }
 
+async function getGymMems(req, res) {
+    try {
+        const gym = await GymService.getGymMems(req.params.id);
+        successResponse.data = gym;
+        return res.status(StatusCodes.OK).json(successResponse);
+        
+    } catch (error) {
+        errorResponse.error = error;
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse);   
+    }
+}
+
 async function updateGym(req, res) {
     try {
         const gym = await GymService.updateGym(req.params.id, req.body);
@@ -82,4 +94,5 @@ module.exports = {
     getGymGraph,
     updateGym,
     deleteGym,
+    getGymMems
 }

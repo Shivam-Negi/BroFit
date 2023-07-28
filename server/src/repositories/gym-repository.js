@@ -24,7 +24,15 @@ class GymRepository extends CrudRepository {
     async getGymInfo(id) {
         const gym = await Gym.findOne({
             gymId : id
-        }).populate('plans')
+        }).select('gymName owner email gymId plans -_id')
+        .populate('plans');
+        return gym;
+    }
+
+    async getGymMems(id) {
+        const gym = await Gym.findOne({
+            gymId : id
+        }).select('members -_id')
         .populate({
             path: "members",
             select: "name registerationNumber"
