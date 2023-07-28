@@ -41,6 +41,17 @@ async function getUserProfile(id) {
     }
 }
 
+async function getUserAttendance(id) {
+    try {
+        const userProfile = await userProfileRepository.getUserAttendance(id);
+        //  console.log(userProfile);
+        return userProfile;
+    } catch (error) {
+        // console.log(error);
+        throw new AppError('', StatusCodes.INTERNAL_SERVER_ERROR);    
+    }
+}
+
 async function updateUserProfile(id, data) {
     try {
         const userProfile = await userProfileRepository.updateUserProfile(id, data);
@@ -124,4 +135,5 @@ module.exports = {
     updateUserProfilePlans,
     updateUserPlan,
     getUserStatusByGymId,
+    getUserAttendance
 }

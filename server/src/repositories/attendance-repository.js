@@ -11,9 +11,9 @@ class AttendanceRepository extends CrudRepository {
     const attendance = Attendance.find({
       gymId: id,
       day: currentDate(),
-    }).populate({
+    }).select('checkIn checkOut -_id').populate({
       path: "userId",
-      select: "name registerationNumber"})
+      select: "name registerationNumber"});
       // .select('checkIn checkOut status -_id');
     return attendance;
   }
@@ -38,9 +38,9 @@ class AttendanceRepository extends CrudRepository {
       const attendance = await Attendance.find({
         gymId : id,
         day : data
-      }).populate({
-          path: "userId",
-          select: "name registerationNumber"});
+      }).select('checkIn checkOut -_id').populate({
+        path: "userId",
+        select: "name registerationNumber"});
       // console.log(attendance);
       
       return attendance;

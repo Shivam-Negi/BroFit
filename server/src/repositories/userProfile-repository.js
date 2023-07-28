@@ -8,17 +8,27 @@ class UserProfileRepository extends CrudRepository {
 
   async getUserProfileInfo(id) {
     const userProfile = await UserProfile.findOne({ userId : id })
+      .select('-attendance -_id')
       .populate({
         path: "userId",
-        select: "email registerationNumber -_id",
+        select: "email registerationNumber -_id ",
       })
-      .populate({
+      /* .populate({
         path: "attendance",
         select: "checkIn checkOut day -_id",
-      })
+      }) */
       .populate({
         path: "plan",
         select: "name validity -_id",
+      });
+    return userProfile;
+  }
+  async getUserAttendance(id) {
+    const userProfile = await UserProfile.findOne({ userId : id })
+      .select('attendance -_id')
+      .populate({
+        path: "attendance",
+        select: "day status -_id ",
       });
     return userProfile;
   }
@@ -58,15 +68,11 @@ class UserProfileRepository extends CrudRepository {
       const userProfile = await UserProfile.find({
         gymId : id,
         status : data,
-      }).populate([{
-        path: "plan",
-        select: "name validy -_id",
-      },
-      {
+      }).select('userId -_id')
+      .populate({
         path: "userId",
-        select: "name email registerationNumber"
-      }
-    ]).sort({updatedAt : -1});
+        select: "email registerationNumber _id",
+      }).sort({updatedAt : -1});
       return userProfile;
     } catch (error) {
       // console.log(error);

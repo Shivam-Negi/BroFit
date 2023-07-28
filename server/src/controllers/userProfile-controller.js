@@ -49,6 +49,20 @@ async function getUserProfile(req, res) {
     }
 }
 
+async function getUserAttendance(req, res) {
+    try {
+        const userProfile = await UserProfileService.getUserAttendance(req.params.id);
+        //  console.log(userProfile);
+        successResponse.data = userProfile;
+        return res.status(StatusCodes.OK).json(successResponse);
+    } catch (error) {
+         console.log(error);
+        errorResponse.error = error;
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse);
+        
+    }
+}
+
 async function updateUserProfile(req, res) {
     try {
         const userProfile = await UserProfileService.updateUserProfile(req.params.id, req.body);
@@ -123,4 +137,5 @@ module.exports = {
     updateUserProfilePlans,
     updateUserPlan,
     getUserByStatus,
+    getUserAttendance
 }
