@@ -1,4 +1,4 @@
-const { UserRepository, GymRepository, UserProfileRepository, AttendanceRepository, CounterRepository } = require('../repositories');
+const { UserRepository, GymRepository, UserProfileRepository, AttendanceRepository, CounterRepository} = require('../repositories');
 const AppError = require('../utils/errors/app-error');
 const { StatusCodes } = require('http-status-codes');
 const { Auth } = require('../utils/common');
@@ -27,7 +27,7 @@ async function createUser(data) {
       name : data.name,
       gymId : data.gymId,
       role : data.role,
-      // registerationNumber : counter.seq,
+      // registerationNumber : 0,
     });
     let counter = await counterRepository.counterIncreement(gym.gymId);
     // console.log(counter);
@@ -38,7 +38,7 @@ async function createUser(data) {
         seq: 1,
       });
       counter = newCounter;
-      // console.log(counter);
+      console.log(counter);
     }
     // console.log(counter);
     // user.registerationNumber = counter.seq;
@@ -56,7 +56,7 @@ async function createUser(data) {
     });
     return {jwt, user};
   } catch (error) {
-    // console.log(error);
+    console.log(error);
     if(error instanceof AppError) throw error;
     throw new AppError(
       'Cannot create a new User object',
@@ -245,11 +245,13 @@ async function deleteUser(id) {
 async function addRoleToUser(id, data) {
   try {
     const response = await userRepository.update(id, data);
-    if(!response.acknowledged) {
-      throw new AppError('failed to change the role of the user please check details and try again later', StatusCodes.BAD_REQUEST);
-    }
+    // console.log(response.acknowledged);
+    // if(!response.acknowledged) {
+    //   throw new AppError('failed to change the role of the user please check details and try again later', StatusCodes.BAD_REQUEST);
+    // }
     return response;
   } catch (error) {
+    // if(error instanceof AppError) throw error;
     throw new AppError(
       'Cannot fetch data of the user',
       StatusCodes.INTERNAL_SERVER_ERROR
