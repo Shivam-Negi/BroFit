@@ -50,7 +50,7 @@ userSchema.pre('save', function (next) {
   next();
 });
 
-// userSchema.post('save', async function(next) {
+// userSchema.post('create', async function(next) {
 //   const user = this;
 //   let counter = await Counter.findOneAndUpdate(
 //     {gymId : id},

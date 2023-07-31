@@ -20,7 +20,7 @@ async function createUserProfile(data) {
     } catch (error) {
         // console.log(error);
         if(error instanceof AppError) throw error;
-        throw new AppError('', StatusCodes.INTERNAL_SERVER_ERROR);       
+        throw new AppError('Something went wrong cannot create user Profile', StatusCodes.INTERNAL_SERVER_ERROR);       
     }
 }
 
@@ -30,29 +30,37 @@ async function getUserProfiles() {
         return userProfiles;
     } catch (error) {
         // console.log(error);
-        throw new AppError('', StatusCodes.INTERNAL_SERVER_ERROR);
+        throw new AppError('Something went wrong cannot fetch the user Profiles', StatusCodes.INTERNAL_SERVER_ERROR);
     }
 }
 
 async function getUserProfile(id) {
     try {
         const userProfile = await userProfileRepository.getUserProfileInfo(id);
+        if(!userProfile) {
+            throw new AppError('no user Profile found for this user', StatusCodes.BAD_REQUEST);
+        }
         //  console.log(userProfile);
         return userProfile;
     } catch (error) {
         // console.log(error);
-        throw new AppError('', StatusCodes.INTERNAL_SERVER_ERROR);    
+        if(error instanceof AppError) throw error;
+        throw new AppError('Something went wrong cannot fetch the user Profiles', StatusCodes.INTERNAL_SERVER_ERROR);    
     }
 }
 
 async function getUserAttendance(id) {
     try {
         const userProfile = await userProfileRepository.getUserAttendance(id);
+        if(!userProfile) {
+            throw new AppError('no attendence found for this user Profile', StatusCodes.BAD_REQUEST);
+        }
         //  console.log(userProfile);
         return userProfile;
     } catch (error) {
         // console.log(error);
-        throw new AppError('', StatusCodes.INTERNAL_SERVER_ERROR);    
+        if(error instanceof AppError) throw error;
+        throw new AppError('Something went wrong cannot fetch the user attendance', StatusCodes.INTERNAL_SERVER_ERROR);    
     }
 }
 
@@ -62,13 +70,16 @@ async function updateUserProfile(id, data) {
         return userProfile;
     } catch (error) {
         // console.log(error);
-        throw new AppError('', StatusCodes.INTERNAL_SERVER_ERROR);   
+        throw new AppError('Something went wrong cannot update the user Profle', StatusCodes.INTERNAL_SERVER_ERROR);   
     }
 }
 
 async function updateUserProfilePlans(id, data) {
     try {
         const userProfile = await userProfileRepository.getUserProfileInfo(id);
+        if(!userProfile) {
+            throw new AppError('cannot find the userProfile for this user', StatusCodes.BAD_REQUEST);
+        }
         const days = userProfile.plan.validity;
         const userProfilePlan = await userProfileRepository.updateUserProfile(userProfile._id, {
             status : data.status,
@@ -77,13 +88,17 @@ async function updateUserProfilePlans(id, data) {
         });
         return userProfilePlan;
     } catch (error) {
-        throw new AppError('', StatusCodes.INTERNAL_SERVER_ERROR); 
+        if(error instanceof AppError) throw error;
+        throw new AppError('Something went wrong cannot update the user plans', StatusCodes.INTERNAL_SERVER_ERROR); 
     }
 }
 
 async function updateUserPlan(userId, data) {
     try {
         const userProfile = await userProfileRepository.getUserProfileInfo(userId);
+        if(!userProfile) {
+            throw AppError('cannot find the userProfile for this user', StatusCodes.BAD_REQUEST);
+        }
         const userProfilePlan = await userProfileRepository.updateUserProfile(userProfile._id, {
             plan: data.planId,
             planStartDate : '',
@@ -91,7 +106,8 @@ async function updateUserPlan(userId, data) {
         });
         return userProfilePlan;
     } catch (error) {
-        throw new AppError('', StatusCodes.INTERNAL_SERVER_ERROR); 
+        if(error instanceof AppError) throw error;
+        throw new AppError('Something went wrong cannot update the user plans', StatusCodes.INTERNAL_SERVER_ERROR); 
     }
 }
 async function deleteUserProfile(id) {
@@ -100,16 +116,20 @@ async function deleteUserProfile(id) {
         return userProfile;
     } catch (error) {
         // console.log(error);
-        throw new AppError('', StatusCodes.INTERNAL_SERVER_ERROR);   
+        throw new AppError('Something went wrong cannot delete the user profile', StatusCodes.INTERNAL_SERVER_ERROR);   
     }
 }
 async function getUserProfileByUserId(id) {
     try {
         const userProfile = await userProfileRepository.getUserProfileByUserId(id);
+        if(!userProfile) {
+            throw AppError('cannot find the userProfile for this user', StatusCodes.BAD_REQUEST);
+        }
         return userProfile;
     } catch (error) {
         // console.log(error);
-        throw new AppError('', StatusCodes.INTERNAL_SERVER_ERROR);   
+        if(error instanceof AppError) throw error;
+        throw new AppError('Something went wrong cannot fetch the user Profile', StatusCodes.INTERNAL_SERVER_ERROR);   
     }
 }
 async function getUserStatusByGymId(id ,data) {
@@ -124,7 +144,7 @@ async function getUserStatusByGymId(id ,data) {
         return userProfile;
     } catch (error) {
         if(error instanceof AppError) throw error;
-        throw new AppError('', StatusCodes.INTERNAL_SERVER_ERROR); 
+        throw new AppError('Something went wrong cannot fetch the user status', StatusCodes.INTERNAL_SERVER_ERROR); 
     }
 }
 
