@@ -11,7 +11,7 @@ async function createGym(req, res) {
         
     } catch (error) {
         errorResponse.error = error;
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse);
+        return res.status(error.statusCode).json(errorResponse);
     }
 }
 
@@ -23,7 +23,7 @@ async function getGyms(req, res) {
         
     } catch (error) {
         errorResponse.error = error;
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse);
+        return res.status(error.statusCode).json(errorResponse);
     }
 }
 
@@ -35,7 +35,7 @@ async function getGym(req, res) {
         
     } catch (error) {
         errorResponse.error = error;
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse);   
+        return res.status(error.statusCode).json(errorResponse);   
     }
 }
 
@@ -47,7 +47,7 @@ async function getGymGraph(req, res) {
         
     } catch (error) {
         errorResponse.error = error;
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse);   
+        return res.status(error.statusCode).json(errorResponse);   
     }
 }
 
@@ -59,7 +59,7 @@ async function getGymMems(req, res) {
         
     } catch (error) {
         errorResponse.error = error;
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse);   
+        return res.status(error.statusCode).json(errorResponse);   
     }
 }
 
@@ -70,7 +70,7 @@ async function updateGym(req, res) {
         return res.status(StatusCodes.OK).json(successResponse);
     } catch (error) {
         errorResponse.error = error;
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse);
+        return res.status(error.statusCode).json(errorResponse);
         
     }
 }
@@ -82,7 +82,7 @@ async function deleteGym(req, res) {
         
     } catch (error) {
         errorResponse.error = error;
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse)
+        return res.status(error.statusCode).json(errorResponse)
         
     }
 }

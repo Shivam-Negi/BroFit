@@ -10,7 +10,7 @@ async function createPlan(data) {
     try {
         const gym = await gymRepository.findGym(data.gymId);
         if(!gym) {
-            throw 'No gym exists for this gym id.'
+            throw 'No gym exists for this gym id.';
         }
         const plan = await planRepository.create(data);
         gym.plans.push(plan);
@@ -18,7 +18,8 @@ async function createPlan(data) {
         return plan;
         
     } catch (error) {
-         console.log(error);
+        //  console.log(error);
+        // if(error instanceof AppError) throw error;
         throw new AppError(error, StatusCodes.INTERNAL_SERVER_ERROR);       
     }
 }
@@ -29,18 +30,23 @@ async function getPlans(gymId) {
         return plans;
     } catch (error) {
         // console.log(error);
-        throw new AppError('', StatusCodes.INTERNAL_SERVER_ERROR);
+        if(error instanceof AppError) throw error;
+        throw new AppError('Something went wrong cannot fetch the gym plans', StatusCodes.INTERNAL_SERVER_ERROR);
     }
 }
 
 async function getPlan(id) {
     try {
         const plan = await planRepository.get(id);
+        if(!plan) {
+            throw new AppError('no plan found for this id', StatusCodes.BAD_REQUEST);
+        }
         return plan;
         
     } catch (error) {
         // console.log(error);
-        throw new AppError('', StatusCodes.INTERNAL_SERVER_ERROR);   
+        if(error instanceof AppError) throw error;
+        throw new AppError('Something went wrong canont fetch the gym plan', StatusCodes.INTERNAL_SERVER_ERROR);   
     }
 }
 
@@ -51,18 +57,22 @@ async function updatePlan(id, data) {
         
     } catch (error) {
         // console.log(error);
-        throw new AppError('', StatusCodes.INTERNAL_SERVER_ERROR);
+        throw new AppError('Something went wrong while updating the plan', StatusCodes.INTERNAL_SERVER_ERROR);
         
     }
 }
 async function deletePlan(id){
     try {
         const plan = await planRepository.destroy(id);
+        if(!plan) {
+            throw new AppError('no such plan exist for the given id', StatusCodes.BAD_REQUEST);
+        }
         const gym = await gymRepository.deletePlansFromeGymByGymId(plan.gymId, plan._id);
         return plan;
     } catch (error) {
         // console.log(error);
-        throw new AppError('', StatusCodes.INTERNAL_SERVER_ERROR);   
+        if(error instanceof AppError) throw error;
+        throw new AppError('Something went wrong while deleting the plan', StatusCodes.INTERNAL_SERVER_ERROR);   
     }
 }
 

@@ -33,7 +33,7 @@ async function getUserProfiles(req, res) {
         
     } catch (error) {
         errorResponse.error = error;
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse);
+        return res.status(error.statusCode).json(errorResponse);
     }
 }
 async function getUserProfile(req, res) {
@@ -45,7 +45,7 @@ async function getUserProfile(req, res) {
     } catch (error) {
          console.log(error);
         errorResponse.error = error;
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse);
+        return res.status(error.statusCode).json(errorResponse);
         
     }
 }
@@ -59,7 +59,7 @@ async function getUserAttendance(req, res) {
     } catch (error) {
          console.log(error);
         errorResponse.error = error;
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse);
+        return res.status(error.statusCode).json(errorResponse);
         
     }
 }
@@ -71,7 +71,7 @@ async function updateUserProfile(req, res) {
         return res.status(StatusCodes.OK).json(successResponse);
     } catch (error) {
         errorResponse.error = error;
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse);
+        return res.status(error.statusCode).json(errorResponse);
         
     }
 }
@@ -84,7 +84,7 @@ async function updateUserProfilePlans(req, res) {
         return res.status(StatusCodes.OK).json(successResponse);
     } catch (error) {
         errorResponse.error = error;
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse);
+        return res.status(error.statusCode).json(errorResponse);
         
     }
 }
@@ -97,7 +97,7 @@ async function updateUserPlan(req, res) {
         return res.status(StatusCodes.OK).json(successResponse);
     } catch (error) {
         errorResponse.error = error;
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse);
+        return res.status(error.statusCode).json(errorResponse);
         
     }
 }
@@ -109,7 +109,7 @@ async function deleteUserProfile(req, res) {
         return res.status(StatusCodes.OK).json(successResponse);
     } catch (error) {
         errorResponse.error = error;
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse);
+        return res.status(error.statusCode).json(errorResponse);
         
     }
 }

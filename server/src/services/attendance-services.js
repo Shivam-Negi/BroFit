@@ -51,7 +51,7 @@ async function getAllAttendance() {
     return attendance;
   } catch (error) {
     // console.log(error);
-    throw new AppError("", StatusCodes.INTERNAL_SERVER_ERROR);
+    throw new AppError("Something went wrong while getting attendance", StatusCodes.INTERNAL_SERVER_ERROR);
   }
 }
 
@@ -61,7 +61,7 @@ async function getStatusInUsers(status) {
     return currentMembers;
   } catch (error) {
     // console.log(error);
-    throw new AppError("", StatusCodes.INTERNAL_SERVER_ERROR);
+    throw new AppError("Something went wrong while fetching the attendence by status", StatusCodes.INTERNAL_SERVER_ERROR);
   }
 }
 
@@ -71,7 +71,7 @@ async function getAttendance(id) {
     return attendance;
   } catch (error) {
     // console.log(error);
-    throw new AppError("", StatusCodes.INTERNAL_SERVER_ERROR);
+    throw new AppError("Something went wrong while fetching the attendace", StatusCodes.INTERNAL_SERVER_ERROR);
   }
 }
 
@@ -109,18 +109,23 @@ async function updateAttendance(id, userId) {
     return attendance;
   } catch (error) {
      console.log(error);
-    throw new AppError("", StatusCodes.INTERNAL_SERVER_ERROR);
+     if(error instanceof AppError) throw error;
+    throw new AppError("Something went wrong while udpating the attendance", StatusCodes.INTERNAL_SERVER_ERROR);
   }
 }
 
 async function deleteAttendance(id) {
   try {
     const attendance = await attendanceRepository.destroy(id);
+    if(!attendance) {
+      throw new AppError('no attendence found for this id', StatusCodes.NOT_FOUND);
+    }
     // const
     return attendance;
   } catch (error) {
     // console.log(error);
-    throw new AppError("", StatusCodes.INTERNAL_SERVER_ERROR);
+    if(error instanceof AppError) throw error;
+    throw new AppError("Something went wrong while deleting attendance", StatusCodes.INTERNAL_SERVER_ERROR);
   }
 }
 async function getAttendanceByUserId(id) {
@@ -135,11 +140,14 @@ async function getAttendanceByUserId(id) {
     let attendanceArray = userProfile.attendance;
     const attendanceId = attendanceArray[attendanceArray.length-1];
     const attendance = await attendanceRepository.get(attendanceId);
+    if(!attendance) {
+      throw new AppError('no attendance found for this id', StatusCodes.NOT_FOUND);
+    }
     return attendance.day.split('-')[0];
    } catch (error) {
     console.log(error);
     if( error instanceof AppError) throw error;
-    throw new AppError("", StatusCodes.INTERNAL_SERVER_ERROR);
+    throw new AppError("Something went wrong while fetching atttendace", StatusCodes.INTERNAL_SERVER_ERROR);
     
    }
 }
@@ -155,7 +163,7 @@ async function getDayWiseAttendenceOfCustomerByGymId(id, data) {
     return attendance;
   } catch (error) {
     if( error instanceof AppError) throw error;
-    throw new AppError("", StatusCodes.INTERNAL_SERVER_ERROR);
+    throw new AppError("Something went wrong while fetching attendance for the gym", StatusCodes.INTERNAL_SERVER_ERROR);
   }
 }
 

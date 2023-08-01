@@ -16,7 +16,7 @@ async function createAttendance(req, res) {
   } catch (error) {
     //  console.log(error);
     errorResponse.error = error;
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse);
+    return res.status(error.statusCode).json(errorResponse);
   }
 }
 
@@ -27,7 +27,7 @@ async function getAllAttendance(req, res) {
     return res.status(StatusCodes.OK).json(successResponse);
   } catch (error) {
     errorResponse.error = error;
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse);
+    return res.status(error.statusCode).json(errorResponse);
   }
 }
 
@@ -38,7 +38,7 @@ async function getAttendance(req, res) {
     return res.status(StatusCodes.OK).json(successResponse);
   } catch (error) {
     errorResponse.error = error;
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse);
+    return res.status(error.statusCode).json(errorResponse);
   }
 }
 async function updateAttendance(req, res) {
@@ -51,7 +51,7 @@ async function updateAttendance(req, res) {
     return res.status(StatusCodes.OK).json(successResponse);
   } catch (error) {
     errorResponse.error = error;
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse);
+    return res.status(error.statusCode).json(errorResponse);
   }
 }
 async function deleteAttendance(req, res) {
@@ -61,7 +61,7 @@ async function deleteAttendance(req, res) {
     return res.status(StatusCodes.OK).json(successResponse);
   } catch (error) {
     errorResponse.error = error;
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse);
+    return res.status(error.statusCode).json(errorResponse);
   }
 }
 

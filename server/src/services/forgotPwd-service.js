@@ -40,6 +40,9 @@ async function getUser(data) {
 async function changePwd(data, userId) {
   try {
     const user = await userRepository.get(userId);
+    if(!user) {
+      throw new AppError('no user found for this userId', StatusCodes.NOT_FOUND);
+    }
     user.password = data.password;
 
     // Re-encrypt the updated password

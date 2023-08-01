@@ -226,11 +226,14 @@ async function deleteUser(id) {
     }
     const userProfile = await userProfileRespository.deleteUserProfileByUserId(user._id);
     // console.log(userProfile);
-    if(!userProfile && user.role == 'user') {
-      throw new AppError('no userProfile exist for this user',StatusCodes.BAD_REQUEST);
-    }
-    if(user.role === 'user') {
-      const attendance = await  attendanceRespository.deleteAllAttendanceOfTheUserId(userProfile.attendance);
+    // if(!userProfile && user.role == 'user') {
+    //   throw new AppError('no userProfile exist for this user',StatusCodes.BAD_REQUEST);
+    // }
+    if(userProfile) {
+      if(userProfile.attendance.length > 0) {
+        // console.log('inside if');
+        const attendance = await  attendanceRespository.deleteAllAttendanceOfTheUserId(userProfile.attendance);
+      }
     }
     return user;
   } catch (error) {

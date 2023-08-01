@@ -11,7 +11,7 @@ async function createPlan(req, res) {
         
     } catch (error) {
         errorResponse.error = error;
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse);
+        return res.status(error.statusCode).json(errorResponse);
     }
 }
 
@@ -23,7 +23,7 @@ async function getPlans(req, res) {
         
     } catch (error) {
         errorResponse.error = error;
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse);
+        return res.status(error.statusCode).json(errorResponse);
     }
 }
 
@@ -35,7 +35,7 @@ async function getPlan(req, res) {
         
     } catch (error) {
         errorResponse.error = error;
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse);   
+        return res.status(error.statusCode).json(errorResponse);   
     }
 }
 async function updatePlan(req, res) {
@@ -45,7 +45,7 @@ async function updatePlan(req, res) {
         return res.status(StatusCodes.OK).json(successResponse);
     } catch (error) {
         errorResponse.error = error;
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse);
+        return res.status(error.statusCode).json(errorResponse);
         
     }
 }
@@ -57,7 +57,7 @@ async function deletePlan(req, res) {
         
     } catch (error) {
         errorResponse.error = error;
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse)
+        return res.status(error.statusCode).json(errorResponse)
         
     }
 }
