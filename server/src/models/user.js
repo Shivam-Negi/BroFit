@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 // const { isEmail } = require('validator');
 const bcrypt = require('bcrypt');
+const Counter = require('./counter');
 
 const userSchema = new mongoose.Schema(
   {
@@ -10,7 +11,7 @@ const userSchema = new mongoose.Schema(
     },
     registerationNumber: {
       type : Number,
-      // default: -1,
+      // default: 0,
       // required: true,
     },
     role: {
@@ -48,5 +49,24 @@ userSchema.pre('save', function (next) {
   user.password = encryptPassword;
   next();
 });
+
+// userSchema.post('create', async function(next) {
+//   const user = this;
+//   let counter = await Counter.findOneAndUpdate(
+//     {gymId : id},
+//     {"$inc": {"seq":1}},
+//     {new: true}
+//     );
+//     console.log(counter);
+//   if(!counter) {
+//     counter = await Counter.create(
+//       {
+//         gymId: gym.gymId,
+//         seq: 1,
+//       });
+//   }
+//   user.registerationNumber = counter.seq;
+//   next();
+// })
 
 module.exports = mongoose.model('User', userSchema);
