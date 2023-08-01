@@ -5,6 +5,7 @@ const AppError = require('../utils/errors/app-error');
 
 async function createGym(data) {
     try {
+        // console.log(data);
         const gym = await gymRepository.create(data);
         return gym;
         

@@ -20,6 +20,10 @@ const gymSchema = new mongoose.Schema({
     match: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
     required: true,
   },
+  phoneNumber: {
+    type : String,
+    maxLength : 10
+  },
   plans : [
     {
       type : mongoose.Schema.Types.ObjectId,
