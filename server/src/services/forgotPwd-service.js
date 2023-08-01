@@ -32,8 +32,10 @@ async function getUser(data) {
         // console.log('link : ', link);
         return link;
     } catch (error) {
-        errorResponse.error = error;
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse);
+        // errorResponse.error = error;
+        // return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse);
+        if(error instanceof AppError) throw error;
+        throw new AppError('Something went wrong while geting the user', StatusCodes.INTERNAL_SERVER_ERROR);
     }
 }
 
@@ -53,8 +55,10 @@ async function changePwd(data, userId) {
     // console.log('response after update pwd : ', response);
     return response;
   } catch (error) {
-    errorResponse.error = error;
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse);
+    // errorResponse.error = error;
+    // return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse);
+    if(error instanceof AppError) throw error;
+    throw new AppError('Something went wrong while changing the password', StatusCodes.INTERNAL_SERVER_ERROR);
   }
 }
 

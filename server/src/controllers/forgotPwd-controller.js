@@ -10,7 +10,7 @@ async function getUser(req, res) {
         
     } catch (error) {
         errorResponse.error = error;
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse);
+        return res.status(error.statusCode).json(errorResponse);
     }
 }
 
@@ -21,10 +21,9 @@ async function changePwd(req, res) {
         return res.status(StatusCodes.OK).json(successResponse);
     } catch (error) {
         errorResponse.error = error;
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse);
+        return res.status(error.statusCode).json(errorResponse);
     }
 }
-
 module.exports = {
     getUser,
     changePwd,
