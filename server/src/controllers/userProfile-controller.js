@@ -57,7 +57,7 @@ async function getUserAttendance(req, res) {
         successResponse.data = userProfile;
         return res.status(StatusCodes.OK).json(successResponse);
     } catch (error) {
-         console.log(error);
+        //  console.log(error);
         errorResponse.error = error;
         return res.status(error.statusCode).json(errorResponse);
         

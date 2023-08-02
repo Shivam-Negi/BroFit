@@ -51,10 +51,11 @@ class GymRepository extends CrudRepository {
         /* console.log('id : ', id);
         console.log('data : ', data); */
         try {
-            const result = await Gym.updateOne({
+            const result = await Gym.findOneAndUpdate({
                 gymId : id
             }, data,
             {new: true});
+            // console.log(result);
             return result;
         } catch(error) {
             // console.log('error in updation of graph : ', error);

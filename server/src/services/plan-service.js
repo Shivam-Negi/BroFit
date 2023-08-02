@@ -68,6 +68,9 @@ async function deletePlan(id){
             throw new AppError('no such plan exist for the given id', StatusCodes.BAD_REQUEST);
         }
         const gym = await gymRepository.deletePlansFromeGymByGymId(plan.gymId, plan._id);
+        if(!gym.acknowledged) {
+            throw new AppError('unable to remove plans from gym', StatusCodes.BAD_REQUEST);
+        }
         return plan;
     } catch (error) {
         // console.log(error);
