@@ -29,22 +29,22 @@ async function createUser(data) {
       role : data.role,
       // registerationNumber : 0,
     });
-    let counter = await counterRepository.counterIncreement(gym.gymId);
-    // console.log(counter);
-    if(!counter) {
-      const newCounter = await counterRepository.create(
-      {
-        gymId: gym.gymId,
-        seq: 1,
-      });
-      counter = newCounter;
-      console.log(counter);
-    }
-    // console.log(counter);
-    // user.registerationNumber = counter.seq;
-    // await user.save();
-    user = await userRepository.update(user.id, {registerationNumber : counter.seq});
     if(data.role != 'owner') {
+      let counter = await counterRepository.counterIncreement(gym.gymId);
+      // console.log(counter);
+      if(!counter) {
+        const newCounter = await counterRepository.create(
+        {
+          gymId: gym.gymId,
+          seq: 1,
+        });
+        counter = newCounter;
+        // console.log(counter);
+      }
+      // console.log(counter);
+      // user.registerationNumber = counter.seq;
+      // await user.save();
+      user = await userRepository.update(user.id, {registerationNumber : counter.seq});
       gym.members.push(user);
       await gym.save();
     }
