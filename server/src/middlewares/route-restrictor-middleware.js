@@ -8,7 +8,7 @@ const { currentDate } = require('../utils/helpers/datetime-helpers');
 async function routeRestrictor(req, res, next) {
     try {
         const day = await AttendanceService.getAttendanceByUserId(req.user);
-        const currentDay = currentDate().split('-')[0];
+        const currentDay = currentDate();
         if(day !== currentDay || !day){
             next();
         }

@@ -143,7 +143,8 @@ async function getAttendanceByUserId(id) {
     if(!attendance) {
       throw new AppError('no attendance found for this id', StatusCodes.NOT_FOUND);
     }
-    return attendance.day.split('-')[0];
+    // return attendance.day.split('-')[0];
+    return attendance.day;
    } catch (error) {
     console.log(error);
     if( error instanceof AppError) throw error;
