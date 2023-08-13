@@ -81,11 +81,12 @@ async function checkOutCron() {
   });
 }
 
+// plan expire daily
 async function planExCron() {
   cron.schedule('0 0 * * *', async () => {
     try {
       const users = await userProfileRepository.getExpireToday(currentDate());
-      //  console.log('users : ', users);
+      console.log(`users whose plan expiring today : ${users} at time : ${checkInTime()}`);
       const data = {
         status: 'inactive',       
         planExpiryDate: '',
@@ -98,16 +99,25 @@ async function planExCron() {
     } catch (error) {
       console.log('planExCron error : ', error);
     }
-  })
+  },
+  {
+    scheduled: true,
+    timezone: "Asia/Kolkata"
+  });
 }
 
 // every night at 2 a.m. 
 async function graphResetCron() {
-  cron.schedule('0 0 * * *', async () => {
-    console.log('resetting graph');
+  cron.schedule('0 2 * * *', async () => {
+    console.log('resetting graph at time : ', checkInTime());
     try {
       const gyms = await gymRepository.getAll();
       for (const gym of gyms) {
+        await gymRepository.updateByGymId(gym.gymId, {
+          $set: {
+            currentlyCheckedIn: 0,
+          }
+        });
         for(let i = 0; i < 24; ++i) {
            await gymRepository.updateByGymId(gym.gymId, {
             $set: {
@@ -120,6 +130,10 @@ async function graphResetCron() {
     } catch (error) {
       console.log('graphResetCron error : ', error);
     }
+  },
+  {
+    scheduled: true,
+    timezone: "Asia/Kolkata"
   })
 }
 

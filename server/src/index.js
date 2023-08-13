@@ -7,6 +7,8 @@ const { graphCron, checkOutCron, planExCron, graphResetCron } = require('./utils
 
 const app = express();
 
+app.set('trust proxy', true);
+
 const limiter = rateLimit({
 	windowMs: 2 * 60 * 1000, // 2 minutes
 	max: 30, // Limit each IP to 30 requests per `window` (here, per 2 minutes)
