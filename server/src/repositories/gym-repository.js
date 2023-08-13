@@ -96,6 +96,17 @@ class GymRepository extends CrudRepository {
             throw error; 
         }
     }
+    async getGymLongitudeAndLatitude(id) {
+        try {
+            const gymLocation = await Gym.findOne({
+                gymId : id,
+            }).select('longitude latitude');
+            return gymLocation;
+        } catch (error) {
+            console.log('something went wrong in the crud repo');
+            throw error;  
+        }
+    }
 
 }
 

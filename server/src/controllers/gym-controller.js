@@ -86,6 +86,17 @@ async function deleteGym(req, res) {
         
     }
 }
+async function getGymLocation(req, res) {
+    try {
+        const gymLocation = await GymService.getGymLocation(req.params.gymId);
+        successResponse.data = gymLocation
+        return res.status(StatusCodes.OK).json(successResponse);
+    } catch (error) {
+        errorResponse.error = error;
+        return res.status(error.statusCode).json(errorResponse);
+        
+    }
+}
 
 module.exports = {
     createGym,
@@ -94,5 +105,6 @@ module.exports = {
     getGymGraph,
     updateGym,
     deleteGym,
-    getGymMems
+    getGymMems,
+    getGymLocation
 }
