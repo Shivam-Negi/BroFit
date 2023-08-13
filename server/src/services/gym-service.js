@@ -96,6 +96,19 @@ async function deleteGym(id){
         throw new AppError('Something went wrong while deleting gym', StatusCodes.INTERNAL_SERVER_ERROR);   
     }
 }
+async function getGymLocation(id) {
+    try {
+        const gymLocation  = await gymRepository.getGymLongitudeAndLatitude(id);
+        if(!gymLocation) {
+            throw new AppError('no gym found for the given gymId', StatusCodes.NOT_FOUND);
+        }
+        return gymLocation;
+    } catch (error) {
+        if(error instanceof AppError) throw error;
+        throw new AppError('Something went wrong while fetching the location', StatusCodes.INTERNAL_SERVER_ERROR);
+        
+    }
+}
 
 module.exports = {
     createGym,
@@ -104,7 +117,8 @@ module.exports = {
     getGymGraph,
     updateGym,
     deleteGym,
-    getGymMems
+    getGymMems,
+    getGymLocation
 }
 
 
