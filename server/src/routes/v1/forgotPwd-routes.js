@@ -10,8 +10,8 @@ router.post('/', AuthMiddlewares.validateEmailRequest,
 router.get('/reset/:id/:jwt',
             AuthMiddlewares.checkAuthReset);
             
-router.post('/reset/:id/:jwt',
-            AuthMiddlewares.checkAuthReset,
+router.post('/reset/:id',
+            // AuthMiddlewares.checkAuthReset,
             ForgotPwdController.changePwd
             );
 

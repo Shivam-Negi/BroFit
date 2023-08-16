@@ -5,6 +5,7 @@ const AppError = require('../utils/errors/app-error');
 const { Auth } = require('../utils/common');
 const { serverConfig, Mailer } = require('../config');
 const bcrypt = require('bcrypt');
+const { generateRandom4DigitNumber } = require('../utils/helpers/otp');
 
 async function getUser(data) {
     try {
@@ -15,22 +16,25 @@ async function getUser(data) {
                 'No user found for the given email',
                 StatusCodes.NOT_FOUND
             );
-        }  
-        const jwt = Auth.createTokenReset({
+        } 
+        const userId = user._id;
+        /* const jwt = Auth.createTokenReset({
             email: user.email,
             userId: user._id,
-          }, user.password);
+          }, user.password); */
         
-        const link = `${serverConfig.RESET}/${user._id}/${jwt}`;
+        // const link = `${serverConfig.RESET}/${user._id}/${jwt}`;
+        
+        const otp = generateRandom4DigitNumber();
         const response = await Mailer.sendMail({
             from: serverConfig.GMAIL_EMAIL,
             to: user.email,
-            subject: 'change password link',
-            text:  link
+            subject: 'change password otp',
+            text: `Please type this otp in the app to change your password : ${otp}`
         });
         // console.log(response);
         // console.log('link : ', link);
-        return link;
+        return {otp, userId};
     } catch (error) {
         // errorResponse.error = error;
         // return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(errorResponse);
@@ -39,7 +43,7 @@ async function getUser(data) {
     }
 }
 
-async function changePwd(data, userId) {
+async function changePwd(userId, data) {
   try {
     const user = await userRepository.get(userId);
     if(!user) {
