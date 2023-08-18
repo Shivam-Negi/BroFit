@@ -19,6 +19,9 @@ async function graphCron() {
       for (const gym of gyms) {
         // console.log('gym inside cron:', gym);
         let liveMem = gym.currentlyCheckedIn;
+        if(liveMem < 0) {
+          liveMem = 0;
+        }
         // console.log(`liveMem of gymId ${gym.gymId} is ${liveMem}`);
         await gymRepository.updateByGymId(gym.gymId, {
           $set: {

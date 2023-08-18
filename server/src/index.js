@@ -7,7 +7,7 @@ const { graphCron, checkOutCron, planExCron, graphResetCron } = require('./utils
 
 const app = express();
 
-app.set('trust proxy', true);
+// app.set('trust proxy', true);
 
 const limiter = rateLimit({
 	windowMs: 2 * 60 * 1000, // 2 minutes
@@ -17,7 +17,7 @@ const limiter = rateLimit({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
-app.use(limiter);
+// app.use(limiter);
 
 // Serve static files from the 'public' folder (assuming 'index.html' is inside the 'public' folder)
 app.use(express.static('public'));
