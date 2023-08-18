@@ -18,6 +18,16 @@ class CounterRepository extends CrudRepository{
             throw error;    
         }
     }
+    async counterDelete(id) {
+        try {
+            const counter = await Counter.findOneAndDelete({
+                gymId : id
+            })
+            return counter;
+        } catch (error) {
+            throw error;
+        }
+    }
 }
 
 module.exports = CounterRepository;

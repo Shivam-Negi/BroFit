@@ -1,6 +1,11 @@
 const { StatusCodes } = require('http-status-codes');
-const { GymRepository } = require('../repositories');
+const { GymRepository, UserRepository, PlanRepository, UserProfileRepository, AttendanceRepository, CounterRepository} = require('../repositories');
 const gymRepository = new GymRepository();
+const userRepository = new UserRepository();
+const planRepository = new PlanRepository();
+const userProfileRespository = new UserProfileRepository();
+const attendanceRespository = new AttendanceRepository();
+const counterRepository = new CounterRepository();
 const AppError = require('../utils/errors/app-error');
 
 async function createGym(data) {
@@ -87,6 +92,31 @@ async function deleteGym(id){
         const gym = await gymRepository.destroy(id);
         if(!gym) {
             throw new AppError('no gym found for this id', StatusCodes.BAD_REQUEST);
+        }
+        const counter = await counterRepository.counterDelete(gym.gymId);
+        // console.log(gym);
+        const gymMembers = gym.members;
+        // console.log(gymMembers);
+        const gymOwner = await userRepository.deleteOwner(gym.gymId);
+        // console.log(gymOwner);
+        const plans = await planRepository.deletePlans(gym.gymId);
+        // console.log(plans);
+        if(gymMembers.length >= 1) {
+            gymMembers.map( async (element) => {
+                // console.log(element);
+                const user = await userRepository.destroy(element);
+                if(!user) {
+                    throw new AppError('no user exist for the given userId',StatusCodes.BAD_REQUEST);
+                } 
+                const userProfile = await userProfileRespository.deleteUserProfileByUserId(user._id);
+                // console.log(userProfile);
+                if(userProfile) {
+                    if(userProfile.attendance.length > 0) {
+                      // console.log('inside if');
+                      const attendance = await  attendanceRespository.deleteAllAttendanceOfTheUserId(userProfile.attendance);
+                    }  
+                }
+            });
         }
         return gym;
 

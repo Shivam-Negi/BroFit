@@ -29,7 +29,7 @@ async function createUser(data) {
       role : data.role,
       // registerationNumber : 0,
     });
-    if(data.role != 'owner') {
+    if(data.role === 'user') {
       let counter = await counterRepository.counterIncreement(gym.gymId);
       // console.log(counter);
       if(!counter) {
@@ -219,21 +219,23 @@ async function deleteUser(id) {
     if(!user) {
       throw new AppError('no user exist for the given userId',StatusCodes.BAD_REQUEST);
     }
-    const gym = await gymRepository.deleteMembersFromGym(user.gymId, user._id);
-    // console.log(gym);
-    if(!gym.acknowledged) {
-      throw new AppError('no such user exist in the gym members array',StatusCodes.BAD_GATEWAY);
-    }
-    const userProfile = await userProfileRespository.deleteUserProfileByUserId(user._id);
-    // console.log(userProfile);
-    // if(!userProfile && user.role == 'user') {
-    //   throw new AppError('no userProfile exist for this user',StatusCodes.BAD_REQUEST);
-    // }
-    if(userProfile) {
-      if(userProfile.attendance.length > 0) {
-        // console.log('inside if');
-        const attendance = await  attendanceRespository.deleteAllAttendanceOfTheUserId(userProfile.attendance);
-      }
+    if(user.role === 'user') {
+        const gym = await gymRepository.deleteMembersFromGym(user.gymId, user._id);
+        // console.log(gym);
+        if(!gym.acknowledged) {
+          throw new AppError('no such user exist in the gym members array',StatusCodes.BAD_GATEWAY);
+        }
+        const userProfile = await userProfileRespository.deleteUserProfileByUserId(user._id);
+        // console.log(userProfile);
+        // if(!userProfile && user.role == 'user') {
+        //   throw new AppError('no userProfile exist for this user',StatusCodes.BAD_REQUEST);
+        // }
+        if(userProfile) {
+          if(userProfile.attendance.length > 0) {
+            // console.log('inside if');
+            const attendance = await  attendanceRespository.deleteAllAttendanceOfTheUserId(userProfile.attendance);
+          }  
+        }
     }
     return user;
   } catch (error) {
