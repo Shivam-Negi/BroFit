@@ -1,60 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Brofit</title>
+  </head>
+  <body>
+    <main>
+      <div class="header">
+        <div class="logo">BROFIT</div>
+        <nav>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#memberships">features</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+        <div class="get-started"><a href="#">Get Started</a></div>
+      </div>
+      <div class="intro">
+        <p class="h1">FITNESS IS YOUR PASSION WITH AGGRESSION</p>
+        <p class="h2">
+          Most people fail, not because of lack of desire, but, because of lack
+          of commitment.
+        </p>
+        <p class="h2">Start your journey with us.</p>
+        <div class="get-started2"><a href="#">Get Started</a></div>
+      </div>
+    </main>
+    <section class="about" id="about">
+      <div class="same1">
+        <div class="p">
+          <p class="h3">Unleash Your Fitness Journey with Brofit!</p>
+          <p class="h4">
+            Welcome to the world of Brofit, where fitness meets innovation in an
+            app designed to elevate your workout experience. Whether you're a
+            gym owner or a dedicated fitness enthusiast, Brofit brings you a
+            suite of captivating features that redefine how you approach fitness
+            and gym management.
+          </p>
+        </div>
+        <img class="overlap" src="assets/overlap.jpeg" />
+      </div>
+    </section>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to Brofit</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
+    <div class="membershipsheading"><p class="h5">Features</p></div>
+    <section class="memberships" id="memberships">
+      <div class="features-box">
+        <h3>Benefits for Mmbers</h3>
+        <ul>
+          <li>
+            📆 Attendance Records at a Glance: Dive into your fitness journey
+            with Brofit's calendar view of attendance records. Gain a deeper
+            understanding of your progress, identify trends, and set new goals
+            with an engaging visual representation of your dedication.
+          </li>
+          <li>
+            ⏱ Precision Workouts: Elevate your workouts using Brofit's fitness
+            timer app and expert tutorials. From novices to fitness enthusiasts,
+            everyone can find meticulously crafted routines that bring you one
+            step closer to your goals.
+          </li>
+        </ul>
+      </div>
+      <div class="features-box">
+        <h3>Benefits for Owners</h3>
+        <ul>
+          <li>
+            🏋‍♂ Effortless Management: Brofit simplifies member registration
+            and profile management for gym owners, allowing you to connect
+            seamlessly with your community. Spend less time on admin tasks and
+            more time inspiring your members to reach new heights.
+          </li>
 
-<body>
-    <nav class="navbar">
-        <div class="container">
-            <h1 class="logo">Brofit</h1>
-            <ul class="nav-links">
-                <li><a href="#about">About</a></li>
-                <li><a href="#features">Features</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </div>
-    </nav>
-    <div class="hero">
-        <div class="container">
-            <h1>Welcome to BroFit</h1>
-            <p>Transform your fitness journey with our powerful gym membership app.</p>
-            <a href="#about" class="cta-btn">Learn More</a>
-        </div>
-    </div>
-    <div class="about" id="about">
-        <div class="container">
-            <h2>About Brofit</h2>
-            <p>Brofit is a revolutionary gym membership app that offers cutting-edge features to gym owners and members
-                alike.
-                Whether you're a gym owner looking to digitize your attendance and member management, or a fitness
-                enthusiast wanting to track your progress and access workout tutorials, Brofit has got you covered.</p>
-        </div>
-    </div>
-    <div class="features" id="features">
-        <div class="container">
-            <h2>Features</h2>
-            <ul>
-                <li>Real-time attendance tracking based on location</li>
-                <li>Live graph showing current members and hourly member count</li>
-                <li>Easy member registration and profile management for gym owners</li>
-                <li>Member access to attendance records in a calendar view</li>
-                <li>Fitness timer app and workout tutorials</li>
-                <li>Built-in chat app for all gym members</li>
-            </ul>
-        </div>
-    </div>
-    <div class="contact" id="contact">
-        <div class="container">
-            <h2>Contact Us</h2>
-            <p>Got any questions or feedback? We'd love to hear from you!</p>
-            <a href="mailto:contact@brofit.com" class="cta-btn">Get in Touch</a>
-        </div>
-    </div>
-</body>
+          <li>
+            ⏰ Real-time Attendance Tracking: Say goodbye to outdated attendance
+            methods. Brofit's location-based tracking provides real-time
+            insights into member attendance, while a live graph showcases hourly
+            member counts. Stay on top of your gym's vitality and foster a sense
+            of friendly competition.
+          </li>
 
+          <li>
+            📈 Live Insights: Harness the power of real-time data with Brofit's
+            live graph. Watch your gym's pulse come alive, empowering you to
+            make informed decisions and tailor your strategies for maximum
+            impact.
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <p class="h6">Contact Us</p>
+      <div class="contact-form">
+        <form
+          action="mailto:your-email@example.com"
+          method="post"
+          enctype="text/plain"
+        >
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="name" required /><br /><br />
+
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" required /><br /><br />
+
+          <label for="message">Message:</label><br />
+          <textarea id="message" name="message" rows="4" required></textarea
+          ><br /><br />
+
+          <input type="submit" value="Send" />
+        </form>
+      </div>
+
+      <div class="contact-details">
+        <h3>Contact Details</h3>
+        <p>Email: brofit56@gmail.com</p>
+        <p>Phone: +91 6398310174</p>
+      </div>
+    </section>
+  </body>
 </html>
