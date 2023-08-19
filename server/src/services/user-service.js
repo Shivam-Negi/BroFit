@@ -29,7 +29,8 @@ async function createUser(data) {
       role : data.role,
       // registerationNumber : 0,
     });
-    if(data.role === 'user') {
+    if(user.role === 'user') {
+
       let counter = await counterRepository.counterIncreement(gym.gymId);
       // console.log(counter);
       if(!counter) {
