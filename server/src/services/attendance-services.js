@@ -5,7 +5,7 @@ const userRepository = new UserRepository();
 const userProfileRepository = new UserProfileRepository();
 const gymRepository = new GymRepository();
 const AppError = require("../utils/errors/app-error");
-const { checkInTime } = require("../utils/helpers/datetime-helpers");
+const { checkInTime, currentDate } = require("../utils/helpers/datetime-helpers");
 
 async function createAttendance(data) {
   try {
@@ -82,10 +82,20 @@ async function updateAttendance(id, userId) {
       throw new AppError('no userProfile found for the given userId',StatusCodes.BAD_REQUEST);
     }
     let attendanceArray = userProfile.attendance;
+    if(attendanceArray.length === 0) {
+      throw new AppError('please check in first', StatusCodes.BAD_REQUEST);
+    }
     const attendanceId = attendanceArray[attendanceArray.length-1];
     const data = {
       checkOut : checkInTime(),
       status : 'OUT'
+    }
+    const chkAttd = await attendanceRepository.get(attendanceId);
+    if(chkAttd.status == 'OUT') {
+      if(chkAttd.day == currentDate()) {
+        throw new AppError('Already checked out', StatusCodes.BAD_REQUEST);
+      }
+      throw new AppError('please check in first', StatusCodes.BAD_REQUEST);
     }
     const attendance = await attendanceRepository.update(attendanceId, data);
     const user = await userRepository.get(userId);
