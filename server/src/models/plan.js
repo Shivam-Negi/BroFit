@@ -10,7 +10,7 @@ const planSchema = new mongoose.Schema({
     required: true,
   },
   gymId: {
-    type: Number,
+    type: String,
     ref: 'Gym',
   },
   validity: {
