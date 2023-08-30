@@ -19,6 +19,20 @@ async function createUser(data) {
     if(!gym) {
       throw new AppError('The gym with the given gymId doesnt exist',StatusCodes.BAD_REQUEST);
     }
+    const counter = await counterRepository.getCounter(data.gymId);
+
+    if(data.registerationNumber) {
+      const userRegisterVerify = await userRepository.getUserRegisterNumber({
+        gymId : data.gymId,
+        registerationNumber : data.registerationNumber,
+      });
+      if(userRegisterVerify) {
+        throw new AppError('A user with the given registration nummber already exists', StatusCodes.BAD_REQUEST);
+      }
+      if(counter.seq < data.registerationNumber) {
+        throw new AppError('Cannot create user with this registration number', StatusCodes.BAD_REQUEST);
+      }
+    }
     // console.log('gym : ', gym);
     // console.log('user : ', user);
     let user = await userRepository.create({
@@ -27,25 +41,19 @@ async function createUser(data) {
       name : data.name,
       gymId : data.gymId,
       role : data.role,
-      // registerationNumber : 0,
+      registerationNumber : data.registerationNumber,
     });
+    // console.log(user);
     if(user.role === 'user') {
-
-      let counter = await counterRepository.counterIncreement(gym.gymId);
-      // console.log(counter);
-      if(!counter) {
-        const newCounter = await counterRepository.create(
-        {
-          gymId: gym.gymId,
-          seq: 1,
-        });
-        counter = newCounter;
-        // console.log(counter);
+      // console.log(user.registerationNumber);
+      if(!user.registerationNumber) {
+        // console.log('inside user registration');
+        const counter = await counterRepository.counterIncreement(gym.gymId);
+        user = await userRepository.update(user.id, {registerationNumber : counter.seq});
       }
       // console.log(counter);
       // user.registerationNumber = counter.seq;
       // await user.save();
-      user = await userRepository.update(user.id, {registerationNumber : counter.seq});
       gym.members.push(user);
       await gym.save();
     }

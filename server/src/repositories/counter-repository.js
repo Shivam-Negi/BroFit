@@ -28,6 +28,16 @@ class CounterRepository extends CrudRepository{
             throw error;
         }
     }
+    async getCounter(id) {
+        try {
+            const counter = await Counter.findOne({
+                gymId : id
+            });
+            return counter;
+        } catch (error) {
+            throw error;
+        }
+    }
 }
 
 module.exports = CounterRepository;

@@ -48,6 +48,17 @@ class UserRepository extends CrudRepository {
         }
 
     }
+    async getUserRegisterNumber(data) {
+        try {
+          const user = await User.findOne({
+            gymId : data.gymId,
+            registerationNumber : data.registerationNumber,
+          });
+          return user; 
+        } catch (error) {
+            throw error;
+        }
+      }
 }
 
 module.exports = UserRepository;

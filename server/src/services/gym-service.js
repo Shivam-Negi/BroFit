@@ -11,7 +11,19 @@ const AppError = require('../utils/errors/app-error');
 async function createGym(data) {
     try {
         // console.log(data);
-        const gym = await gymRepository.create(data);
+        const counter = await counterRepository.create({
+            gymId : data.gymId,
+            seq : data.registerationNumber - 1,
+        })
+        const gym = await gymRepository.create({
+            gymName : data.gymName,
+            gymId : data.gymId,
+            owner : data.owner,
+            email : data.email,
+            phoneNumber : data.phoneNumber,
+            latitude : data.latitude,
+            longitude : data.longitude, 
+        });
         return gym;
         
     } catch (error) {
