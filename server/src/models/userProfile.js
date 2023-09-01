@@ -8,7 +8,6 @@ const userProfileSchema = new mongoose.Schema({
   gymId : {
     type : String,
     required : true,
-
   },
   profilePhoto: {
     type: String,
@@ -21,6 +20,7 @@ const userProfileSchema = new mongoose.Schema({
   },
   age: {
     type: Number,
+    default: 0
   },
   gender: {
     type: String,
