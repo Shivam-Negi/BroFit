@@ -178,6 +178,32 @@ async function getDayWiseAttendenceOfCustomerByGymId(id, data) {
   }
 }
 
+async function getMonthlyAttendance(id, currentMonth) {
+  try {
+    const currentYear = Number(currentDate().split('-')[2]);
+    let currentDay = Number(currentDate().split('-')[0]);
+    const newCurrentMonth = Number(currentDate().split('-')[1])
+    let monthDaysArray = [31,28,31,30,31,30,31,31,30,31,30,31];
+    if((currentYear % 100 === 0) ? (currentYear % 400 === 0) : (currentYear % 4 === 0)) {
+      monthDaysArray[1] = 29;
+    }
+    // console.log('here');
+    // console.log(newCurrentMonth);
+    // console.log(Number(currentMonth));
+    if(Number(currentMonth) !== newCurrentMonth) {
+      currentDay = monthDaysArray[currentMonth - 1];
+    }
+    const attendanceOfTheMonth = await attendanceRepository.getMonthlyAttendance(id, currentMonth);
+    const result = {
+      attended : attendanceOfTheMonth,
+      total : currentDay,
+    }
+    return result;
+  } catch (error) {
+    throw new AppError('Something went wrong while fetching the attendance for this current month', StatusCodes.INTERNAL_SERVER_ERROR);
+  }
+}
+
 module.exports = {
   getAllAttendance,
   getAttendance,
@@ -186,5 +212,6 @@ module.exports = {
   deleteAttendance,
   getAttendanceByUserId,
   getStatusInUsers,
-  getDayWiseAttendenceOfCustomerByGymId
+  getDayWiseAttendenceOfCustomerByGymId,
+  getMonthlyAttendance,
 };

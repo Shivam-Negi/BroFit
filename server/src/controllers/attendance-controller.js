@@ -65,7 +65,7 @@ async function deleteAttendance(req, res) {
   }
 }
 
-async function getDayWiseAttendence(req, res) {
+async function getDayWiseAttendance(req, res) {
   try {
     const attendance = await AttendanceService.getDayWiseAttendenceOfCustomerByGymId(req.params.id, req.params.day);
     successResponse.data = attendance;
@@ -77,6 +77,16 @@ async function getDayWiseAttendence(req, res) {
     
   }
 }
+async function getMonthlyAttendance(req, res) {
+  try {
+    const count = await AttendanceService.getMonthlyAttendance(req.params.id, req.params.currentMonth);
+    successResponse.data = count;
+    return res.status(StatusCodes.OK).json(successResponse);
+  } catch (error) {
+    errorResponse.error = error;
+    return res.status(error.statusCode).json(errorResponse); 
+  }
+}
 
 module.exports = {
   createAttendance,
@@ -84,6 +94,7 @@ module.exports = {
   getAttendance,
   updateAttendance,
   deleteAttendance,
-  getDayWiseAttendence
+  getDayWiseAttendance,
+  getMonthlyAttendance,
   // dailyAttendance,
 };

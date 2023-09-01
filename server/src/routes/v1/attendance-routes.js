@@ -32,7 +32,11 @@ router.delete(
 );
 router.get(
   '/:id/:day',
-  AttendanceController.getDayWiseAttendence
+  AttendanceController.getDayWiseAttendance
+);
+router.get(
+  '/monthlyCount/:id/:currentMonth',
+  AttendanceController.getMonthlyAttendance
 );
 
 module.exports = router;

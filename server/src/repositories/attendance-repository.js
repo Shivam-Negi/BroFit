@@ -50,6 +50,23 @@ class AttendanceRepository extends CrudRepository {
       throw error;
     }
   }
+  async getMonthlyAttendance(id, currentMonth) {
+    try {
+      const current = '-' + currentMonth + '-';
+      // console.log(current);
+      const attendance = await Attendance.find({
+        userId : id,
+        day: {
+           $regex : current,
+          },
+      });
+      // console.log(attendance);
+      return attendance.length;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
 }
 
 module.exports = AttendanceRepository;
