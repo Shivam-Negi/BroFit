@@ -7,7 +7,7 @@ class PlanRepository extends CrudRepository {
         super(Plan);
     }
     async getPlansOfGym(gymId) {
-        const plans = Plan.find({
+      const plans = await Plan.find({
           gymId: gymId
         });
         return plans;
