@@ -19,24 +19,23 @@ async function createUser(data) {
     if(!gym) {
       throw new AppError('The gym with the given gymId doesnt exist',StatusCodes.BAD_REQUEST);
     }
-    const counter = await counterRepository.getCounter(data.gymId);
-
-    if(data.registerationNumber) {
-      const userRegisterVerify = await userRepository.getUserRegisterNumber({
-        gymId : data.gymId,
-        registerationNumber : data.registerationNumber,
-      });
-      if(userRegisterVerify) {
-        throw new AppError('A user with the given registration nummber already exists', StatusCodes.BAD_REQUEST);
-      }
-      if(counter.seq < data.registerationNumber) {
-        throw new AppError('Cannot create user with this registration number', StatusCodes.BAD_REQUEST);
-      }
-    }
+    // const counter = await counterRepository.getCounter(data.gymId);
+    // if(data.registerationNumber) {
+    //   const userRegisterVerify = await userRepository.getUserRegisterNumber({
+    //     gymId : data.gymId,
+    //     registerationNumber : data.registerationNumber,
+    //   });
+    //   if(userRegisterVerify) {
+    //     throw new AppError('A user with the given registration nummber already exists', StatusCodes.BAD_REQUEST);
+    //   }
+    //   if(counter.seq < data.registerationNumber) {
+    //     throw new AppError('Cannot create user with this registration number', StatusCodes.BAD_REQUEST);
+    //   }
+    // }
     // console.log('gym : ', gym);
     // console.log('user : ', user);
     let user = await userRepository.create({
-      email : data.email,
+      email : data.email.toLowerCase(),
       password : data.password,
       name : data.name,
       gymId : data.gymId,
@@ -46,11 +45,11 @@ async function createUser(data) {
     // console.log(user);
     if(user.role === 'user') {
       // console.log(user.registerationNumber);
-      if(!user.registerationNumber) {
-        // console.log('inside user registration');
-        const counter = await counterRepository.counterIncreement(gym.gymId);
-        user = await userRepository.update(user.id, {registerationNumber : counter.seq});
-      }
+      // if(!user.registerationNumber) {
+      //   // console.log('inside user registration');
+      //   const counter = await counterRepository.counterIncreement(gym.gymId);
+      //   user = await userRepository.update(user.id, {registerationNumber : counter.seq});
+      // }
       // console.log(counter);
       // user.registerationNumber = counter.seq;
       // await user.save();
@@ -273,6 +272,18 @@ async function addRoleToUser(id, data) {
   }   
 }
 
+async function updateUserReg(id, data) {
+  try {
+    const user = await userRepository.update(id, data);
+    return user;
+  } catch (error) {
+    throw new AppError(
+      'Cannot fetch data of the user',
+      StatusCodes.INTERNAL_SERVER_ERROR
+    );
+  }
+}
+
 module.exports = {
   createUser,
   getUser,
@@ -283,4 +294,5 @@ module.exports = {
   getUserInfo,
   addRoleToUser,
   isAuthenticatedReset,
+  updateUserReg,
 };

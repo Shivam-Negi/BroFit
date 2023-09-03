@@ -29,6 +29,8 @@ router.post('/signin',
 
 router.delete('/:id',UserController.deleteUser);
 
-router.patch('/:id', UserController.addRoleToUser)
+router.patch('/:id', UserController.addRoleToUser);
+
+router.patch('/reg/:id', UserController.updateUserReg);
 
 module.exports = router;    

@@ -11,10 +11,10 @@ const AppError = require('../utils/errors/app-error');
 async function createGym(data) {
     try {
         // console.log(data);
-        const counter = await counterRepository.create({
-            gymId : data.gymId,
-            seq : data.registerationNumber - 1,
-        })
+        // const counter = await counterRepository.create({
+        //     gymId : data.gymId,
+        //     seq : data.registerationNumber - 1,
+        // })
         const gym = await gymRepository.create({
             gymName : data.gymName,
             gymId : data.gymId,

@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema(
     registerationNumber: {
       type : Number,
       // default: 0,
-      // required: true,
+      required: true,
     },
     role: {
       type: String,

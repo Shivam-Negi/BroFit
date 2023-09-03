@@ -148,6 +148,20 @@ async function deleteUser(req, res) {
         
     }
 }
+async function updateUserReg(req, res) {
+    try {
+        const user = await UserService.updateUserReg(req.params.id, req.body);
+        successResponse.data = user;
+        return res
+                .status(StatusCodes.OK)
+                .json(successResponse);
+    } catch (error) {
+        errorResponse.error = error;
+        return res
+                .status(error.statusCode)
+                .json(errorResponse);
+    }
+}
 
 module.exports = {
     getUser,
@@ -156,6 +170,6 @@ module.exports = {
     addRoleToUser,
     deleteUser,
     getUserInfo,
-    addRoleToUser
+    updateUserReg,
     // signinWithRole,
 }

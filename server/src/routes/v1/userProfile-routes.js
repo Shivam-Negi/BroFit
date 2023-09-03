@@ -12,5 +12,6 @@ router.delete('/:id', AuthMiddlewares.checkAuth, UserProfileController.deleteUse
 router.patch('/plan/:id',UserProfileController.updateUserProfilePlans);
 router.patch('/newPlan/:id',UserProfileController.updateUserPlan);
 router.get('/:id/:status',UserProfileController.getUserByStatus);
+router.get('/planMemberCount/:gymId/:planId', UserProfileController.getPlanMemberCount);
  
 module.exports = router;

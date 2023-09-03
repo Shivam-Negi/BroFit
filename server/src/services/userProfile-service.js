@@ -147,6 +147,18 @@ async function getUserStatusByGymId(id ,data) {
         throw new AppError('Something went wrong cannot fetch the user status', StatusCodes.INTERNAL_SERVER_ERROR); 
     }
 }
+async function getPlanMemberCount(gymId, planId) {
+    try {
+        const userProfile = await userProfileRepository.getPlanMemberCount(gymId, planId);
+        const result = {
+            count : userProfile,
+        }
+        return result;
+        
+    } catch (error) {
+        throw new AppError('Something went wrong cannot fetch the plan member count', StatusCodes.INTERNAL_SERVER_ERROR);  
+    }
+}
 
 
 module.exports = {
@@ -159,5 +171,6 @@ module.exports = {
     updateUserProfilePlans,
     updateUserPlan,
     getUserStatusByGymId,
-    getUserAttendance
+    getUserAttendance,
+    getPlanMemberCount,
 }

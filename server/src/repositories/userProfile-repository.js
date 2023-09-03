@@ -84,6 +84,19 @@ class UserProfileRepository extends CrudRepository {
       throw error;
     }
   }
+  async getPlanMemberCount(gymId, planId) {
+    try {
+      const userProfile = await UserProfile.countDocuments({
+        gymId : gymId,
+        plan : planId,
+        status : 'active'
+      });
+      return userProfile;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
 }
 
 module.exports = UserProfileRepository;

@@ -5,7 +5,7 @@ const userRepository = new UserRepository();
 const userProfileRepository = new UserProfileRepository();
 const gymRepository = new GymRepository();
 const AppError = require("../utils/errors/app-error");
-const { checkInTime, currentDate } = require("../utils/helpers/datetime-helpers");
+const { checkInTime, currentDate, HrsToMins } = require("../utils/helpers/datetime-helpers");
 
 async function createAttendance(data) {
   try {
@@ -193,12 +193,27 @@ async function getMonthlyAttendance(id, currentMonth) {
     if(Number(currentMonth) !== newCurrentMonth) {
       currentDay = monthDaysArray[currentMonth - 1];
     }
-    const attendanceOfTheMonth = await attendanceRepository.getMonthlyAttendance(id, currentMonth);
-    const result = {
-      attended : attendanceOfTheMonth,
-      total : currentDay,
+    const attendanceOfTheMonth = (await attendanceRepository.getMonthlyAttendance(id, currentMonth));
+    let sum = 0;
+    for(const element of attendanceOfTheMonth) {
+      let checkOut = HrsToMins(element.checkOut);
+      // console.log('checkout time',checkOut,element.checkOut);
+      let checkIn = HrsToMins(element.checkIn);
+      if(checkIn <= checkOut) {
+        sum += checkOut - checkIn; 
+      }
+      else {
+        sum += 60;
+      }
+      // console.log('checkin time',checkIn,element.checkIn);
+      // console.log('sum', sum);
     }
-    return result;
+    const monthlyData = {
+      attended : attendanceOfTheMonth.length,
+      total : currentDay,
+      totalMinutes : sum
+    }
+    return monthlyData;
   } catch (error) {
     throw new AppError('Something went wrong while fetching the attendance for this current month', StatusCodes.INTERNAL_SERVER_ERROR);
   }

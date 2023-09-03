@@ -129,6 +129,17 @@ async function getUserByStatus(req, res) {
     }
 }
 
+async function getPlanMemberCount(req, res) {
+    try {
+        const planCount = await UserProfileService.getPlanMemberCount(req.params.gymId, req.params.planId);
+        successResponse.data = planCount;
+        return res.status(StatusCodes.OK).json(successResponse);
+    } catch (error) {
+        errorResponse.error = error;
+        return res.status(error.statusCode).json(errorResponse);  
+    }
+}
+
 module.exports = {
     createUserProfile,
     getUserProfiles,
@@ -138,5 +149,6 @@ module.exports = {
     updateUserProfilePlans,
     updateUserPlan,
     getUserByStatus,
-    getUserAttendance
+    getUserAttendance,
+    getPlanMemberCount,
 }

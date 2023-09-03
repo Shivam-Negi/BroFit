@@ -61,7 +61,7 @@ class AttendanceRepository extends CrudRepository {
           },
       });
       // console.log(attendance);
-      return attendance.length;
+      return attendance;
     } catch (error) {
       console.log(error);
       throw error;
