@@ -26,6 +26,9 @@ const attendanceSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   }
+},
+{
+  timestamps : true,
 });
 
 const attendance = mongoose.model("Attendance", attendanceSchema);
