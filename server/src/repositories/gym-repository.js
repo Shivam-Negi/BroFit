@@ -29,14 +29,19 @@ class GymRepository extends CrudRepository {
         return gym;
     }
 
-    async getGymMems(id) {
+    async getGymMems(data) {
+        // console.log(typeof(data.limit));
+        // console.log(typeof(data.page));
         const gym = await Gym.findOne({
-            gymId : id
+            gymId : data.gymId
         }).select('members -_id')
         .populate({
             path: "members",
             select: "name registerationNumber"
-        });
+        })
+        // .skip((data.page - 1) * data.limit)
+        // .limit(5)
+        // .exec();
         return gym;
     }
 

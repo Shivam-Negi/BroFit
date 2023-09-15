@@ -52,8 +52,14 @@ async function getGymGraph(req, res) {
 }
 
 async function getGymMems(req, res) {
+    // console.log(req.query);
     try {
-        const gym = await GymService.getGymMems(req.params.id);
+        const data = {
+            gymId : req.params.id,
+            limit : parseInt(req.query.limit) || 25,
+            page : parseInt(req.query.page) || 1,
+        };
+        const gym = await GymService.getGymMems(data);
         successResponse.data = gym;
         return res.status(StatusCodes.OK).json(successResponse);
         

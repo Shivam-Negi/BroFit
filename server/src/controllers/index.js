@@ -5,4 +5,5 @@ module.exports = {
   PlanController: require("./plan-controller"),
   AttendanceController: require("./attendance-controller"),
   ForgotPwdController: require("./forgotPwd-controller"),
+  DietChartController: require("./dietChart-controller"),
 };

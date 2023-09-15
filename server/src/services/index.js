@@ -5,4 +5,5 @@ module.exports = {
   UserProfileService: require("./userProfile-service"),
   AttendanceService: require("./attendance-services"),
   ForgotPwdService: require("./forgotPwd-service"),
+  DietChartService: require("./dietChart-services"),
 };
