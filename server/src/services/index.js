@@ -6,4 +6,5 @@ module.exports = {
   AttendanceService: require("./attendance-services"),
   ForgotPwdService: require("./forgotPwd-service"),
   DietChartService: require("./dietChart-services"),
+  NotiService: require("./noti-service"),
 };
