@@ -272,6 +272,19 @@ async function addRoleToUser(id, data) {
   }   
 }
 
+async function searchMemberByRegisterationNumber(data) {
+  try {
+    const member = await userRepository.getUserByRegNumber(data);
+    if(!member) {
+      throw new AppError('No user found for this registration Number', StatusCodes.BAD_REQUEST);
+    }
+    return member;
+  } catch (error) {
+    if(error instanceof AppError) throw error;
+    throw new AppError('Cannot delete user from the database',StatusCodes.INTERNAL_SERVER_ERROR);  
+  }
+}
+
 async function updateUserReg(id, data) {
   try {
     const user = await userRepository.update(id, data);
@@ -295,4 +308,5 @@ module.exports = {
   addRoleToUser,
   isAuthenticatedReset,
   updateUserReg,
+  searchMemberByRegisterationNumber,
 };

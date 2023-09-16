@@ -133,6 +133,26 @@ async function addRoleToUser(req, res) {
     }
 }
 
+async function searchMember(req, res) {
+    try {
+        const member = await UserService.searchMemberByRegisterationNumber({
+            gymId : req.params.gymId,
+            registerationNumber : req.params.registerationNumber,
+        });
+        successResponse.data = member;
+        return res
+                .status(StatusCodes.CREATED)
+                .json(successResponse);
+    } catch (error) {
+        console.log(error)
+        errorResponse.error = error;
+        return res
+                .status(error.statusCode)
+                .json(errorResponse);
+        
+    }
+}
+
 async function deleteUser(req, res) {
     try {
         const user = await UserService.deleteUser(req.params.id);
@@ -171,5 +191,6 @@ module.exports = {
     deleteUser,
     getUserInfo,
     updateUserReg,
+    searchMember,
     // signinWithRole,
 }

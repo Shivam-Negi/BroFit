@@ -6,6 +6,7 @@ const userProfileRouter = require("./userProfile-routes");
 const planRouter = require("./plan-routes");
 const attendanceRouter = require("./attendance-routes");
 const forgotPwdRouter = require("./forgotPwd-routes");
+const dietChartRouter = require("./dietChart-routes");
 const notiRouter = require("./noti-routes");
 
 router.use("/gym", gymRouter);
@@ -14,6 +15,5 @@ router.use("/userProfile", userProfileRouter);
 router.use("/plan", planRouter);
 router.use("/attendance", attendanceRouter);
 router.use("/forgotPass", forgotPwdRouter);
-router.use("/noti", notiRouter);
 
 module.exports = router;

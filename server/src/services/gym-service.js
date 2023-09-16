@@ -73,9 +73,10 @@ async function getGymGraph(id) {
     }
 }
 
-async function getGymMems(id) {
+async function getGymMems(data) {
     try {
-        const gym = await gymRepository.getGymMems(id);
+        // console.log(data);
+        const gym = await userRepository.getGymMembers(data);
         if(!gym) {
             throw new AppError('no gym exist for this gymId',StatusCodes.BAD_REQUEST);
         }

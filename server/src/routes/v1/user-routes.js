@@ -8,6 +8,8 @@ router.get('/:id', UserController.getUser);
 
 router.get('/:reg/:gym', UserController.getUserInfo);
 
+router.get('/search/:gymId/:registerationNumber', UserController.searchMember);
+
 router.post('/signup', AuthMiddlewares.validateAuthRequest,
                        AuthMiddlewares.checkOwner,
                        UserController.createUser);
