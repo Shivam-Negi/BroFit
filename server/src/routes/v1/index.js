@@ -15,5 +15,7 @@ router.use("/userProfile", userProfileRouter);
 router.use("/plan", planRouter);
 router.use("/attendance", attendanceRouter);
 router.use("/forgotPass", forgotPwdRouter);
+router.use("/dietChart", dietChartRouter);
+router.use("/noti", notiRouter);
 
 module.exports = router;
