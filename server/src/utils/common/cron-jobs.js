@@ -1,10 +1,11 @@
 const cron = require('node-cron');
 const { checkInTime, HrsToMins, currentDate } = require('../helpers/datetime-helpers');
 const { AttendanceService } = require('../../services');
-const { GymRepository, AttendanceRepository, UserProfileRepository } = require('../../repositories');
+const { GymRepository, AttendanceRepository, UserProfileRepository, NotiRepository } = require('../../repositories');
 const gymRepository = new GymRepository();
 const attendanceRepository = new AttendanceRepository();
 const userProfileRepository = new UserProfileRepository();
+const notiRepository = new NotiRepository();
 
 const status = 'IN';
 
@@ -94,9 +95,16 @@ async function planExCron() {
         status: 'inactive',       
         planExpiryDate: '',
         planStartDate: '',
-      }
+      };
       for(const user of users) {
+        const msg = {
+         gymId: user.gymId,
+         content: 'Please renew your gym membership.',
+         target: 'specific',
+         userId: user.userId,
+        };
         await userProfileRepository.updateUserProfile(user._id, data);
+        await notiRepository.create(msg);
         console.log(`${user} plan updated to inactive at ${checkInTime()}`);
       }
     } catch (error) {

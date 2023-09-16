@@ -61,7 +61,7 @@ class UserProfileRepository extends CrudRepository {
   async getExpireToday(day) {
     const userProfile = await UserProfile.find({ 
           planExpiryDate : day
-      }).select('planExpiryDate userId plan')
+      }).select('planExpiryDate userId plan gymId')
       .populate({
         path: "plan",
         select: "name validity -_id",
