@@ -59,9 +59,13 @@ class UserRepository extends CrudRepository {
             throw error;
         }
       }
-    async getGymMembers(data) {
+      async getGymMembers(data) {
         try {
             // console.log(data);
+            const count = await User.countDocuments({
+                gymId : data.gymId,
+                role : 'user',
+            })
             const gymMembers = await User.find({
                 gymId : data.gymId,
                 role : 'user',
@@ -70,12 +74,16 @@ class UserRepository extends CrudRepository {
             .limit(data.limit)
             .exec();
             // console.log(gymMembers);
-            return gymMembers;
+            return {
+                totalPages : Math.ceil(count/data.limit),
+                MembersArray : gymMembers
+            };
         } catch (error) {
             console.log(error);
             throw error;
         }
     }
+    
     async getUserByRegNumber(data) {
         try {
             const member = await User.findOne({
