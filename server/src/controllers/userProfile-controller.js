@@ -140,6 +140,28 @@ async function getPlanMemberCount(req, res) {
     }
 }
 
+async function getUserPic(req, res) {
+    try {
+        const urlPic = await UserProfileService.getUserPic(req.params.userId);
+        successResponse.data = urlPic;
+        return res.status(StatusCodes.OK).json(successResponse);
+    } catch (error) {
+        errorResponse.error = error;
+        return res.status(error.statusCode).json(errorResponse);  
+    }
+}
+
+async function uploadUserPic(req, res) {
+    try {
+        const urlPic = await UserProfileService.uploadUserPic(req.params, req.body.format);
+        successResponse.data = urlPic;
+        return res.status(StatusCodes.OK).json(successResponse);
+    } catch (error) {
+        errorResponse.error = error;
+        return res.status(error.statusCode).json(errorResponse);
+    }
+}
+
 module.exports = {
     createUserProfile,
     getUserProfiles,
@@ -151,4 +173,6 @@ module.exports = {
     getUserByStatus,
     getUserAttendance,
     getPlanMemberCount,
+    getUserPic,
+    uploadUserPic,
 }

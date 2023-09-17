@@ -9,5 +9,5 @@ module.exports = {
   JWT_SECRET : process.env.JWT_SECRET,
   GMAIL_EMAIL : process.env.GMAIL_EMAIL,
   GMAIL_PASS : process.env.GMAIL_PASS,
-  RESET: process.env.RESET_URI
+  RESET: process.env.RESET_URI,
 };

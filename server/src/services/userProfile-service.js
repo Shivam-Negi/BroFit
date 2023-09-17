@@ -5,6 +5,7 @@ const {StatusCodes} = require('http-status-codes');
 const AppError = require('../utils/errors/app-error');
 const { currentDate, dateAfterAddingDays } = require('../utils/helpers/datetime-helpers');
 const user = require('../models/user');
+const { S3 } = require('../config');
 
 
 async function createUserProfile(data) {
@@ -160,6 +161,33 @@ async function getPlanMemberCount(gymId, planId) {
     }
 }
 
+async function getUserPic(userId) {
+    try {
+        const user = await userProfileRepository.getUserProfileByUserId(userId);
+        if(!user.profilePhoto)
+            throw new AppError("pic doesn't exist", StatusCodes.INTERNAL_SERVER_ERROR);
+        const urlPic = await S3.getSignedFileUrl(user.profilePhoto);
+        return urlPic;
+    } catch (error) {
+        if(error instanceof AppError)
+            throw error; 
+        throw new AppError('Something went wrong cannot fetch the profile pic', StatusCodes.INTERNAL_SERVER_ERROR);  
+    }
+}
+
+async function uploadUserPic(data, format) {
+    try {
+        const fileName = `${data.gymId}/profilePic/${data.userId}.${format}`;
+        console.log(fileName);
+        const uploadUrl = await S3.putSignedFileUrl(fileName, format);
+        console.log(uploadUrl);
+        const response = await userProfileRepository.updateProfilePic(data.userId, fileName);
+        console.log('response :', response);
+        return uploadUrl;
+    } catch (error) {
+        throw new AppError('Something went wrong cannot upload the profile pic', StatusCodes.INTERNAL_SERVER_ERROR); 
+    }
+}
 
 module.exports = {
     createUserProfile,
@@ -173,4 +201,6 @@ module.exports = {
     getUserStatusByGymId,
     getUserAttendance,
     getPlanMemberCount,
+    getUserPic,
+    uploadUserPic,
 }

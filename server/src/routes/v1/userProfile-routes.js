@@ -13,5 +13,7 @@ router.patch('/plan/:id',UserProfileController.updateUserProfilePlans);
 router.patch('/newPlan/:id',UserProfileController.updateUserPlan);
 router.get('/:id/:status',UserProfileController.getUserByStatus);
 router.get('/planMemberCount/:gymId/:planId', UserProfileController.getPlanMemberCount);
+router.get('/profilePic/:userId/:gymId', UserProfileController.getUserPic);
+router.post('/profilePic/:userId/:gymId', UserProfileController.uploadUserPic);
  
 module.exports = router;

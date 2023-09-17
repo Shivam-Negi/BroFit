@@ -97,6 +97,21 @@ class UserProfileRepository extends CrudRepository {
       throw error;
     }
   }
+  async updateProfilePic(userId, fileName) {
+    try {
+      const result = await UserProfile.findOneAndUpdate({
+        userId : userId,
+    }, 
+    { 
+      profilePhoto: fileName
+    },
+    {new: true});
+    return result;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
 }
 
 module.exports = UserProfileRepository;
