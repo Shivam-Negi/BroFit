@@ -164,6 +164,7 @@ async function getPlanMemberCount(gymId, planId) {
 async function getUserPic(userId) {
     try {
         const user = await userProfileRepository.getUserProfileByUserId(userId);
+        console.log(user);
         if(!user.profilePhoto)
             throw new AppError("pic doesn't exist", StatusCodes.INTERNAL_SERVER_ERROR);
         const urlPic = await S3.getSignedFileUrl(user.profilePhoto);
@@ -177,7 +178,10 @@ async function getUserPic(userId) {
 
 async function uploadUserPic(data, format) {
     try {
-        const fileName = `${data.gymId}/profilePic/${data.userId}.${format}`;
+        let parts = format.split('/');
+        let ext = parts[1];
+        let type = parts[0];
+        const fileName = `${data.gymId}/profilePic/${data.userId}/${type}.${ext}`;
         console.log(fileName);
         const uploadUrl = await S3.putSignedFileUrl(fileName, format);
         console.log(uploadUrl);
