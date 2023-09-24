@@ -1,125 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scale=0">
     <title>Brofit</title>
-  </head>
-  <body>
-    <main>
-      <div class="header">
-        <div class="logo">BROFIT</div>
-        <nav>
-          <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#memberships">features</a></li>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="logo">BROFIT</a>
+        <img src="images/menu.png" alt="" class="menu-btn">
+
+        <ul class="nav-list">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#about">About Us</a></li>
             <li><a href="#contact">Contact</a></li>
-          </ul>
-        </nav>
-        <div class="get-started"><a href="#">Get Started</a></div>
-      </div>
-      <div class="intro">
-        <p class="h1">FITNESS IS YOUR PASSION WITH AGGRESSION</p>
-        <p class="h2">
-          Most people fail, not because of lack of desire, but, because of lack
-          of commitment.
-        </p>
-        <p class="h2">Start your journey with us.</p>
-        <div class="get-started2"><a href="#">Get Started</a></div>
-      </div>
-    </main>
-    <section class="about" id="about">
-      <div class="same1">
-        <div class="p">
-          <p class="h3">Unleash Your Fitness Journey with Brofit!</p>
-          <p class="h4">
-            Welcome to the world of Brofit, where fitness meets innovation in an
-            app designed to elevate your workout experience. Whether you're a
-            gym owner or a dedicated fitness enthusiast, Brofit brings you a
-            suite of captivating features that redefine how you approach fitness
-            and gym management.
-          </p>
+        </ul>
+
+    </nav>
+    <header>
+
+
+        <video src="images/display.mp4" class="display" loop autoplay></video>
+        <div class="button-container"><a href="#about" class="hero-btn">Get Started</a>
         </div>
-        <img class="overlap" src="assets/overlap.jpeg" />
-      </div>
+    </header>
+
+    <!--SECTION 2 gym owner-->
+
+    <section class="section-2" id="features">
+        <div class="section-2-left">
+            <div class="section-2-left-content section-2-left-1">
+                <div class="section-2-left-heading">Access Members Record</div>
+                <div class="section-2-left-desc">Simplify your gym's operations by effortlessly managing and accessing
+                    member profiles all in one place.
+                </div>
+            </div>
+            <div class="section-2-left-content section-2-left-2">
+                <div class="section-2-left-heading">Single-Click Plan Activation & Payment Reminder</div>
+                <div class="section-2-left-desc">Easily activate members plan after verifying their payment.
+                    Along with auto-reminders, ping inactive members to renew membership with a notification feature.
+                </div>
+            </div>
+            <div class="section-2-left-content section-2-left-3">
+                <div class="section-2-left-heading">Personalized Workout Videos </div>
+                <div class="section-2-left-desc"> Customize fitness routines for gym members.
+                    Upload unlimited number of high quality videos.
+                </div>
+            </div>
+            <div class="section-2-left-content section-2-left-4">
+                <div class="section-2-left-heading">Real-time Gym Occupancy</div>
+                <div class="section-2-left-desc">Know about peak hours of your gym, represented in a graph and plan
+                    accordingly.
+
+                </div>
+            </div>
+        </div>
+        <div class="section-2-right">
+            <div class="section-2-right-placeholder">
+                <img src="images/record.jpeg" class="section-2-right-img">
+
+            </div>
+        </div>
     </section>
 
-    <div class="membershipsheading"><p class="h5">Features</p></div>
-    <section class="memberships" id="memberships">
-      <div class="features-box">
-        <h3>Benefits for Mmbers</h3>
-        <ul>
-          <li>
-            📆 Attendance Records at a Glance: Dive into your fitness journey
-            with Brofit's calendar view of attendance records. Gain a deeper
-            understanding of your progress, identify trends, and set new goals
-            with an engaging visual representation of your dedication.
-          </li>
-          <li>
-            ⏱ Precision Workouts: Elevate your workouts using Brofit's fitness
-            timer app and expert tutorials. From novices to fitness enthusiasts,
-            everyone can find meticulously crafted routines that bring you one
-            step closer to your goals.
-          </li>
-        </ul>
-      </div>
-      <div class="features-box">
-        <h3>Benefits for Owners</h3>
-        <ul>
-          <li>
-            🏋‍♂ Effortless Management: Brofit simplifies member registration
-            and profile management for gym owners, allowing you to connect
-            seamlessly with your community. Spend less time on admin tasks and
-            more time inspiring your members to reach new heights.
-          </li>
+    <div class="text">
+        <h1> Innovate, Inspire, and Achieve with Us </h1>
+    </div>
 
-          <li>
-            ⏰ Real-time Attendance Tracking: Say goodbye to outdated attendance
-            methods. Brofit's location-based tracking provides real-time
-            insights into member attendance, while a live graph showcases hourly
-            member counts. Stay on top of your gym's vitality and foster a sense
-            of friendly competition.
-          </li>
+    <!-- SECTION 3 gym members-->
 
-          <li>
-            📈 Live Insights: Harness the power of real-time data with Brofit's
-            live graph. Watch your gym's pulse come alive, empowering you to
-            make informed decisions and tailor your strategies for maximum
-            impact.
-          </li>
-        </ul>
-      </div>
+    <section class="section-3">
+        <div class="section-3-container">
+            <h2>Exciting and premium features for your members.</h2>
+        </div>
+        <div class="section-3-right">
+            <video src="images/Brofitv2.mp4" class="memberv" loop autoplay></video>
+        </div>
+
     </section>
 
-    <section class="contact" id="contact">
-      <p class="h6">Contact Us</p>
-      <div class="contact-form">
-        <form
-          action="mailto:your-email@example.com"
-          method="post"
-          enctype="text/plain"
-        >
-          <label for="name">Name:</label>
-          <input type="text" id="name" name="name" required /><br /><br />
+    <!-- section connect on social platforms-->
 
-          <label for="email">Email:</label>
-          <input type="email" id="email" name="email" required /><br /><br />
-
-          <label for="message">Message:</label><br />
-          <textarea id="message" name="message" rows="4" required></textarea
-          ><br /><br />
-
-          <input type="submit" value="Send" />
-        </form>
-      </div>
-
-      <div class="contact-details">
-        <h3>Contact Details</h3>
-        <p>Email: brofit56@gmail.com</p>
-        <p>Phone: +91 6398310174</p>
-      </div>
+    <section class="section-4" id="about">
+        <h2>Follow Us</h2>
+        <div class="section-4-content">
+            <a href="https://twitter.com/Brofit"><i class="fa-brands fa-2x fa-twitter"></i></a>
+            <a href="https://instagram.com/brofit_app?igshid=NzZlODBkYWE4Ng=="><i
+                    class="fa-brands fa-2x fa-instagram"></i></a>
+            <a href="https://www.linkedin.com/company/brofit-app/"><i class="fa-brands fa-2x fa-linkedin"></i></a>
+        </div>
     </section>
-  </body>
+
+
+    <!-- footer -->
+
+    <footer>
+        <div class="footer-content" id="contact">
+            <div class="contact-info">
+                <h3>Contact Us : </h3>
+                <a href="mailto:brofit56@gmail.com">brofit56@gmail.com</a>
+            </div>
+            <div class="app-icons">
+                <span class="p1">Download from : </span>
+
+                <a href="https://play.google.com/store/apps/details?id=com.brogrammers.brofit" class="icon"><i
+                        class="fa fa-android fa-2x"></i></a>
+                <a href="https://apps.apple.com/app/id6462795530" class="icon"><i class="fa fa-apple fa-2x"></i></a>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 Brofit. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="./script.js"></script>
+</body>
+
 </html>
