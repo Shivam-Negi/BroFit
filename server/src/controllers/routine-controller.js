@@ -16,17 +16,18 @@ async function createRoutine(req, res) {
     }
 }
 
-
-
-
-
-
-
-
-
-
+async function pushWorkout(req, res) {
+    try {
+        const routine = await RoutineService.pushWorkout(req.params.id, req.body);
+        successResponse.data = routine;
+        return res.status(StatusCodes.OK).json(successResponse);
+    } catch (error) {
+        errorResponse.error = error;
+        return res.status(error.statusCode).json(errorResponse);        
+    }
+}
 
 module.exports = {
     createRoutine,
-
+    pushWorkout,
 };

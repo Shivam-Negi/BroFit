@@ -20,9 +20,17 @@ async function createRoutine(id, data) {
     } 
 }
 
-
+async function pushWorkout(id, data) {
+    try {
+        const routine = await routineRepository.addWorkouts(id, data);
+        return routine;        
+    } catch (error) {
+        // console.log(error);
+        throw new AppError('Something went wrong while updating the routine', StatusCodes.INTERNAL_SERVER_ERROR);      
+    }
+}
 
 module.exports = {
     createRoutine,
-
+    pushWorkout,
 };
