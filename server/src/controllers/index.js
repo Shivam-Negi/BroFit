@@ -7,4 +7,5 @@ module.exports = {
   ForgotPwdController: require("./forgotPwd-controller"),
   NotiController: require("./noti-controller"),
   DietChartController: require("./dietChart-controller"),
+  WorkoutController: require("./workout-controller"),
 };

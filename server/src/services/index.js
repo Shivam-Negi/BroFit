@@ -7,4 +7,5 @@ module.exports = {
   ForgotPwdService: require("./forgotPwd-service"),
   DietChartService: require("./dietChart-services"),
   NotiService: require("./noti-service"),
+  WorkoutService: require("./workout-service"),
 };

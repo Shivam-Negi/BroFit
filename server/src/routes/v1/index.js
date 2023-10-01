@@ -8,6 +8,7 @@ const attendanceRouter = require("./attendance-routes");
 const forgotPwdRouter = require("./forgotPwd-routes");
 const dietChartRouter = require("./dietChart-routes");
 const notiRouter = require("./noti-routes");
+const workoutRouter = require("./workout-routes");
 
 router.use("/gym", gymRouter);
 router.use("/user", userRouter);
@@ -17,5 +18,6 @@ router.use("/attendance", attendanceRouter);
 router.use("/forgotPass", forgotPwdRouter);
 router.use("/dietChart", dietChartRouter);
 router.use("/noti", notiRouter);
+router.use("/workout", workoutRouter);
 
 module.exports = router;

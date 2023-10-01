@@ -36,7 +36,6 @@ class UserProfileRepository extends CrudRepository {
     const userProfile = await UserProfile.findOne({
       userId: data,
     });
-    // console.log(userProfile);
     return userProfile;
   }
   async deleteUserProfileByUserId(id) {

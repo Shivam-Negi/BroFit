@@ -6,5 +6,6 @@ module.exports = {
   AttendanceRepository: require("./attendance-repository"),
   CounterRepository: require('./counter-repository'),
   NotiRepository: require("./noti-repository"),
-  DietChartRepository : require('./dietChart-repository')
+  DietChartRepository : require('./dietChart-repository'),
+  WorkoutRepository: require('./workout-repository'),
 };
