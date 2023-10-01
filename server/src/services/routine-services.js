@@ -7,7 +7,7 @@ const userRepository = new UserRepository();
 
 async function createRoutine(id, data) {
     try {
-        const role = userRepository.getRole(id);
+        const role = await userRepository.getRole(id);
         data.gymId = role.gymId;
         if(role.role == 'user') {
             data.created = id;
@@ -20,9 +20,34 @@ async function createRoutine(id, data) {
     } 
 }
 
+async function getRoutinesNames(params) {
+    try {
+        const {visibility, id} = params;
+        if(visibility == "specific") {
+            const routine = await routineRepository.getRoutinesNameByUserId(id, visibility);
+            return routine;
+        }
+        const routine = await routineRepository.getRoutinesNameByGymId(id, visibility);
+        return routine;
+    } catch (error) {
+        throw new AppError('Something went wrong while getting routine', StatusCodes.INTERNAL_SERVER_ERROR); 
+    }
+}
+
+async function getRoutineDayContent(routineId, day) {
+    try {
+        const routine = await routineRepository.getRoutineDayContent(routineId, day);
+        return routine;
+    } catch (error) {
+        throw new AppError('Something went wrong while getting routine', StatusCodes.INTERNAL_SERVER_ERROR);
+    }
+
+}
+
 
 
 module.exports = {
     createRoutine,
-
+    getRoutinesNames,
+    getRoutineDayContent,
 };

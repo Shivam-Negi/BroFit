@@ -16,17 +16,30 @@ async function createRoutine(req, res) {
     }
 }
 
+async function getRoutinesNames(req, res) {
+    try {
+        const routinesNames = await RoutineService.getRoutinesNames(req.params);
+        successResponse.data = routinesNames;
+        return res.status(StatusCodes.OK).json(successResponse);
+    } catch (error) {
+        errorResponse.error = error;
+        return res.status(error.statusCode).json(errorResponse);
+    }
+}
 
-
-
-
-
-
-
-
-
-
+async function getRoutineDayContent(req, res) {
+    try {
+        const routineContent = await RoutineService.getRoutineDayContent(req.params.id, req.params.day);
+        successResponse.data = routineContent;
+        return res.status(StatusCodes.OK).json(successResponse);
+    } catch (error) {
+        errorResponse.error = error;
+        return res.status(error.statusCode).json(errorResponse);        
+    }
+}
 module.exports = {
     createRoutine,
+    getRoutinesNames,
+    getRoutineDayContent,
 
 };
