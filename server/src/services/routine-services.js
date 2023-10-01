@@ -57,5 +57,6 @@ async function pushWorkout(id, data) {
 module.exports = {
     createRoutine,
     getRoutinesNames,
-    getRoutineDayContent,    pushWorkout,
+    getRoutineDayContent,
+    pushWorkout,
 };
