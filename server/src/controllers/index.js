@@ -8,4 +8,5 @@ module.exports = {
   NotiController: require("./noti-controller"),
   DietChartController: require("./dietChart-controller"),
   WorkoutController: require("./workout-controller"),
+  RoutineController: require("./routine-controller"),
 };

@@ -18,6 +18,16 @@ class WorkoutRepository extends CrudRepository {
             throw error;
         }
     }
+    async getWorkout(params) {
+        try {
+            const workout = await Workout.findOne({
+                name : params
+            });
+            return workout;
+        } catch (error) {
+            throw error;
+        }
+    }
 }
 
 module.exports = WorkoutRepository;

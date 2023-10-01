@@ -8,4 +8,5 @@ module.exports = {
   NotiRepository: require("./noti-repository"),
   DietChartRepository : require('./dietChart-repository'),
   WorkoutRepository: require('./workout-repository'),
+  RoutineRepository: require('./routine-repository'),
 };

@@ -8,4 +8,5 @@ module.exports = {
   DietChartService: require("./dietChart-services"),
   NotiService: require("./noti-service"),
   WorkoutService: require("./workout-service"),
+  RoutineService : require("./routine-services"),
 };

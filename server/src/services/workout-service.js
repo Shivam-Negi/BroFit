@@ -28,6 +28,24 @@ async function getWorkouts(query) {
     }
 }
 
+async function getWorkout(params) {
+    try {
+        const workout = await workoutRepository.getWorkout(params);
+        return workout;
+    } catch (error) {
+        throw new AppError('Cannot get the specified  workout', StatusCodes.INTERNAL_SERVER_ERROR);  
+    }
+}
+
+async function updateWorkout(id, data) {
+    try {
+        const workout = await workoutRepository.update(id, data);
+        return workout;
+    } catch (error) {
+        throw new AppError('Cannot update the specified  workout', StatusCodes.INTERNAL_SERVER_ERROR);
+    }
+}
+
 async function deleteWorkout(id) {
     try {
         const response = await workoutRepository.destroy(id);
@@ -40,5 +58,7 @@ async function deleteWorkout(id) {
 module.exports = {
     createWorkout,
     getWorkouts,
+    getWorkout,
+    updateWorkout,
     deleteWorkout,
 }

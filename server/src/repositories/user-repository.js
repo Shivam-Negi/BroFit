@@ -97,6 +97,17 @@ class UserRepository extends CrudRepository {
             throw error;   
         }
     }
+
+    async getRole(id) {
+        try {
+            const role = await User.findOne({
+                _id : id,
+            }).select('role gymId');
+            return role;
+        } catch (error) {
+            throw error;
+        }
+    }
 }
 
 module.exports = UserRepository;

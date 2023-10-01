@@ -28,6 +28,36 @@ async function getWorkouts(req, res) {
     }
 }
 
+async function getWorkout(req, res) {
+    try {
+        const workouts = await WorkoutService.getWorkout(req.params.name);
+        successResponse.data = workouts;
+        return res
+                .status(StatusCodes.CREATED)
+                .json(successResponse);
+    } catch (error) {
+        errorResponse.error = error;
+        return res
+                .status(error.statusCode)
+                .json(errorResponse);
+    }
+}
+
+async function updateWorkout(req, res) {
+    try {
+        const workout = await WorkoutService.updateWorkout(req.params.id, req.body);
+        successResponse.data = workout;
+        return res
+                .status(StatusCodes.CREATED)
+                .json(successResponse);
+    } catch (error) {
+        errorResponse.error = error;
+        return res
+                .status(error.statusCode)
+                .json(errorResponse);
+    }
+}
+
 async function deleteWorkout(req, res) {
     try {
         const response = await WorkoutService.deleteWorkout(req.params.id);
@@ -42,5 +72,7 @@ async function deleteWorkout(req, res) {
 module.exports = {
     createWorkout,
     getWorkouts,
+    getWorkout,
+    updateWorkout,
     deleteWorkout,
 }
