@@ -10,7 +10,7 @@ class WorkoutRepository extends CrudRepository {
         try {
             const workouts = await Workout.find({ 
                 tags: {
-                     $in: tags 
+                     $all: tags 
                 } 
             });
             return workouts;
