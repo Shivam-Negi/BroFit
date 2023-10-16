@@ -54,9 +54,19 @@ async function pushWorkout(id, data) {
     }
 }
 
+async function deleteRoutine(id) {
+    try {
+        const routine = await routineRepository.destroy(id);
+        return routine;
+    } catch (error) {
+        throw new AppError('Something went wrong while deleting the routine', StatusCodes.INTERNAL_SERVER_ERROR);
+    }
+}
+
 module.exports = {
     createRoutine,
     getRoutinesNames,
     getRoutineDayContent,
     pushWorkout,
+    deleteRoutine,
 };

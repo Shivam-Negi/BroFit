@@ -48,9 +48,22 @@ async function getRoutineDayContent(req, res) {
         return res.status(error.statusCode).json(errorResponse);        
     }
 }
+
+async function deleteRoutine(req, res) {
+    try {
+        const routine = await RoutineService.deleteRoutine(req.params.id);
+        successResponse.data = routine;
+        return res.status(StatusCodes.OK).json(successResponse);
+    } catch (error) {
+        errorResponse.error = error;
+        return res.status(error.statusCode).json(errorResponse);
+    }
+}
+
 module.exports = {
     createRoutine,
     getRoutinesNames,
     getRoutineDayContent,
     pushWorkout,
+    deleteRoutine,
 };
