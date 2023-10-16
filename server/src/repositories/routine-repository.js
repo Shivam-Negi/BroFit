@@ -55,7 +55,27 @@ class RoutineRepository extends CrudRepository {
                 },
                 { 
                     $push: { 
-                        [dayOfWeek]: { $each: workouts } 
+                        [dayOfWeek]: workouts 
+                    } 
+                }
+              );
+              return result;
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    }
+    async removeWorkouts(id, data) {
+        const workouts = data.workouts; // array of id's of workout
+        const dayOfWeek = data.day;
+        try {
+            const result = await Routine.updateOne(
+                { 
+                    _id: id 
+                },
+                { 
+                    $pull: { 
+                        [dayOfWeek]: { $in: workouts } 
                     } 
                 }
               );

@@ -54,6 +54,16 @@ async function pushWorkout(id, data) {
     }
 }
 
+async function pullWorkout(id, data) {
+    try {
+        const routine = await routineRepository.removeWorkouts(id, data);
+        return routine;        
+    } catch (error) {
+        // console.log(error);
+        throw new AppError('Something went wrong while updating the routine', StatusCodes.INTERNAL_SERVER_ERROR);      
+    }
+}
+
 async function deleteRoutine(id) {
     try {
         const routine = await routineRepository.destroy(id);
@@ -69,4 +79,5 @@ module.exports = {
     getRoutineDayContent,
     pushWorkout,
     deleteRoutine,
+    pullWorkout,
 };

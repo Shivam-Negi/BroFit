@@ -27,6 +27,17 @@ async function pushWorkout(req, res) {
     }
 }
 
+async function pullWorkout(req, res) {
+    try {
+        const routine = await RoutineService.pullWorkout(req.params.id, req.body);
+        successResponse.data = routine;
+        return res.status(StatusCodes.OK).json(successResponse);
+    } catch (error) {
+        errorResponse.error = error;
+        return res.status(error.statusCode).json(errorResponse);        
+    }
+}
+
 async function getRoutinesNames(req, res) {
     try {
         const routinesNames = await RoutineService.getRoutinesNames(req.params);
@@ -66,4 +77,5 @@ module.exports = {
     getRoutineDayContent,
     pushWorkout,
     deleteRoutine,
+    pullWorkout,
 };
