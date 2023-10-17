@@ -1,5 +1,6 @@
 const CrudRepository = require('./crud-repository');
 const Routine = require('../models/routine');
+const { default: mongoose } = require('mongoose');
 
 
 class RoutineRepository extends CrudRepository {
@@ -9,21 +10,59 @@ class RoutineRepository extends CrudRepository {
     }
     async getRoutinesNameByUserId(id, visibility) {
         try {
-            const routineName = await Routine.find({
-                created : id,
-                visibility : visibility,
-            }).select('title');
+            const routineName = await Routine.aggregate([
+                {
+                    $match : {
+                        created : new mongoose.Types.ObjectId(id),
+                        visibility : visibility,
+                    }
+                },
+                {
+                    $project : {
+                        title : 1,
+                        monday : {$size : '$monday'},
+                        tuesday : {$size : '$tuesday'},
+                        wednesday : {$size : '$wednesday'},
+                        thursday : {$size : '$thursday'},
+                        friday : {$size : '$friday'},
+                        saturday : {$size : '$saturday'},
+                        sunday : {$size : '$sunday'},
+
+                    },
+                },
+            ]);
+            // console.log(routineName);
             return routineName;
         } catch (error) {
+            console.log(error);
             throw error;
         }    
     }
     async getRoutinesNameByGymId(id, visibility) {
         try {
-            const routineName = await Routine.find({
-                gymId : id,
-                visibility : visibility,
-            }).select('title level');
+            const routineName = await Routine.aggregate([ // it first search using the filter then create a object with the specified data
+                {
+                    $match : {
+                        gymId : id,
+                        visibility : visibility,
+                    }
+                },
+                {
+                    $project : {
+                        title : 1,
+                        level : 1,
+                        monday : {$size : '$monday'},
+                        tuesday : {$size : '$tuesday'},
+                        wednesday : {$size : '$wednesday'},
+                        thursday : {$size : '$thursday'},
+                        friday : {$size : '$friday'},
+                        saturday : {$size : '$saturday'},
+                        sunday : {$size : '$sunday'},
+
+                    },
+                },
+            ]);
+            // console.log(routineName);
             return routineName;
         } catch (error) {
             throw error;
